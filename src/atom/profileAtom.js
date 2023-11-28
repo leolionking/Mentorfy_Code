@@ -12,5 +12,3 @@ export const profileAccount = atom({
     default: [],
     effects_UNSTABLE: [persistAtom]
 })
-// console.log('created view to another page, ban as pop up')
-// console.log('created view to another page, ban as pop up')22
