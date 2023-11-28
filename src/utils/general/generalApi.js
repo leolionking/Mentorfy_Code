@@ -41,6 +41,16 @@ const getUserGenericForm = async (payload) =>
 const getUserWorkspace = async (payload) =>
   await api.structure("workspace").getData("getUserWorkspaceById", payload);
 
+const checkUserEmailByWorkspace = async (payload) =>
+  await api
+    .structure("userByworkSpace")
+    .getData("checkUserEmailByWorkspace", payload);
+
+const checkUserForValidation = async (payload) =>
+  await api
+    .structure("uservalidation")
+    .getData("checkUserForValidation", payload);
+
 export {
   login,
   logout,
@@ -54,5 +64,7 @@ export {
   getProfile,
   editProfile,
   getUserGenericForm,
-  getUserWorkspace
+  getUserWorkspace,
+  checkUserEmailByWorkspace,
+  checkUserForValidation
 };
