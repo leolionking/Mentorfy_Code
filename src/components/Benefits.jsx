@@ -9,7 +9,7 @@ export default function Benefits() {
                 <img src={ribbon} alt="" />
             </div>
         <div className="flex items-center flex-col gap-4 lg:w-[50%]">
-          <h2 className="text-6xl font-['ginto-bold'] font-black">Benefits of <span className="text-[var(--primary)]">Mentorfy </span> </h2>
+          <h2 className="text-4xl lg:text-6xl font-['ginto-bold'] font-black">Benefits of <span className="text-[var(--primary)]">Mentorfy </span> </h2>
           <p className="text-sm">Our platform connects you with the right Mentorship opportunities, whether you're seeking guidance or looking to make a meaningful impact</p>
         </div>
         </div>
