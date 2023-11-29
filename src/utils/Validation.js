@@ -20,7 +20,7 @@ const forgotPassword = yup.object().shape({
     repeat_password: yup.string().required("Required"),
 })
 
-const reforgotPassword = yup.object().shape({
+const resetPassword = yup.object().shape({
     old_password: yup.string().required("Required"),
     new_password: yup.string().required("Required"),
     repeat_new_password: yup.string().required("Required"),
@@ -88,7 +88,7 @@ export {
     loginuser,
     otpverification,
     forgotPassword,
-    reforgotPassword,
+    resetPassword,
     requestNewPassword,
     stage1,
     stage2,
