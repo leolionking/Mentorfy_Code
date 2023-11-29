@@ -7,6 +7,8 @@ import MenteeLayout from './layouts/MenteeLayout';
 import MenteeLogin from "./pages/mentee/MenteeLogin";
 import MentorLayout from './layouts/MentorLayout';
 import MentorLogin from "./pages/mentor/MentorLogin";
+import ForgotPasswordClient from "./pages/client/ForgotPasswordClient";
+import ResetPasswordClient from "./pages/client/ResetPasswordClient";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +28,14 @@ const router = createBrowserRouter([
       {
         path: "/signin",
         element: <LoginClient />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPasswordClient />,
+      },
+      {
+        path: "/reset-password",
+        element: <ResetPasswordClient />,
       },
    
     ],
