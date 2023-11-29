@@ -10,6 +10,8 @@
     "aos": "^2.3.4",
     "directual-api": "^1.4.0",
     "formik": "^2.4.3",
+    "primeicons": "^6.0.1",
+    "primereact": "^10.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.15.0",
