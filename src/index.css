@@ -45,10 +45,10 @@ body{
 }
 
 .headOne{
-  @apply text-4xl lg:text-6xl font-['ginto-bold']
+  @apply text-4xl lg:text-6xl font-['ginto-bold'] font-black
 }
 .headTwo{
-  @apply text-2xl lg:text-4xl font-['ginto-bold']
+  @apply text-3xl lg:text-5xl font-['ginto-bold']
 }
 
 .subtitle{

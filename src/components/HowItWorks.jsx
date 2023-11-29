@@ -3,9 +3,9 @@ import React from "react";
 export default function HowItWorks() {
   return (
     <div className="bg-[var(--primary)] h-full py-[10vh] lg:h-[80vh]">
-      <div className="text-white flex items-center flex-col justify-center h-full gap-10">
+      <div className="main text-white flex items-center flex-col justify-center h-full gap-10">
         <div className="text-center">
-          <h2 className="headTwo ">How Mentorfy Works</h2>
+          <h2 className="text-2xl lg:text-4xl font-['ginto-bold'] ">How Mentorfy Works</h2>
           <p className="text-sm py-2">
             Our mentorship system connects mentors with mentees, fostering
             meaningful guidance and support
