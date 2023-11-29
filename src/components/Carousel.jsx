@@ -1,5 +1,6 @@
 import React from "react";
 import { Carousel } from "antd";
+import { Link } from "react-router-dom";
 
 export default function CarouselComponent() {
   return (
@@ -14,8 +15,8 @@ export default function CarouselComponent() {
               Match Mentors, Peer Groups anywhere, at any time.{" "}
             </div>
             <div className="flex items-center gap-4">
-              <button className="white-btn ">Get Started</button>
-              <button className="ter-btn">Request a demo</button>
+              <Link to='/pricing' className="white-btn ">Get Started</Link>
+              <Link to='/request-demo' className="ter-btn">Request a demo</Link>
             </div>
           </div>
         </div>
@@ -28,8 +29,8 @@ export default function CarouselComponent() {
             </h1>
             <div className="subtitle">Set goals, chat, share feedback.</div>
             <div className="flex items-center gap-4">
-              <button className="white-btn ">Get Started</button>
-              <button className="ter-btn">Request a demo</button>
+              <Link to='/pricing' className="white-btn ">Get Started</Link>
+              <Link to='/request-demo' className="ter-btn">Request a demo</Link>
             </div>
           </div>
         </div>
@@ -45,8 +46,8 @@ export default function CarouselComponent() {
               organization
             </div>
             <div className="flex items-center gap-4">
-              <button className="white-btn ">Get Started</button>
-              <button className="ter-btn">Request a demo</button>
+              <Link to='/pricing' className="white-btn ">Get Started</Link>
+              <Link to='/request-demo' className="ter-btn">Request a demo</Link>
             </div>
           </div>
         </div>

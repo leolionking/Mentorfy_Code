@@ -56,11 +56,11 @@ body{
 }
 
 .ter-btn{
-  @apply h-[50px] border border-white px-5 rounded-md text-sm text-white;
+  @apply h-[50px] border border-white px-5 rounded-md text-sm text-white flex items-center justify-center gap-2;
 }
 
 .white-btn{
-  @apply h-[50px] border border-white px-5 rounded-md text-sm bg-white text-[var(--primary)];
+  @apply h-[50px] border border-white px-5 rounded-md text-sm bg-white text-[var(--primary)] flex items-center justify-center gap-2;
 }
 
 .main{
@@ -73,4 +73,19 @@ input{
 
 label{
   @apply text-sm font-bold
+}
+
+.ant-carousel .slick-dots {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 15;
+  display: flex !important;
+  justify-content: center;
+  margin-right: 15%;
+  margin-bottom: 100px !important;
+  margin-left: 15%;
+  padding-left: 0;
+  list-style: none;
 }

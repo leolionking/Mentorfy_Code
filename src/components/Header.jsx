@@ -11,9 +11,9 @@ export default function Header() {
         </Link>
         <div className="hidden md:block flex-shrink-0">
           <ul className="flex items-center gap-6 text-sm">
-            <li className="cursor-pointer">Pricing</li>
+            <Link to='/pricing' className="cursor-pointer">Pricing</Link>
             <Link to='/signin' className="sec-btn" >Sign in</Link>
-            <button className="pri-btn">Get Started</button>
+            <Link to='/pricing' className="pri-btn">Get Started</Link>
           </ul>
         </div>
         <div className="block md:hidden cursor-pointer">

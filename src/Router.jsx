@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
-import Home  from "./pages/general/Home";
+import Home from "./pages/general/Home";
 import LoginClient from "./pages/client/LoginClient";
-import ClientLayout from './layouts/ClientLayout';
-import MenteeLayout from './layouts/MenteeLayout';
+import ClientLayout from "./layouts/ClientLayout";
+import MenteeLayout from "./layouts/MenteeLayout";
 import MenteeLogin from "./pages/mentee/MenteeLogin";
-import MentorLayout from './layouts/MentorLayout';
+import MentorLayout from "./layouts/MentorLayout";
 import MentorLogin from "./pages/mentor/MentorLogin";
 import ForgotPasswordClient from "./pages/client/ForgotPasswordClient";
 import ResetPasswordClient from "./pages/client/ResetPasswordClient";
+import PricingClient from "./pages/client/PricingClient";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -18,7 +19,6 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home />,
       },
-   
     ],
   },
   {
@@ -37,7 +37,10 @@ const router = createBrowserRouter([
         path: "/reset-password",
         element: <ResetPasswordClient />,
       },
-   
+      {
+        path: "/pricing",
+        element: <PricingClient />,
+      },
     ],
   },
   {
@@ -48,7 +51,6 @@ const router = createBrowserRouter([
         path: "/mentee-signin/:id",
         element: <MenteeLogin />,
       },
-   
     ],
   },
   {
@@ -59,7 +61,6 @@ const router = createBrowserRouter([
         path: "/mentor-signin/:id",
         element: <MentorLogin />,
       },
-   
     ],
   },
 ]);
