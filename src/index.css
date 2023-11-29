@@ -1,3 +1,68 @@
+@font-face {
+  font-family: "ginto";
+  src: url(./assets/font/ABCGintoNormal-Regular.otf);
+}
+@font-face {
+  font-family: "ginto-bold";
+  src: url(./assets/font/ABCGintoNormal-Bold.otf);
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --primary: #95a302;
+  --secondary: #131313;
+  --gray: #f1f1f1;
+  --orange-bg: #fff1e7;
+  --background: #fbfbfb;
+  --yellow-bg: #fffaf4;
+  --vet-bg: #f4f4ff;
+  --shadow: 0px 17.7729px 54.686px rgba(27, 25, 86, 0.06);
+  --filter: invert(21%) sepia(43%) saturate(3218%) hue-rotate(111deg)
+    brightness(96%) contrast(91%);
+}
+
+body{
+    font-family: 'ginto';
+}
+
+.sec-btn {
+  @apply h-[40px] border border-[var(--secondary)] px-5 rounded-md text-sm;
+}
+
+.pri-btn {
+  @apply h-[40px] border bg-[var(--primary)] border-[var(--primary)] px-5 text-white rounded-md text-sm;
+}
+
+.carousel-body{
+  @apply h-[90vh] bg-top
+}
+
+.carousel-content{
+  @apply w-[90%] md:w-[80%] mx-auto
+}
+
+.headOne{
+  @apply text-4xl lg:text-6xl font-['ginto-bold']
+}
+.headTwo{
+  @apply text-2xl lg:text-4xl font-['ginto-bold']
+}
+
+.subtitle{
+  @apply py-3 text-sm text-center lg:text-[1rem] 
+}
+
+.ter-btn{
+  @apply h-[50px] border border-white px-5 rounded-md text-sm text-white;
+}
+
+.white-btn{
+  @apply h-[50px] border border-white px-5 rounded-md text-sm bg-white text-[var(--primary)];
+}
+
+.main{
+  @apply w-[90%] md:w-[80%] mx-auto
+}

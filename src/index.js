@@ -7,7 +7,7 @@ import { RecoilRoot } from "recoil";
 import "react-toastify/dist/ReactToastify.css";
 
 import App from "./App";
-// import router from "./router";
+import router from "./Router";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <>
@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         closeOnClick
       />
       <App />
-      {/* <RouterProvider router={router} /> */}
+      <RouterProvider router={router} />
     </RecoilRoot>
   </>
 );
