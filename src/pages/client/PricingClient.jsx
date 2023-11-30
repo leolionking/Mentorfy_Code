@@ -1,25 +1,79 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 import { useRecoilState } from "recoil";
 import { registerUserAtom } from "../../atom/registrationAtom";
 import { InputText } from "primereact/inputtext";
 import avatar from "../../assets/avatar.svg";
 import { useFormik } from "formik";
 import { pricing } from "../../utils/Validation";
+import {
+  checkIfUserExist,
+  checkUser,
+  generateOtp,
+} from "../../utils/general/generalApi";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const changePlan = (data) => {
     setPlan(data);
   };
 
-  const next = () => {};
+  const onSubmit = async (values) => {
+    setLoading(true);
+    const payload = {
+      user: {
+        ...values,
+      },
+      step: 1,
+    };
+    setRegistration(payload);
+    const emailData = {
+      email: values.email.toLowerCase(),
+    };
+    const checkEmail = {
+      id: values.email.toLowerCase(),
+    };
 
-  const onSubmit = (values) => {
-    console.log(values);
+    checkUser(checkEmail).then((res) => {
+      setLoading(false);
+
+      if (res?.payload.length === 0 || res.payload[0].isVerified === false) {
+        generateOtp(emailData).then((res) => {
+          const payload = {
+            user: {
+              ...values,
+            },
+            step: 2,
+          };
+          setRegistration(payload);
+        });
+      } else {
+        checkIfUserExist({ email: values.email })
+          .then((res) => {
+            setLoading(false);
+            if (res.payload.length === 1) {
+              navigate("/signin");
+              toast.error("User already exists. Please login");
+            } else {
+              const payload = {
+                user: {
+                  ...values,
+                },
+                step: 3,
+              };
+              setRegistration(payload);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
   };
   const initialValue = {
     email: "",
@@ -43,8 +97,7 @@ export default function PricingClient() {
   });
   return (
     <div className="relative">
-      <Header />
-      <div className={registration?.price === undefined ? " blur-md" : " "}>
+      <div className={registration?.step === 3 ? "  " : "blur-md "}>
         <div className="h-[60vh] bg-[var(--primary)]">
           <div className="grid place-items-center h-full">
             <div className="">
@@ -167,10 +220,12 @@ export default function PricingClient() {
           </div>
         </div>
       </div>
-      {registration?.price === undefined ? (
+      {registration?.step !== 3 ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
           <div className="main w-full lg:w-[35vw] bg-white shadow-small p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-xl ">
-            {registration?.user?.email == undefined ? (
+            {registration?.user?.email == undefined ||
+            registration.step !== undefined ||
+            registration.step === 1 ? (
               <form onSubmit={handleSubmit} className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
                   Hey there! <img src={avatar} alt="" />
@@ -216,20 +271,15 @@ export default function PricingClient() {
                   </button>
                 </div>
               </form>
-            ) : (
+            ) : registration.step === 2 ? (
               <div className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
-                  Hey there! <img src={avatar} alt="" />
+                  Check your inbox
                 </h2>
                 <p className="text-sm text-center">
-                  Stay in the loop by sharing your name & email with us! Don’t
-                  worry, we won’t spam your email
+                  We've sent an OTP to {registration?.user?.email}.
                 </p>
                 <div className="grid gap-3 py-5">
-                  <div className="flex flex-col gap-2">
-                    <label htmlFor="fullname">Fullname</label>
-                    <InputText id="fullname" aria-describedby="fullname-help" />
-                  </div>
                   <div className="flex flex-col gap-2">
                     <label htmlFor="email">Email</label>
                     <InputText id="email" aria-describedby="email-help" />
@@ -237,13 +287,14 @@ export default function PricingClient() {
                   <button className="pri-btn">Proceed</button>
                 </div>
               </div>
+            ) : (
+              ""
             )}
           </div>
         </div>
       ) : (
         ""
       )}
-      <Footer />
     </div>
   );
 }

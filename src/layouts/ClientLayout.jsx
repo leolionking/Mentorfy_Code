@@ -12,7 +12,6 @@ export default function ClientLayout() {
     <div className="">
       {auth && auth?.role === "owner" ? (
         <div>
-          <Header />
           <Outlet />
         </div>
       ) : (

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { authState } from "../../atom/authAtom";
 import WorkspaceCard from "../../components/WorkspaceCard";
+import Header from "../../components/Header";
 
 export default function SelectWorkspace() {
   const auth = useRecoilValue(authState);
@@ -43,6 +44,8 @@ export default function SelectWorkspace() {
     listMyWorkspace();
   }, []);
   return (
+    <div className="">
+      <Header />
     <div className="h-full pt-10 lg:h-[70vh] w-full">
       <div className="main h-full grid place-items-center">
         <div className="text-center">
@@ -58,6 +61,7 @@ export default function SelectWorkspace() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -12,6 +12,7 @@ import ResetPasswordClient from "./pages/client/ResetPasswordClient";
 import PricingClient from "./pages/client/PricingClient";
 import SelectWorkspace from "./pages/client/SelectWorkspace";
 import NotFound from './pages/general/NotFound'
+import ClientDashboard from './pages/client/ClientDashboard';
 
 const router = createBrowserRouter([
   {
@@ -26,13 +27,6 @@ const router = createBrowserRouter([
         path: "/signin",
         element: <LoginClient />,
       },
-    ],
-  },
-  {
-    path: "/",
-    element: <ClientLayout />,
-    children: [
-   
       {
         path: "/forgot-password",
         element: <ForgotPasswordClient />,
@@ -45,9 +39,19 @@ const router = createBrowserRouter([
         path: "/pricing",
         element: <PricingClient />,
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <ClientLayout />,
+    children: [
       {
         path: "/select-workspace",
         element: <SelectWorkspace />,
+      },
+      {
+        path: "/client-dashboard",
+        element: <ClientDashboard />,
       },
     ],
   },
