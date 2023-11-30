@@ -10,6 +10,7 @@ import MentorLogin from "./pages/mentor/MentorLogin";
 import ForgotPasswordClient from "./pages/client/ForgotPasswordClient";
 import ResetPasswordClient from "./pages/client/ResetPasswordClient";
 import PricingClient from "./pages/client/PricingClient";
+import SelectWorkspace from "./pages/client/SelectWorkspace";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/pricing",
         element: <PricingClient />,
+      },
+      {
+        path: "/select-workspace",
+        element: <SelectWorkspace />,
       },
     ],
   },

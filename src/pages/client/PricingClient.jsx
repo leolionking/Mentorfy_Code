@@ -170,7 +170,7 @@ export default function PricingClient() {
       {registration?.price === undefined ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
           <div className="main w-full lg:w-[35vw] bg-white shadow-small p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-xl ">
-            {registration?.user.email == -undefined ? (
+            {registration?.user?.email == undefined ? (
               <form onSubmit={handleSubmit} className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
                   Hey there! <img src={avatar} alt="" />
@@ -184,6 +184,7 @@ export default function PricingClient() {
                     <label htmlFor="fullname">Fullname</label>
                     <InputText
                       id="fullname"
+                      name="fullName"
                       value={values.fullName}
                       onChange={handleChange}
                       onBlur={handleBlur}
@@ -197,6 +198,7 @@ export default function PricingClient() {
                     <label htmlFor="email">Email</label>
                     <InputText
                       id="email"
+                      name="email"
                       value={values.email}
                       onChange={handleChange}
                       onBlur={handleBlur}

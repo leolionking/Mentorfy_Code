@@ -1,8 +1,21 @@
 import React from "react";
 import logo from "../assets/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authState } from "../atom/authAtom";
+import { useRecoilState } from "recoil";
+import { logout } from "../utils/general/generalApi";
+import { toast } from "react-toastify";
 
 export default function Header() {
+  const [auth, setAuth] = useRecoilState(authState);
+  const navigate = useNavigate();
+  const signout = () => {
+    logout().then((res) => {
+      setAuth("");
+      toast.success("user logged out successfully");
+      // navigate("/signin");
+    });
+  };
   return (
     <div className="w-full h-[80px] flex items-center relative bg-white z-[1000]">
       <div className="w-[80%] mx-auto flex items-center justify-between ">
@@ -10,11 +23,13 @@ export default function Header() {
           <img src={logo} alt="" className=" w-full h-full object-contain"/>
         </Link>
         <div className="hidden md:block flex-shrink-0">
+          {auth && auth?.role ? 
+          <button  onClick={signout} className="pri-btn"> Logout</button>:
           <ul className="flex items-center gap-6 text-sm">
             <Link to='/pricing' className="cursor-pointer">Pricing</Link>
             <Link to='/signin' className="sec-btn" >Sign in</Link>
             <Link to='/pricing' className="pri-btn">Get Started</Link>
-          </ul>
+          </ul>}
         </div>
         <div className="block md:hidden cursor-pointer">
           <i className="pi pi-bars flex-shrink-0"></i>

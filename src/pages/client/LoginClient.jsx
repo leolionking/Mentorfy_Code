@@ -25,7 +25,7 @@ export default function LoginClient() {
         setAuth(res);
         setLoading(false);
         toast.success("Signin Successful");
-        navigate("/list-workspace");
+        navigate("/select-workspace");
       })
       .catch((e) => {
         setLoading(false);
@@ -92,7 +92,17 @@ export default function LoginClient() {
                     onBlur={handleBlur}
                   />
                 </div>
-                <button className="pri-btn">Sign in</button>
+                <button
+                  className="pri-btn"
+                  disabled={!isValid || isSubmitting || loading}
+                >
+                  {loading ? (
+                    <i className="pi pi-spin pi-spinner !text-[20px]"></i>
+                  ) : (
+                    ""
+                  )}
+                  Sign in
+                </button>
                 <div className="text-sm text-center grid gap-2">
                   <Link to="/forgot-password" className="">
                     Forgot Password?
