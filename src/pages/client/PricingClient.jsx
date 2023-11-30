@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -330,12 +330,22 @@ export default function PricingClient() {
             ) : registration.step === 2 ? (
               <div className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
-                 <i className="pi pi-inbox text-2xl text-[var(--primary)]"></i> Check your inbox
+                  <i className="pi pi-inbox text-2xl text-[var(--primary)]"></i>{" "}
+                  Check your inbox
                 </h2>
                 <p className="text-sm text-center">
                   We've sent an OTP to {registration?.user?.email}.
                 </p>
-                <p className="text-center text-sm">Didn’t get OTP? <span className="text-[var(--primary)] cursor-pointer" onClick={regenerateOtp}>  Resend OTP </span></p>
+                <p className="text-center text-sm">
+                  Didn’t get OTP?{" "}
+                  <span
+                    className="text-[var(--primary)] cursor-pointer"
+                    onClick={regenerateOtp}
+                  >
+                    {" "}
+                    Resend OTP{" "}
+                  </span>
+                </p>
                 <div className="grid gap-3 py-5">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="email">Otp</label>
@@ -344,16 +354,21 @@ export default function PricingClient() {
                       keyfilter="int"
                       className=" !tracking-[20px] !text-center !font-bold !text-xl"
                       value={otp}
+                      maxLength={4}
                       onChange={(e) => setOtp(e.target.value)}
                       aria-describedby="email-help"
                     />
                   </div>
-                  <button className="pri-btn" onClick={validate} disabled={loading}>
-                  {loading ? (
-                    <i className="pi pi-spin pi-spinner !text-[20px]"></i>
-                  ) : (
-                    ""
-                  )}
+                  <button
+                    className="pri-btn"
+                    onClick={validate}
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <i className="pi pi-spin pi-spinner !text-[20px]"></i>
+                    ) : (
+                      ""
+                    )}
                     Verify OTP
                   </button>
                 </div>
