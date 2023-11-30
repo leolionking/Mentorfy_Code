@@ -11,6 +11,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+
+.tucalendi_iframe_root {
+  font-size: 0.8rem !important;
+}
+
+}
+
 :root {
   --primary: #95a302;
   --secondary: #131313;
@@ -24,8 +32,12 @@
     brightness(96%) contrast(91%);
 }
 
-body{
-    font-family: 'ginto';
+body {
+  font-family: "ginto";
+}
+
+.tucalendi_iframe_root > .TuCali--widget-content {
+  border: none !important;
 }
 
 .sec-btn {
@@ -36,46 +48,46 @@ body{
   @apply h-[40px] border bg-[var(--primary)] border-[var(--primary)] px-5 text-white rounded-md text-sm flex items-center justify-center gap-2;
 }
 
-.carousel-body{
-  @apply h-[90vh] bg-top
+.carousel-body {
+  @apply h-[90vh] bg-top;
 }
 
-.carousel-content{
-  @apply w-[90%] md:w-[80%] mx-auto
+.carousel-content {
+  @apply w-[90%] md:w-[80%] mx-auto;
 }
 
-.headOne{
-  @apply text-4xl lg:text-6xl font-['ginto-bold'] font-black
+.headOne {
+  @apply text-4xl lg:text-6xl font-['ginto-bold'] font-black;
 }
-.headTwo{
-  @apply text-3xl lg:text-5xl font-['ginto-bold']
+.headTwo {
+  @apply text-3xl lg:text-5xl font-['ginto-bold'];
 }
-.headThree{
-  @apply text-xl lg:text-3xl font-['ginto-bold']
-}
-
-.subtitle{
-  @apply py-3 text-sm text-center lg:text-[1rem] 
+.headThree {
+  @apply text-xl lg:text-3xl font-['ginto-bold'];
 }
 
-.ter-btn{
+.subtitle {
+  @apply py-3 text-sm text-center lg:text-[1rem];
+}
+
+.ter-btn {
   @apply h-[50px] border border-white px-5 rounded-md text-sm text-white flex items-center justify-center gap-2;
 }
 
-.white-btn{
+.white-btn {
   @apply h-[50px] border border-white px-5 rounded-md text-sm bg-white text-[var(--primary)] flex items-center justify-center gap-2;
 }
 
-.main{
-  @apply w-[90%] md:w-[80%] mx-auto
+.main {
+  @apply w-[90%] md:w-[80%] mx-auto;
 }
 
-input{
-  @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full
+input {
+  @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full;
 }
 
-label{
-  @apply text-sm font-bold
+label {
+  @apply text-sm font-bold;
 }
 
 .ant-carousel .slick-dots {
@@ -93,26 +105,26 @@ label{
   list-style: none;
 }
 
-.price{
-  @apply font-['ginto-bold'] text-3xl tracking-tighter text-orange-400
+.price {
+  @apply font-['ginto-bold'] text-3xl tracking-tighter text-orange-400;
 }
 
-.price span{
-  @apply text-sm font-['ginto'] tracking-normal
+.price span {
+  @apply text-sm font-['ginto'] tracking-normal;
 }
 
-.feature{
-  @apply flex items-center gap-2
+.feature {
+  @apply flex items-center gap-2;
 }
 
-.feature i{
-  @apply text-orange-400
+.feature i {
+  @apply text-orange-400;
 }
 
-:disabled{
-  @apply !bg-gray-400 
+:disabled {
+  @apply !bg-gray-400;
 }
 
-.error{
-  @apply text-xs text-red-400
+.error {
+  @apply text-xs text-red-400;
 }
