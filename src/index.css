@@ -83,9 +83,24 @@ body {
 }
 
 input {
-  @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full;
+  @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full !font-['ginto'];
 }
 
+.p-dropdown{
+  @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none text-sm w-full p-0 !font-['ginto'];
+}
+
+.p-dropdown-item{
+  @apply !font-['ginto'];
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight{
+  @apply text-[var(--primary)] bg-[#95a30012]
+}
+
+.p-dropdown-label .p-inputtext{
+  @apply !font-['ginto'];
+}
 label {
   @apply text-sm font-bold;
 }

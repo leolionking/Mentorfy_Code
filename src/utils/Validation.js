@@ -34,11 +34,18 @@ const requestNewPassword = yup.object().shape({
     email: yup.string().email("Please enter a valid email").required("Required"),
 })
 
-const stage1 = yup.object().shape({
-    firstName: yup.string().required("Required"),
-    lastName: yup.string().required("Required"),
+const onboardClientValidation = yup.object().shape({
     password: yup.string().min(5).max(25).matches(passwordRule, {message: "Please create a stronger password"}).required("Required"),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords must match").required("Required")
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], "Passwords must match").required("Required"),
+    country:yup.string().required("Required"),
+    province: yup.string().required("Required"),
+    postalcode: yup.string().required("Required"),
+    phone: yup.string().required("Required"),
+    professionalArea: yup.string().required("Required"),
+    description: yup.string().required("Required"),
+    logo: yup.string().required("Required"),
+    workspaceName: yup.string().required("Required"),
+   
 })
 
 const stage2 = yup.object().shape({
@@ -94,7 +101,7 @@ export {
     forgotPassword,
     resetPassword,
     requestNewPassword,
-    stage1,
+    onboardClientValidation,
     pricing,
     stage2,
     workspace1,

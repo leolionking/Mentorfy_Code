@@ -11,10 +11,11 @@ import ForgotPasswordClient from "./pages/client/ForgotPasswordClient";
 import ResetPasswordClient from "./pages/client/ResetPasswordClient";
 import PricingClient from "./pages/client/PricingClient";
 import SelectWorkspace from "./pages/client/SelectWorkspace";
-import NotFound from './pages/general/NotFound'
-import ClientDashboard from './pages/client/ClientDashboard';
+import NotFound from "./pages/general/NotFound";
+import ClientDashboard from "./pages/client/ClientDashboard";
 import ClientOnboard from "./pages/client/ClientOnboard";
 import RequestDemo from "./pages/general/RequestDemo";
+import OnboardLayout from "./layouts/OnboardLayout";
 
 const router = createBrowserRouter([
   {
@@ -41,13 +42,20 @@ const router = createBrowserRouter([
         path: "/pricing",
         element: <PricingClient />,
       },
-      {
-        path: "/client-onboard",
-        element: <ClientOnboard />,
-      },
+
       {
         path: "/request-demo",
         element: <RequestDemo />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <OnboardLayout />,
+    children: [
+      {
+        path: "/client-onboard",
+        element: <ClientOnboard />,
       },
     ],
   },
@@ -86,9 +94,9 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: '*',
-    element: <NotFound/>
-  }
+    path: "*",
+    element: <NotFound />,
+  },
 ]);
 
 export default router;
