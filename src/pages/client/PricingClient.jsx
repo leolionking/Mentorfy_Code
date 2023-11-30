@@ -187,7 +187,7 @@ export default function PricingClient() {
   return (
     <div className="relative">
       <div className={registration?.step === 3 ? "  " : "blur-md "}>
-        <div className="h-[60vh] bg-[var(--primary)]">
+        <div className="h-[60vh] bg-pricingBg w-full bg-cover">
           <div className="grid place-items-center h-full">
             <div className="">
               {registration && registration?.user ? (

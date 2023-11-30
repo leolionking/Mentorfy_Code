@@ -8,6 +8,7 @@ module.exports = {
         heroOne: "url('../src/assets/welcome-1.jpg')",
         heroTwo: "url('../src//assets/welcome-2.jpg')",
         heroThree: "url('../src/assets/welcome-3.jpg')",
+        pricingBg: "url('../src/assets/pricing-bg.jpg')"
       },
       boxShadow: {
         small: "0px 17.7729px 54.686px rgba(27, 25, 86, 0.06)",
