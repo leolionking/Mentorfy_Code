@@ -43,13 +43,13 @@ export default function SelectWorkspace() {
     listMyWorkspace();
   }, []);
   return (
-    <div className="h-[70vh] w-full">
+    <div className="h-full pt-10 lg:h-[70vh] w-full">
       <div className="main h-full grid place-items-center">
         <div className="text-center">
           <p>
             Hello {userData.firstName} {userData.lastName}
           </p>
-          <h4 className="font-['ginto-bold']">Select your Workspace</h4>
+          <h4 className="font-['ginto-bold'] text-xl">Select your Workspace</h4>
 
           <div className="pt-10">
             {workspace?.map((res, i) => (
