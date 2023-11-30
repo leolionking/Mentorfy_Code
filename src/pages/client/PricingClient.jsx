@@ -100,7 +100,7 @@ export default function PricingClient() {
           validateUser(userPayload).then((res) => {
             toast.success("OTP validation successful");
             const payload = {
-              ...registration.user,
+              ...registration,
               step: 3,
             };
             setRegistration(payload);
