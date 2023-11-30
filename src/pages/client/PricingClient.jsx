@@ -19,7 +19,6 @@ export default function PricingClient() {
   const [otp, setOtp] = useState("");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
-
   const changePlan = (data) => {
     setPlan(data);
   };
@@ -76,6 +75,7 @@ export default function PricingClient() {
           })
           .catch((err) => {
             console.log(err);
+            setLoading(false);
           });
       }
     });
@@ -111,7 +111,6 @@ export default function PricingClient() {
       .catch((err) => {
         toast.error(err.response.data.msg);
         setLoading(false);
-
       });
   };
 
@@ -128,9 +127,13 @@ export default function PricingClient() {
       .catch((err) => {
         toast.error(err.response.data.msg);
         setLoading(false);
-
       });
   };
+
+  const changeEmail = () => {
+    changeData()
+  }
+
   const initialValue = {
     email: "",
     fullName: "",
@@ -152,13 +155,24 @@ export default function PricingClient() {
     onSubmit,
   });
 
-  useEffect(() => {
-    if (registration?.step === undefined || registration === undefined) {
+  const setData = () => {
+    if ( registration === undefined ||registration?.step === undefined  ) {
       const payload = {
-        step: 1,
+        ...registration,
+        step: 1
       };
       setRegistration(payload);
     }
+  }
+  const changeData = () => {
+      const payload = {
+        ...registration,
+        step: 1
+      };
+      setRegistration(payload);
+  }
+  useEffect(() => {
+    setData()
   }, []);
   return (
     <div className="relative">
@@ -166,6 +180,15 @@ export default function PricingClient() {
         <div className="h-[60vh] bg-[var(--primary)]">
           <div className="grid place-items-center h-full">
             <div className="">
+              {registration && registration?.user ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className=" text-center">Hello {registration?.user?.fullName}</div>
+                  <button onClick={changeEmail} className="white-btn !h-8 hover:bg-transparent hover:border hover:border-white hover:text-white transition-all ">Change Email</button>
+                </div>
+
+              ) : (
+                ""
+              )}
               <div className="subtitle font-bold">
                 Choose your Mentorfy Plan
               </div>
