@@ -72,6 +72,14 @@ const proceedToWorkspace = () => {
   setRegistration(payload);
 };
 
+const previous = (data)=> {
+  const payload = {
+    ...registration,
+    onboardStep: data,
+  };
+  setRegistration(payload);
+}
+
   const {
     values,
     errors,
@@ -175,7 +183,7 @@ const proceedToWorkspace = () => {
             ) : registration.onboardStep === 2 ? (
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
-                  <i className="pi pi-arrow-left"></i>
+                  <i className="pi pi-arrow-left" onClick={()=> previous(1)}></i>
                   <div className="">{registration.onboardStep}/6</div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
@@ -211,7 +219,7 @@ const proceedToWorkspace = () => {
             ) : registration.onboardStep === 3 ? (
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
-                  <i className="pi pi-arrow-left"></i>
+                <i className="pi pi-arrow-left" onClick={()=> previous(2)}></i>
                   <div className="">{registration.onboardStep}/6</div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
