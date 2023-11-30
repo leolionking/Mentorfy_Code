@@ -12,7 +12,7 @@ import {
   validateOtp,
   validateUser,
 } from "../../utils/general/generalApi";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function PricingClient() {
@@ -46,29 +46,33 @@ export default function PricingClient() {
       setLoading(false);
 
       if (res?.payload.length === 0 || res.payload[0].isVerified === false) {
-        generateOtp(emailData).then((res) => {
-          const payload = {
-            user: {
-              ...values,
-            },
-            step: 2,
-          };
-          setRegistration(payload);
-        });
+        generateOtp(emailData)
+          .then((res) => {
+            const payload = {
+              user: {
+                ...values,
+              },
+              step: 2,
+            };
+            setRegistration(payload);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
         checkIfUserExist({ email: values.email })
           .then((res) => {
             setLoading(false);
+            const payload = {
+              user: {
+                ...values,
+              },
+              step: 3,
+            };
             if (res.payload.length === 1) {
-              navigate("/signin");
+              setRegistration(payload);
               toast.error("User already exists. Please login");
             } else {
-              const payload = {
-                user: {
-                  ...values,
-                },
-                step: 3,
-              };
               setRegistration(payload);
             }
           })
@@ -108,6 +112,8 @@ export default function PricingClient() {
       })
       .catch((err) => {
         toast.error(err.response.data.msg);
+        setLoading(false);
+
       });
   };
 
@@ -119,12 +125,13 @@ export default function PricingClient() {
     generateOtp(payload)
       .then((res) => {
         toast.success("Check your email for new OTP");
-        // navigate("/otpverification");
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err.response.data.msg);
+        setLoading(false);
+
       });
-    setLoading(false);
   };
   const initialValue = {
     email: "",
@@ -148,7 +155,7 @@ export default function PricingClient() {
   });
 
   useEffect(() => {
-    if (registration?.step === undefined) {
+    if (registration?.step === undefined || registration === undefined) {
       const payload = {
         step: 1,
         ...registration,
@@ -324,8 +331,13 @@ export default function PricingClient() {
                   </div>
                   <button
                     className="pri-btn"
-                    disabled={!isValid || isSubmitting}
+                    disabled={!isValid || isSubmitting || loading}
                   >
+                    {loading ? (
+                      <i className="pi pi-spin pi-spinner !text-[20px]"></i>
+                    ) : (
+                      ""
+                    )}
                     Proceed
                   </button>
                 </div>

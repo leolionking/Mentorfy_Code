@@ -13,6 +13,7 @@ import PricingClient from "./pages/client/PricingClient";
 import SelectWorkspace from "./pages/client/SelectWorkspace";
 import NotFound from './pages/general/NotFound'
 import ClientDashboard from './pages/client/ClientDashboard';
+import ClientOnboard from "./pages/client/ClientOnboard";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/pricing",
         element: <PricingClient />,
+      },
+      {
+        path: "/client-onboard",
+        element: <ClientOnboard />,
       },
     ],
   },
