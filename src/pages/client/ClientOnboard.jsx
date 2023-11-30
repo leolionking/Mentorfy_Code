@@ -31,7 +31,6 @@ export default function ClientOnboard() {
         password: values.password,
       },
       onboardStep: 2,
-
     };
     setRegistration(payload);
   };
@@ -44,7 +43,6 @@ export default function ClientOnboard() {
         country: values.country,
       },
       onboardStep: 3,
-
     };
     setRegistration(payload);
   };
@@ -164,6 +162,72 @@ export default function ClientOnboard() {
                     />
                     {errors.country && touched.country && (
                       <p className="error">{errors.country}</p>
+                    )}
+                  </div>
+                  <button
+                    className="pri-btn"
+                    disabled={errors.country}
+                    onClick={saveCountry}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            ) : registration.onboardStep === 3 ? (
+              <div className="main py-5">
+                <div className="flex items-center justify-between w-full pb-2">
+                  <i className="pi pi-arrow-left"></i>
+                  <div className="">3/6</div>
+                </div>
+                <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
+                  Province & other details
+                </div>
+
+                <div className="grid gap-3">
+                  <div className="grid md:grid-cols-2 gap-2 w-full h-full">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="username">Province</label>
+                      <Dropdown
+                        id="username"
+                        name="province"
+                        value={values.province}
+                        options={countries}
+                        className=" !text-black"
+                        filter
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {errors.province && touched.province && (
+                        <p className="error">{errors.province}</p>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="username">Phone Number</label>
+                      <InputText
+                        id="phone"
+                        name="phone"
+                        aria-describedby="phone-help"
+                        value={values.phone}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {errors.phone && touched.phone && (
+                        <p className="error">{errors.phone}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="username">Postal code</label>
+                    <InputText
+                      id="postalcode"
+                      name="postalcode"
+                      aria-describedby="postalcode-help"
+                      value={values.postalcode}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    />
+                    {errors.postalcode && touched.postalcode && (
+                      <p className="error">{errors.postalcode}</p>
                     )}
                   </div>
                   <button

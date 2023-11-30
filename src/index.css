@@ -86,6 +86,10 @@ input {
   @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full !font-['ginto'];
 }
 
+.p-inputtext{
+  @apply  outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full !font-['ginto'];
+}
+
 .p-dropdown{
   @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none text-sm w-full p-0 !font-['ginto'];
 }
