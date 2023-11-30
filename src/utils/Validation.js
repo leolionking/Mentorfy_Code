@@ -5,6 +5,10 @@ const passwordRule = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,}$/
 const registerUser = yup.object().shape({
     email: yup.string().email("Please enter a valid email").required("Required"),
 })
+const pricing = yup.object().shape({
+    email: yup.string().email("Please enter a valid email").required("Required"),
+    fullName: yup.string().required("Required"),
+})
 const loginuser = yup.object().shape({
     email: yup.string().email("Please enter a valid email").required("Required"),
     password: yup.string().required("Required"),
@@ -91,6 +95,7 @@ export {
     resetPassword,
     requestNewPassword,
     stage1,
+    pricing,
     stage2,
     workspace1,
     userDynamicForm,

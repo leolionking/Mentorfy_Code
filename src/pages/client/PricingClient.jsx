@@ -5,19 +5,46 @@ import { useRecoilState } from "recoil";
 import { registerUserAtom } from "../../atom/registrationAtom";
 import { InputText } from "primereact/inputtext";
 import avatar from "../../assets/avatar.svg";
+import { useFormik } from "formik";
+import { pricing } from "../../utils/Validation";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
+
   const changePlan = (data) => {
     setPlan(data);
   };
 
-  useEffect(() => {});
+  const next = () => {};
+
+  const onSubmit = (values) => {
+    console.log(values);
+  };
+  const initialValue = {
+    email: "",
+    fullName: "",
+  };
+
+  const {
+    values,
+    errors,
+    isValid,
+    isSubmitting,
+    touched,
+    handleBlur,
+    handleChange,
+    handleSubmit,
+  } = useFormik({
+    validateOnMount: true,
+    initialValues: initialValue,
+    validationSchema: pricing,
+    onSubmit,
+  });
   return (
     <div className="relative">
       <Header />
-      <div className={registration?.price.id === undefined ? " blur-md" : " "}>
+      <div className={registration?.price === undefined ? " blur-md" : " "}>
         <div className="h-[60vh] bg-[var(--primary)]">
           <div className="grid place-items-center h-full">
             <div className="">
@@ -140,29 +167,75 @@ export default function PricingClient() {
           </div>
         </div>
       </div>
-      {registration?.price.id === undefined ? (
+      {registration?.price === undefined ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
           <div className="main w-full lg:w-[35vw] bg-white shadow-small p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-xl ">
-            <div className="main grid gap-2">
-              <h2 className="headThree text-center flex items-center gap-2 justify-center">
-                Hey there! <img src={avatar} alt="" />
-              </h2>
-              <p className="text-sm text-center">
-                Stay in the loop by sharing your name & email with us! Don’t
-                worry, we won’t spam your email
-              </p>
-              <div className="grid gap-3 py-5">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="fullname">Fullname</label>
-                  <InputText id="fullname" aria-describedby="fullname-help" />
+            {registration?.user.email == -undefined ? (
+              <form onSubmit={handleSubmit} className="main grid gap-2">
+                <h2 className="headThree text-center flex items-center gap-2 justify-center">
+                  Hey there! <img src={avatar} alt="" />
+                </h2>
+                <p className="text-sm text-center">
+                  Stay in the loop by sharing your name & email with us! Don’t
+                  worry, we won’t spam your email
+                </p>
+                <div className="grid gap-3 py-5">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="fullname">Fullname</label>
+                    <InputText
+                      id="fullname"
+                      value={values.fullName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-describedby="fullname-help"
+                    />
+                    {errors.fullName && touched.fullName && (
+                      <p className="error">{errors.fullName}</p>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="email">Email</label>
+                    <InputText
+                      id="email"
+                      value={values.email}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      aria-describedby="email-help"
+                    />
+                    {errors.email && touched.email && (
+                      <p className="error">{errors.email}</p>
+                    )}
+                  </div>
+                  <button
+                    className="pri-btn"
+                    disabled={!isValid || isSubmitting}
+                  >
+                    Proceed
+                  </button>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="email">Email</label>
-                  <InputText id="email" aria-describedby="email-help" />
+              </form>
+            ) : (
+              <div className="main grid gap-2">
+                <h2 className="headThree text-center flex items-center gap-2 justify-center">
+                  Hey there! <img src={avatar} alt="" />
+                </h2>
+                <p className="text-sm text-center">
+                  Stay in the loop by sharing your name & email with us! Don’t
+                  worry, we won’t spam your email
+                </p>
+                <div className="grid gap-3 py-5">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="fullname">Fullname</label>
+                    <InputText id="fullname" aria-describedby="fullname-help" />
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="email">Email</label>
+                    <InputText id="email" aria-describedby="email-help" />
+                  </div>
+                  <button className="pri-btn">Proceed</button>
                 </div>
-                <button className="pri-btn">Proceed</button>
               </div>
-            </div>
+            )}
           </div>
         </div>
       ) : (

@@ -108,3 +108,7 @@ label{
 .feature i{
   @apply text-orange-400
 }
+
+:disabled{
+  @apply !bg-gray-400 text-black 
+}
