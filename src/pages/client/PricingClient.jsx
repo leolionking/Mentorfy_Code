@@ -13,12 +13,18 @@ import {
   validateUser,
 } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
   const [otp, setOtp] = useState("");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
+  const [stripePromise, setStripePromise] = useState(null);
+  const [clientSecret, setClientSecret] = useState("");
+
   const changePlan = (data) => {
     setPlan(data);
   };
@@ -131,8 +137,8 @@ export default function PricingClient() {
   };
 
   const changeEmail = () => {
-    changeData()
-  }
+    changeData();
+  };
 
   const initialValue = {
     email: "",
@@ -156,24 +162,28 @@ export default function PricingClient() {
   });
 
   const setData = () => {
-    if ( registration === undefined ||registration?.step === undefined  ) {
+    if (registration === undefined || registration?.step === undefined) {
       const payload = {
         ...registration,
-        step: 1
+        step: 1,
       };
       setRegistration(payload);
     }
-  }
+  };
   const changeData = () => {
-      const payload = {
-        ...registration,
-        step: 1
-      };
-      setRegistration(payload);
-  }
+    const payload = {
+      ...registration,
+      step: 1,
+    };
+    setRegistration(payload);
+  };
   useEffect(() => {
-    setData()
+    setData();
+    setStripePromise(loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY));
+    setClientSecret(process.env.REACT_APP_SECRET_KEY)
   }, []);
+
+
   return (
     <div className="relative">
       <div className={registration?.step === 3 ? "  " : "blur-md "}>
@@ -182,10 +192,16 @@ export default function PricingClient() {
             <div className="">
               {registration && registration?.user ? (
                 <div className="flex items-center justify-center gap-2">
-                  <div className=" text-center">Hello {registration?.user?.fullName}</div>
-                  <button onClick={changeEmail} className="white-btn !h-8 hover:bg-transparent hover:border hover:border-white hover:text-white transition-all ">Change Email</button>
+                  <div className=" text-center">
+                    Hello {registration?.user?.fullName}
+                  </div>
+                  <button
+                    onClick={changeEmail}
+                    className="white-btn !h-8 hover:bg-transparent hover:border hover:border-white hover:text-white transition-all "
+                  >
+                    Change Email
+                  </button>
                 </div>
-
               ) : (
                 ""
               )}
@@ -307,6 +323,11 @@ export default function PricingClient() {
             </div>
           </div>
         </div>
+        {/* {clientSecret && stripePromise && (
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <CheckoutForm />
+        </Elements>
+      )} */}
       </div>
       {registration?.step !== 3 ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
@@ -364,6 +385,7 @@ export default function PricingClient() {
               </form>
             ) : registration.step === 2 ? (
               <div className="main grid gap-2">
+                <i className="pi pi-arrow-left pb-5 cursor-pointer" onClick={changeData}></i>
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
                   <i className="pi pi-inbox text-2xl text-[var(--primary)]"></i>{" "}
                   Check your inbox
