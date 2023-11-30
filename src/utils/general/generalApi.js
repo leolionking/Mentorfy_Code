@@ -18,6 +18,9 @@ const checkUser = async (payload) =>
 const validateOtp = async (payload) =>
   await api.structure("uservalidation").getData("validateOtp", payload);
 
+const validateUser = async (payload) =>
+  await api.structure("uservalidation").setData("validateOtp", payload);
+
 const resetPassword = async (payload) =>
   await api
     .structure("reset_password_inputs")
@@ -57,6 +60,7 @@ export {
   checkIfUserExist,
   generateOtp,
   validateOtp,
+  validateUser,
   resetPassword,
   checkUser,
   getPricing,
@@ -66,5 +70,5 @@ export {
   getUserGenericForm,
   getUserWorkspace,
   checkUserEmailByWorkspace,
-  checkUserForValidation
+  checkUserForValidation,
 };

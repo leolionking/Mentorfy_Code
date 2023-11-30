@@ -9,12 +9,15 @@ import {
   checkIfUserExist,
   checkUser,
   generateOtp,
+  validateOtp,
+  validateUser,
 } from "../../utils/general/generalApi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
+  const [otp, setOtp] = useState();
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -74,6 +77,51 @@ export default function PricingClient() {
           });
       }
     });
+  };
+
+  const payload = {
+    otp: otp,
+    id: registration.user.email,
+  };
+
+  const validate = () => {
+    validateOtp(payload)
+      .then((res) => {
+        if (res.payload.length === 0) {
+          toast.error("Invalid OTP");
+        } else {
+          const userPayload = {
+            id: registration.user.email,
+          };
+          validateUser(userPayload).then((res) => {
+            toast.success("OTP validation successful");
+            const payload = {
+              ...registration.user,
+              step: 3,
+            };
+            setRegistration(payload);
+          });
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+      });
+  };
+  const regenerateOtp = () => {
+    setLoading(true);
+    const payload = {
+      email: registration.user.email,
+    };
+    generateOtp(payload)
+      .then((res) => {
+        toast.success("Check your email for new OTP");
+        // navigate("/otpverification");
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+      });
+    setLoading(false);
   };
   const initialValue = {
     email: "",
@@ -281,8 +329,8 @@ export default function PricingClient() {
                 </p>
                 <div className="grid gap-3 py-5">
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="email">Email</label>
-                    <InputText id="email" aria-describedby="email-help" />
+                    <label htmlFor="email">Otp</label>
+                    <InputText id="otp" value="otp" onChange={(e)=> setOtp(e.target.value)} aria-describedby="email-help" />
                   </div>
                   <button className="pri-btn">Proceed</button>
                 </div>
