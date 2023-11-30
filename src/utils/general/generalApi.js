@@ -1,7 +1,7 @@
 import Directual from "directual-api";
 const api = new Directual({ apiHost: "/" });
 
-const login = async (username, password) =>
+const loginApi = async (username, password) =>
   await api.auth.login(username, password);
 
 const logout = async (payload) => await api.auth.logout(payload);
@@ -52,7 +52,7 @@ const checkUserForValidation = async (payload) =>
     .getData("checkUserForValidation", payload);
 
 export {
-  login,
+  loginApi,
   logout,
   checkIfUserExist,
   generateOtp,
