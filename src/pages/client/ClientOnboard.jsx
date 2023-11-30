@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { useFormik } from "formik";
@@ -6,9 +6,12 @@ import { useRecoilState } from "recoil";
 import { registerUserAtom } from "../../atom/registrationAtom";
 import { onboardClientValidation } from "../../utils/Validation";
 import { Dropdown } from "primereact/dropdown";
+import { getProvinces } from "../../utils/general/generalApi";
+import { toast } from "react-toastify";
 
 export default function ClientOnboard() {
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
+  const [provinces, setProvinces] = useState([]);
   const countries = ["Canada", "Others"];
 
   const onSubmit = async (values) => {
@@ -43,6 +46,19 @@ export default function ClientOnboard() {
         country: values.country,
       },
       onboardStep: 3,
+    };
+    setRegistration(payload);
+  };
+  const saveProvices = () => {
+    const payload = {
+      ...registration,
+      user: {
+        ...registration.user,
+        province: values.province,
+        postalcode: values.postalcode,
+        phone: values.phone,
+      },
+      onboardStep: 4,
     };
     setRegistration(payload);
   };
@@ -84,8 +100,18 @@ export default function ClientOnboard() {
     }
   };
 
+  const fetchProvinces = () => {
+    getProvinces()
+    .then((res) => {
+      setProvinces(res.payload);
+    })
+    .catch((err) => {
+      toast.error(err.response.data.msg);
+    });
+ }
   useEffect(() => {
     setData();
+    fetchProvinces()
   }, []);
 
   return (
@@ -141,7 +167,7 @@ export default function ClientOnboard() {
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i className="pi pi-arrow-left"></i>
-                  <div className="">2/6</div>
+                  <div className="">{registration.onboardStep}/6</div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   Select a country
@@ -177,7 +203,7 @@ export default function ClientOnboard() {
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i className="pi pi-arrow-left"></i>
-                  <div className="">3/6</div>
+                  <div className="">{registration.onboardStep}/6</div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   Province & other details
@@ -191,7 +217,9 @@ export default function ClientOnboard() {
                         id="username"
                         name="province"
                         value={values.province}
-                        options={countries}
+                        options={provinces}
+                        optionLabel="Province"
+                        optionValue="Province"
                         className=" !text-black"
                         filter
                         onChange={handleChange}
@@ -232,8 +260,8 @@ export default function ClientOnboard() {
                   </div>
                   <button
                     className="pri-btn"
-                    disabled={errors.country}
-                    onClick={saveCountry}
+                    disabled={errors.phone || errors.postalcode || errors.province}
+                    onClick={saveProvices}
                   >
                     Next
                   </button>
