@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <div className="w-full h-[80px] flex items-center">
+    <div className="w-full h-[80px] flex items-center relative bg-white z-[1000]">
       <div className="w-[80%] mx-auto flex items-center justify-between ">
         <Link to="/" className="h-[30px] flex-shrink-0">
           <img src={logo} alt="" className=" w-full h-full object-contain"/>

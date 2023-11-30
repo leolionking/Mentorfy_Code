@@ -50,6 +50,9 @@ body{
 .headTwo{
   @apply text-3xl lg:text-5xl font-['ginto-bold']
 }
+.headThree{
+  @apply text-xl lg:text-3xl font-['ginto-bold']
+}
 
 .subtitle{
   @apply py-3 text-sm text-center lg:text-[1rem] 
@@ -88,4 +91,20 @@ label{
   margin-left: 15%;
   padding-left: 0;
   list-style: none;
+}
+
+.price{
+  @apply font-['ginto-bold'] text-3xl tracking-tighter text-orange-400
+}
+
+.price span{
+  @apply text-sm font-['ginto'] tracking-normal
+}
+
+.feature{
+  @apply flex items-center gap-2
+}
+
+.feature i{
+  @apply text-orange-400
 }

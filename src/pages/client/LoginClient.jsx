@@ -38,7 +38,7 @@ export default function LoginClient() {
                   <div className="">
                     Don’t have an account?{" "}
                     <Link
-                      to="/register"
+                      to="/pricing"
                       className=" cursor-pointer text-[var(--primary)]"
                     >
                       Create account
