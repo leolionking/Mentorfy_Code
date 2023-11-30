@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.svg";
 import { useFormik } from "formik";
 import { loginuser } from "../../utils/Validation";
 import { authState } from "../../atom/authAtom";
@@ -55,12 +54,6 @@ export default function LoginClient() {
     <div className="h-[100vh] w-full ">
       <div className="main  grid lg:grid-cols-2 place-items-center h-full">
         <div className="h-full w-full ">
-          {/* <img
-            src={logo}
-            alt=""
-            onClick={gotoHome}
-            className="relative cursor-pointer top-[20%] left-0"
-          /> */}
         </div>
         <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] shadow-small rounded-2xl">
           <div className="">

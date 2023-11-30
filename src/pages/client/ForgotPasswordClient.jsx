@@ -1,22 +1,13 @@
 import React from "react";
 import { InputText } from "primereact/inputtext";
-import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo.svg";
+import { Link } from "react-router-dom";
 export default function ForgotPasswordClient() {
-  const navigate = useNavigate();
-  const gotoHome = () => {
-    navigate("/");
-  };
+
   return (
     <div className="h-[100vh] w-full ">
       <div className="main  grid md:grid-cols-2 place-items-center h-full">
         <div className="h-full w-full ">
-          {/* <img
-            src={logo}
-            alt=""
-            onClick={gotoHome}
-            className="relative cursor-pointer top-[20%] left-0"
-          /> */}
+     
         </div>
         <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] py-10 shadow-small rounded-2xl">
           <div className="">

@@ -12,7 +12,6 @@ import {
   validateOtp,
   validateUser,
 } from "../../utils/general/generalApi";
-import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function PricingClient() {
@@ -20,7 +19,6 @@ export default function PricingClient() {
   const [otp, setOtp] = useState("");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const changePlan = (data) => {
     setPlan(data);
@@ -158,7 +156,6 @@ export default function PricingClient() {
     if (registration?.step === undefined || registration === undefined) {
       const payload = {
         step: 1,
-        ...registration,
       };
       setRegistration(payload);
     }

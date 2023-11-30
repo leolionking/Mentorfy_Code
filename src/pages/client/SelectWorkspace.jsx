@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { getClientWorkspace } from "../../utils/client/clientApi";
 import { useRecoilState, useRecoilValue } from "recoil";
@@ -5,7 +6,6 @@ import { user } from "../../atom/userAtom";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { getProfile } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import { authState } from "../../atom/authAtom";
 import WorkspaceCard from "../../components/WorkspaceCard";
 import Header from "../../components/Header";
@@ -16,8 +16,7 @@ export default function SelectWorkspace() {
   const [userData, setUserData] = useRecoilState(user);
   const [workspaceData, setWorkspaceData] = useRecoilState(workspaceStore);
 
-  const navigate = useNavigate();
-  const listMyWorkspace = () => {
+  function listMyWorkspace ()  {
     const payload = {
       sessionID: auth?.sessionID,
     };
@@ -43,6 +42,7 @@ export default function SelectWorkspace() {
   useEffect(() => {
     listMyWorkspace();
   }, []);
+  
   return (
     <div className="">
       <Header />

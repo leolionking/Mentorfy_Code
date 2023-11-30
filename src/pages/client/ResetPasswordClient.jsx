@@ -1,6 +1,5 @@
 import React from "react";
-import { InputText } from "primereact/inputtext";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { Password } from "primereact/password";
 
