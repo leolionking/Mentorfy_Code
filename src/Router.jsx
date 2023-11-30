@@ -14,6 +14,7 @@ import SelectWorkspace from "./pages/client/SelectWorkspace";
 import NotFound from './pages/general/NotFound'
 import ClientDashboard from './pages/client/ClientDashboard';
 import ClientOnboard from "./pages/client/ClientOnboard";
+import RequestDemo from "./pages/general/RequestDemo";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
       {
         path: "/client-onboard",
         element: <ClientOnboard />,
+      },
+      {
+        path: "/request-demo",
+        element: <RequestDemo />,
       },
     ],
   },
