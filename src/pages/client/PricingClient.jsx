@@ -270,7 +270,7 @@ export default function PricingClient() {
       </div>
       {registration?.step !== 3 ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
-          <div className="main w-full lg:w-[35vw] bg-white shadow-small p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-xl ">
+          <div className="main w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-xl ">
             {registration?.user?.email == undefined ||
             registration.step !== undefined ||
             registration.step === 1 ? (
@@ -332,7 +332,7 @@ export default function PricingClient() {
                     <label htmlFor="email">Otp</label>
                     <InputText id="otp" value="otp" onChange={(e)=> setOtp(e.target.value)} aria-describedby="email-help" />
                   </div>
-                  <button className="pri-btn">Proceed</button>
+                  <button className="pri-btn" onClick={validate}>Verify OTP</button>
                 </div>
               </div>
             ) : (
