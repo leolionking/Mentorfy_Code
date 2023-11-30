@@ -24,7 +24,7 @@ const professionalAreaAction = async (payload) =>
     .structure("_professional_areasAction")
     .setData("professionalAreaAction", payload);
 
-const getWorkspace = async (payload) =>
+const getClientWorkspace = async (payload) =>
   await api.structure("workspace").getData("ownerWorkspaseListing", payload);
 
 const ownerWorkspaceEdit = async (payload) =>
@@ -70,7 +70,7 @@ export {
   getProfAreasByWorkSpace,
   getProfAreaByWorkspaceOwner,
   professionalAreaAction,
-  getWorkspace,
+  getClientWorkspace,
   ownerWorkspaceEdit,
   newRequestToWorkspace,
   manageRequstByWorkspace,
