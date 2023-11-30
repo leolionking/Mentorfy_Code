@@ -80,6 +80,8 @@ export default function PricingClient() {
   };
 
   const validate = () => {
+    setLoading(true);
+
     const payload = {
       otp: otp,
       id: registration?.user?.email,
@@ -88,6 +90,7 @@ export default function PricingClient() {
       .then((res) => {
         if (res.payload.length === 0) {
           toast.error("Invalid OTP");
+          setLoading(false);
         } else {
           const userPayload = {
             id: registration.user.email,
