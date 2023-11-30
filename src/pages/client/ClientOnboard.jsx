@@ -24,7 +24,7 @@ export default function ClientOnboard() {
       },
     };
   };
-
+// stage 1
   const proceed = () => {
     const payload = {
       ...registration,
@@ -37,7 +37,7 @@ export default function ClientOnboard() {
     };
     setRegistration(payload);
   };
-
+// stage 2
   const saveCountry = () => {
     const payload = {
       ...registration,
@@ -49,6 +49,7 @@ export default function ClientOnboard() {
     };
     setRegistration(payload);
   };
+// stage 3
   const saveProvices = () => {
     const payload = {
       ...registration,
@@ -62,6 +63,14 @@ export default function ClientOnboard() {
     };
     setRegistration(payload);
   };
+// stage 4
+const proceedToWorkspace = () => {
+  const payload = {
+    ...registration,
+    onboardStep: 5,
+  };
+  setRegistration(payload);
+};
 
   const {
     values,
@@ -102,16 +111,16 @@ export default function ClientOnboard() {
 
   const fetchProvinces = () => {
     getProvinces()
-    .then((res) => {
-      setProvinces(res.payload);
-    })
-    .catch((err) => {
-      toast.error(err.response.data.msg);
-    });
- }
+      .then((res) => {
+        setProvinces(res.payload);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+      });
+  };
   useEffect(() => {
     setData();
-    fetchProvinces()
+    fetchProvinces();
   }, []);
 
   return (
@@ -260,8 +269,30 @@ export default function ClientOnboard() {
                   </div>
                   <button
                     className="pri-btn"
-                    disabled={errors.phone || errors.postalcode || errors.province}
+                    disabled={
+                      errors.phone || errors.postalcode || errors.province
+                    }
                     onClick={saveProvices}
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            ) : registration.onboardStep === 4 ? (
+              <div className="main py-5">
+                <div className="flex items-center justify-between w-full pb-2">
+                  <div className="ml-auto">{registration.onboardStep}/6</div>
+                </div>
+                <div className=" text-center text-5xl">🎉</div>
+                <div className="header font-['ginto-bold'] font-black text-2xl text-center pb-5">
+                  Welcome, <br/> {registration.user.fullName}
+                </div>
+
+                <div className="grid gap-3">
+                  <p className="pb-10 text-center">Let’s get your workspace configured</p>
+                  <button
+                    className="pri-btn"
+                    onClick={proceedToWorkspace}
                   >
                     Next
                   </button>
