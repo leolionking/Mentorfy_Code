@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
-  const [otp, setOtp] = useState();
+  const [otp, setOtp] = useState('');
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -79,12 +79,11 @@ export default function PricingClient() {
     });
   };
 
-  const payload = {
-    otp: otp,
-    id: registration.user.email,
-  };
-
   const validate = () => {
+    const payload = {
+      otp: otp,
+      id: registration?.user?.email,
+    };
     validateOtp(payload)
       .then((res) => {
         if (res.payload.length === 0) {
@@ -108,6 +107,7 @@ export default function PricingClient() {
         toast.error(err.response.data.msg);
       });
   };
+
   const regenerateOtp = () => {
     setLoading(true);
     const payload = {
@@ -143,6 +143,16 @@ export default function PricingClient() {
     validationSchema: pricing,
     onSubmit,
   });
+
+  useEffect(() => {
+    if (registration?.step === undefined) {
+      const payload = {
+        step: 1,
+        ...registration,
+      };
+      setRegistration(payload);
+    }
+  }, []);
   return (
     <div className="relative">
       <div className={registration?.step === 3 ? "  " : "blur-md "}>
@@ -271,9 +281,7 @@ export default function PricingClient() {
       {registration?.step !== 3 ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
           <div className="main w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-xl ">
-            {registration?.user?.email == undefined ||
-            registration.step !== undefined ||
-            registration.step === 1 ? (
+            {registration.step === 1 ? (
               <form onSubmit={handleSubmit} className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
                   Hey there! <img src={avatar} alt="" />
@@ -322,17 +330,32 @@ export default function PricingClient() {
             ) : registration.step === 2 ? (
               <div className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
-                  Check your inbox
+                 <i className="pi pi-inbox text-2xl text-[var(--primary)]"></i> Check your inbox
                 </h2>
                 <p className="text-sm text-center">
                   We've sent an OTP to {registration?.user?.email}.
                 </p>
+                <p className="text-center text-sm">Didn’t get OTP? <span className="text-[var(--primary)] cursor-pointer" onClick={regenerateOtp}>  Resend OTP </span></p>
                 <div className="grid gap-3 py-5">
                   <div className="flex flex-col gap-2">
                     <label htmlFor="email">Otp</label>
-                    <InputText id="otp" value="otp" onChange={(e)=> setOtp(e.target.value)} aria-describedby="email-help" />
+                    <InputText
+                      id="otp"
+                      keyfilter="int"
+                      className=" !tracking-[20px] !text-center !font-bold !text-xl"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                      aria-describedby="email-help"
+                    />
                   </div>
-                  <button className="pri-btn" onClick={validate}>Verify OTP</button>
+                  <button className="pri-btn" onClick={validate} disabled={loading}>
+                  {loading ? (
+                    <i className="pi pi-spin pi-spinner !text-[20px]"></i>
+                  ) : (
+                    ""
+                  )}
+                    Verify OTP
+                  </button>
                 </div>
               </div>
             ) : (
