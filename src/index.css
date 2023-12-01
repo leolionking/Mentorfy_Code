@@ -82,7 +82,7 @@ body {
   @apply w-[90%] md:w-[80%] mx-auto;
 }
 
-input {
+input, textarea {
   @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full !font-['ginto'];
 }
 
@@ -93,6 +93,7 @@ input {
 .p-dropdown{
   @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none text-sm w-full p-0 !font-['ginto'];
 }
+
 
 .p-dropdown-item{
   @apply !font-['ginto'];
