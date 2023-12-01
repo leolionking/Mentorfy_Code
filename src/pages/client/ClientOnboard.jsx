@@ -372,7 +372,7 @@ export default function ClientOnboard() {
                   </div>
                   <button
                     className="pri-btn"
-                    disabled={errors.country}
+                    disabled={errors.description || errors.professionalArea || errors.workspaceName}
                     onClick={saveCountry}
                   >
                     Next
