@@ -14,7 +14,7 @@ export default function ClientOnboard() {
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [provinces, setProvinces] = useState([]);
   const countries = ["Canada", "Others"];
-  const stages = 7
+  const stages = 7;
   const onSubmit = async (values) => {
     const { user, ...others } = registration;
     const payload = {
@@ -69,6 +69,20 @@ export default function ClientOnboard() {
     const payload = {
       ...registration,
       onboardStep: 5,
+    };
+    setRegistration(payload);
+  };
+
+  // stage 5
+  const workspaceSetup = () => {
+    const payload = {
+      ...registration,
+      workspace: {
+        name: values.workspaceName,
+        professionalArea: values.professionalArea,
+        description: values.description
+      },
+      onboardStep: 6,
     };
     setRegistration(payload);
   };
@@ -188,7 +202,9 @@ export default function ClientOnboard() {
                     className="pi pi-arrow-left"
                     onClick={() => previous(1)}
                   ></i>
-                  <div className="">{registration.onboardStep}/{stages}</div>
+                  <div className="">
+                    {registration.onboardStep}/{stages}
+                  </div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   Select a country
@@ -227,7 +243,9 @@ export default function ClientOnboard() {
                     className="pi pi-arrow-left"
                     onClick={() => previous(2)}
                   ></i>
-                  <div className="">{registration.onboardStep}/{stages}</div>
+                  <div className="">
+                    {registration.onboardStep}/{stages}
+                  </div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   Province & other details
@@ -296,7 +314,9 @@ export default function ClientOnboard() {
             ) : registration.onboardStep === 4 ? (
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
-                  <div className="ml-auto">{registration.onboardStep}/{stages}</div>
+                  <div className="ml-auto">
+                    {registration.onboardStep}/{stages}
+                  </div>
                 </div>
                 <div className=" text-center text-5xl">🎉</div>
                 <div className="header font-['ginto-bold'] font-black text-2xl text-center pb-5">
@@ -319,7 +339,9 @@ export default function ClientOnboard() {
                     className="pi pi-arrow-left"
                     onClick={() => previous(4)}
                   ></i>
-                  <div className="">{registration.onboardStep}/{stages}</div>
+                  <div className="">
+                    {registration.onboardStep}/{stages}
+                  </div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   🙌 Right on! configure your Workspace
@@ -372,8 +394,12 @@ export default function ClientOnboard() {
                   </div>
                   <button
                     className="pri-btn"
-                    disabled={errors.description || errors.professionalArea || errors.workspaceName}
-                    onClick={saveCountry}
+                    disabled={
+                      errors.description ||
+                      errors.professionalArea ||
+                      errors.workspaceName
+                    }
+                    onClick={workspaceSetup}
                   >
                     Next
                   </button>
@@ -386,7 +412,9 @@ export default function ClientOnboard() {
                     className="pi pi-arrow-left"
                     onClick={() => previous(5)}
                   ></i>
-                  <div className="">{registration.onboardStep}/{stages}</div>
+                  <div className="">
+                    {registration.onboardStep}/{stages}
+                  </div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   Province & other details
