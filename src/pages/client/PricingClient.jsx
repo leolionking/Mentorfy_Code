@@ -13,9 +13,7 @@ import {
   validateUser,
 } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
-import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import CheckoutForm from "./CheckoutForm";
 import { useNavigate } from "react-router-dom";
 
 export default function PricingClient() {

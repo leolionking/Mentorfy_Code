@@ -103,21 +103,18 @@ export default function ClientOnboard() {
     resetForm();
   };
 
-  const removeData = (data, index) => {
-    const myData = new Map()
-    myData.set(index, data )
-    console.log(myData);
-    // const newData = myData.delete(index);
-    // console.log(newData);
-    // setFormProperties(Object.values(newData));
+  const removeData = (index) => {
+    const newData = formProperties.splice(index, 1)
+    setFormProperties(newData);
+    console.log(formProperties);
   };
 
   const editData = (data) => {
-    [
-      (values.acceptedValue = data.acceptedValue),
-      (values.options = data.options),
-      (values.label = data.label),
-    ];
+    setValues({
+      acceptedValue: data.acceptedValue,
+      options: data.options,
+      label: data.label,
+    });
   };
 
   const previous = (data) => {
@@ -137,6 +134,7 @@ export default function ClientOnboard() {
     resetForm,
     handleBlur,
     handleChange,
+    setValues,
     handleSubmit,
   } = useFormik({
     validateOnMount: true,
@@ -242,7 +240,7 @@ export default function ClientOnboard() {
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
-                    className="pi pi-arrow-left"
+                    className="pi pi-arrow-left cursor-pointer"
                     onClick={() => previous(1)}
                   ></i>
                   <div className="">
@@ -283,7 +281,7 @@ export default function ClientOnboard() {
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
-                    className="pi pi-arrow-left"
+                    className="pi pi-arrow-left cursor-pointer"
                     onClick={() => previous(2)}
                   ></i>
                   <div className="">
@@ -379,7 +377,7 @@ export default function ClientOnboard() {
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
-                    className="pi pi-arrow-left"
+                    className="pi pi-arrow-left cursor-pointer"
                     onClick={() => previous(4)}
                   ></i>
                   <div className="">
@@ -452,7 +450,7 @@ export default function ClientOnboard() {
               <div className="main py-5">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
-                    className="pi pi-arrow-left"
+                    className="pi pi-arrow-left cursor-pointer"
                     onClick={() => previous(5)}
                   ></i>
                   <div className="">
@@ -523,7 +521,7 @@ export default function ClientOnboard() {
             <div className="grouped flex flex-col gap-2">
               {formProperties.map((res, i) => (
                 <div
-                  className="p-5 mt-2 grid grid-cols-[10fr,1fr]  gap-2 w-full shadow-small"
+                  className="p-5 mt-2 grid lg:grid-cols-[10fr,1fr]  gap-2 w-full shadow-small"
                   key={i}
                 >
                   <div className="grid gap-1 text-sm">
@@ -547,7 +545,7 @@ export default function ClientOnboard() {
                   </div>
                   <div className="text-sm h-full flex justify-start gap-4">
                     <i className="pi pi-pencil text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={() =>editData(res)}></i>
-                    <i className="pi pi-trash text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={()=> removeData(res, i)}></i>
+                    <i className="pi pi-trash text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={()=> removeData(i)}></i>
                   </div>
                 </div>
               ))}
