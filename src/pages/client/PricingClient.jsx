@@ -187,7 +187,7 @@ export default function PricingClient() {
   return (
     <div className="relative">
       <div className={registration?.step === 3 ? "  " : "blur-md "}>
-        <div className="h-[60vh] bg-pricingBg w-full bg-cover">
+        <div className=" h-[60vh] bg-pricingBg w-full bg-cover">
           <div className="grid place-items-center h-full">
             <div className="">
               {registration && registration?.user ? (
@@ -249,7 +249,7 @@ export default function PricingClient() {
             </div>
           </div>
         </div>
-        <div className="main">
+        <div className={registration?.step !==3 ? "main h-[30vh] md:h-[50vh] lg:h-full overflow-y-hidden": "main"}>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4 py-10">
             <div className="plan border flex  border-orange-400 w-full rounded-xl h-[350px]">
               <div className=" main text-center flex items-center justify-center flex-col gap-2">
