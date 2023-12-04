@@ -13,7 +13,7 @@ import {
   validateUser,
 } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
-import { loadStripe } from "@stripe/stripe-js";
+// import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate } from "react-router-dom";
 
 export default function PricingClient() {
@@ -21,8 +21,8 @@ export default function PricingClient() {
   const [otp, setOtp] = useState("");
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
   const [loading, setLoading] = useState(false);
-  const [stripePromise, setStripePromise] = useState(null);
-  const [clientSecret, setClientSecret] = useState("");
+  // const [stripePromise, setStripePromise] = useState(null);
+  // const [clientSecret, setClientSecret] = useState("");
 
   const navigate = useNavigate()
   const changePlan = (data) => {
@@ -183,8 +183,8 @@ export default function PricingClient() {
   };
   useEffect(() => {
     setData();
-    setStripePromise(loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY));
-    setClientSecret(process.env.REACT_APP_SECRET_KEY)
+    // setStripePromise(loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY));
+    // setClientSecret(process.env.REACT_APP_SECRET_KEY)
   }, []);
 
 
