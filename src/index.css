@@ -94,6 +94,18 @@ input, textarea {
   @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none text-sm w-full p-0 !font-['ginto'];
 }
 
+.p-chips-input-token input{
+  @apply border-none p-0
+}
+
+.p-chips-multiple-container {
+  @apply border outline-none focus:outline-none border-[var(--secondary)] shadow-none p-2 text-sm w-full !font-['ginto'];
+  
+}
+
+.p-dropdown-item{
+  @apply text-[.90rem]
+}
 
 .p-dropdown-item{
   @apply !font-['ginto'];

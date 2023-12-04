@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import React, { useEffect, useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -9,9 +10,13 @@ import { onboardClientValidation } from "../../utils/Validation";
 import { Dropdown } from "primereact/dropdown";
 import { getProvinces } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
+import { Chips } from "primereact/chips";
 
 export default function ClientOnboard() {
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
+  const [formProperties, setFormProperties] = useState([]);
+  const [createdForm, setCreatedForm] = useState({});
+  const [acceptanceValue, setAcceptacevalue] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const countries = ["Canada", "Others"];
   const stages = 7;
@@ -25,6 +30,7 @@ export default function ClientOnboard() {
       },
     };
   };
+
   // stage 1
   const proceed = () => {
     const payload = {
@@ -80,11 +86,38 @@ export default function ClientOnboard() {
       workspace: {
         name: values.workspaceName,
         professionalArea: values.professionalArea,
-        description: values.description
+        description: values.description,
       },
       onboardStep: 6,
     };
     setRegistration(payload);
+  };
+  // stage 6
+  const submitForm = () => {
+    const property = {
+      label: values.label,
+      options: values.options,
+      acceptedValue: values.acceptedValue,
+    };
+    setFormProperties([...formProperties, property]);
+    resetForm();
+  };
+
+  const removeData = (data, index) => {
+    const myData = new Map()
+    myData.set(index, data )
+    console.log(myData);
+    // const newData = myData.delete(index);
+    // console.log(newData);
+    // setFormProperties(Object.values(newData));
+  };
+
+  const editData = (data) => {
+    [
+      (values.acceptedValue = data.acceptedValue),
+      (values.options = data.options),
+      (values.label = data.label),
+    ];
   };
 
   const previous = (data) => {
@@ -101,6 +134,7 @@ export default function ClientOnboard() {
     isValid,
     isSubmitting,
     touched,
+    resetForm,
     handleBlur,
     handleChange,
     handleSubmit,
@@ -117,6 +151,9 @@ export default function ClientOnboard() {
       description: "",
       logo: "",
       workspaceName: "",
+      label: "",
+      acceptedValue: "",
+      options: [],
     },
     validationSchema: onboardClientValidation,
     onSubmit,
@@ -148,7 +185,13 @@ export default function ClientOnboard() {
 
   return (
     <div className="h-full lg:h-[90vh] w-full ">
-      <div className="main  grid place-items-center h-full">
+      <div
+        className={
+          registration.onboardStep === 6
+            ? "main  grid lg:grid-cols-2 place-items-center relative h-full"
+            : "main  grid place-items-center h-full"
+        }
+      >
         <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] py-10 shadow-small rounded-2xl">
           <div className="">
             {registration.onboardStep === 1 ? (
@@ -417,74 +460,102 @@ export default function ClientOnboard() {
                   </div>
                 </div>
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
-                  Province & other details
+                  Mentor acceptance criteria
                 </div>
-
-                <div className="grid gap-3">
-                  <div className="grid md:grid-cols-2 gap-2 w-full h-full">
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="username">Province</label>
-                      <Dropdown
-                        id="username"
-                        name="province"
-                        value={values.province}
-                        options={provinces}
-                        optionLabel="Province"
-                        optionValue="Province"
-                        className=" !text-black"
-                        filter
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {errors.province && touched.province && (
-                        <p className="error">{errors.province}</p>
-                      )}
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label htmlFor="username">Phone Number</label>
-                      <InputText
-                        id="phone"
-                        name="phone"
-                        aria-describedby="phone-help"
-                        value={values.phone}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                      />
-                      {errors.phone && touched.phone && (
-                        <p className="error">{errors.phone}</p>
-                      )}
-                    </div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="username">Enter Field Label</label>
+                    <InputText
+                      id="username"
+                      name="label"
+                      onChange={handleChange}
+                      value={values.label}
+                    />
+                    {errors.label && touched.label && (
+                      <p className="error">{errors.label}</p>
+                    )}
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label htmlFor="username">Postal code</label>
-                    <InputText
-                      id="postalcode"
-                      name="postalcode"
-                      aria-describedby="postalcode-help"
-                      value={values.postalcode}
+                    <label htmlFor="options">
+                      Enter options separated by comma (,)
+                    </label>
+                    <Chips
+                      name="options"
+                      value={values.options}
                       onChange={handleChange}
-                      onBlur={handleBlur}
+                      separator=","
                     />
-                    {errors.postalcode && touched.postalcode && (
-                      <p className="error">{errors.postalcode}</p>
+
+                    {errors.options && touched.options && (
+                      <p className="error">{errors.options}</p>
                     )}
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="username">Accepted Value</label>
+                    <Dropdown
+                      name="acceptedValue"
+                      options={values.options}
+                      value={values.acceptedValue}
+                      onChange={handleChange}
+                    />
                   </div>
                   <button
                     className="pri-btn"
                     disabled={
-                      errors.phone || errors.postalcode || errors.province
+                      errors.options || errors.label || errors.acceptedValue
                     }
-                    onClick={saveProvices}
+                    onClick={submitForm}
                   >
-                    Next
+                    Save
                   </button>
                 </div>
               </div>
             ) : (
-              registration.onboardStep === 7("")
+              ""
             )}
           </div>
         </div>
+        {registration.onboardStep === 6 ? (
+          <div className="relative h-full pt-10 w-full top-0">
+            <h2 className="text-lg font-['ginto-bold'] font-black">
+              Acceptance Criteria
+            </h2>
+            <div className="grouped flex flex-col gap-2">
+              {formProperties.map((res, i) => (
+                <div
+                  className="p-5 mt-2 grid grid-cols-[10fr,1fr]  gap-2 w-full shadow-small"
+                  key={i}
+                >
+                  <div className="grid gap-1 text-sm">
+                    <div className="question font-['ginto-bold']">
+                      {res.label}
+                    </div>
+                    <div className="options flex items-center gap-4">
+                      <span className="font-['ginto-bold']">Options:</span>
+                      <p className="">
+                        {res?.options.map((option) => (
+                          <span>{option} </span>
+                        ))}
+                      </p>
+                    </div>
+                    <div className="accepted flex items-center gap-4">
+                      <span className="font-['ginto-bold']">
+                        Accepted Value:
+                      </span>
+                      <p>{res.acceptedValue}</p>
+                    </div>
+                  </div>
+                  <div className="text-sm h-full flex justify-start gap-4">
+                    <i className="pi pi-pencil text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={() =>editData(res)}></i>
+                    <i className="pi pi-trash text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={()=> removeData(res, i)}></i>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );
