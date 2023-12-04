@@ -6,7 +6,7 @@ export default function Team() {
       <div className="main flex items-center justify-center flex-col h-full gap-10">
         <div className="">
           <h2 className="headTwo text-center"> Our Team</h2>
-          <p className="text-sm">
+          <p className="text-sm text-center">
             We are Mentorfy, we are all about you and the connections you have
             and make with Mentees
           </p>
