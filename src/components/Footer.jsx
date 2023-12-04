@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -8,7 +9,7 @@ export default function Footer() {
           Start your Mentorship today by checking out our Free Trial *No credit
           card required to set up
         </p>
-        <button className="pri-btn">Create Account</button>
+        <Link to='/pricing' className="pri-btn">Create Account</Link>
       </div>
     </div>
   );
