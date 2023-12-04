@@ -63,7 +63,7 @@ export default function PricingClient() {
             console.log(err);
           });
       } else {
-        checkIfUserExist({ email: values.email })
+        checkIfUserExist({ email: values.email.toLowerCase() })
           .then((res) => {
             setLoading(false);
             const payload = {
