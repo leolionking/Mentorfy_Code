@@ -75,6 +75,7 @@ export default function PricingClient() {
             if (res.payload.length === 1) {
               setRegistration(payload);
               toast.error("User already exists. Please login");
+              navigate('/signin')
             } else {
               setRegistration(payload);
             }
