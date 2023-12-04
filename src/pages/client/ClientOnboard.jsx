@@ -184,7 +184,7 @@ export default function ClientOnboard() {
   }, []);
 
   return (
-    <div className="h-full lg:h-[90vh] w-full ">
+    <div className="h-[90vh] w-full ">
       <div
         className={
           registration.onboardStep === 6
