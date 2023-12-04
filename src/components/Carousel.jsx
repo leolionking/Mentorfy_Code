@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function CarouselComponent() {
   return (
-    <Carousel effect="fade" autoplay dots={true} className=" text-white">
+    <Carousel autoplaySpeed={7000} autoplay  pauseOnHover={false} pauseOnDotsHover={false} dots={true} className=" text-white">
       <div className="bg-heroOne carousel-body">
         <div className="carousel-content h-full">
           <div className="flex items-center flex-col justify-center h-full gap-4">
