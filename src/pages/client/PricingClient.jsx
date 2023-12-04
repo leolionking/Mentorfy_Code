@@ -92,7 +92,7 @@ export default function PricingClient() {
 
     const payload = {
       otp: otp,
-      id: registration?.user?.email,
+      id: registration?.user?.email.toLowerCase(),
     };
     validateOtp(payload)
       .then((res) => {
@@ -101,7 +101,7 @@ export default function PricingClient() {
           setLoading(false);
         } else {
           const userPayload = {
-            id: registration.user.email,
+            id: registration.user.email.toLowerCase(),
           };
           validateUser(userPayload).then((res) => {
             toast.success("OTP validation successful");
@@ -123,7 +123,7 @@ export default function PricingClient() {
   const regenerateOtp = () => {
     setLoading(true);
     const payload = {
-      email: registration.user.email,
+      email: registration.user.email.toLowerCase(),
     };
     generateOtp(payload)
       .then((res) => {
