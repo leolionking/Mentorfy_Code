@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { useNavigate } from "react-router-dom";
 
 export default function PricingClient() {
   const [plan, setPlan] = useState("monthly");
@@ -25,6 +26,7 @@ export default function PricingClient() {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
+  const navigate = useNavigate()
   const changePlan = (data) => {
     setPlan(data);
   };
@@ -139,6 +141,10 @@ export default function PricingClient() {
   const changeEmail = () => {
     changeData();
   };
+
+  const onboard = () => {
+    navigate('/client-onboard')
+  }
 
   const initialValue = {
     email: "",
@@ -258,7 +264,7 @@ export default function PricingClient() {
                 <div className="price">
                   $1,000.00 <span> /month </span>
                 </div>
-                <button className="border border-orange-400 text-orange-400 w-full rounded-md h-[45px]">
+                <button className="border border-orange-400 text-orange-400 w-full rounded-md h-[45px]" onClick={onboard}>
                   Get Started
                 </button>
                 <div className="">
@@ -307,7 +313,7 @@ export default function PricingClient() {
                   $1,400.00 <span> /month </span>
                 </div>
                 <button className="border border-orange-400 text-orange-400 w-full rounded-md h-[45px]">
-                  Get Started
+                  Contact Sales
                 </button>
                 <div className="">
                   <div className="feature">
