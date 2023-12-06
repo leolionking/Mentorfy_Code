@@ -24,7 +24,7 @@ export default function PricingClient() {
   // const [stripePromise, setStripePromise] = useState(null);
   // const [clientSecret, setClientSecret] = useState("");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const changePlan = (data) => {
     setPlan(data);
   };
@@ -75,7 +75,7 @@ export default function PricingClient() {
             if (res.payload.length === 1) {
               setRegistration(payload);
               toast.error("User already exists. Please login");
-              navigate('/signin')
+              navigate("/signin");
             } else {
               setRegistration(payload);
             }
@@ -142,8 +142,19 @@ export default function PricingClient() {
   };
 
   const onboard = () => {
-    navigate('/client-onboard')
-  }
+    checkIfUserExist({ email: registration?.user?.email.toLowerCase() })
+      .then((res) => {
+        if (res.payload.length === 1) {
+          toast.error("User already exists. Please login");
+          navigate("/signin");
+        } else {
+          navigate("/client-onboard");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const initialValue = {
     email: "",
@@ -187,7 +198,6 @@ export default function PricingClient() {
     // setStripePromise(loadStripe(process.env.REACT_APP_PUBLISHABLE_KEY));
     // setClientSecret(process.env.REACT_APP_SECRET_KEY)
   }, []);
-
 
   return (
     <div className="relative">
@@ -254,7 +264,13 @@ export default function PricingClient() {
             </div>
           </div>
         </div>
-        <div className={registration?.step !==3 ? "main h-[30vh] md:h-[50vh] lg:h-full overflow-y-hidden": "main"}>
+        <div
+          className={
+            registration?.step !== 3
+              ? "main h-[30vh] md:h-[50vh] lg:h-full overflow-y-hidden"
+              : "main"
+          }
+        >
           <div className="grid md:grid-cols-2 lg:grid-cols-3 place-items-center gap-4 py-10">
             <div className="plan border flex  border-orange-400 w-full rounded-xl h-[350px]">
               <div className=" main text-center flex items-center justify-center flex-col gap-2">
@@ -263,7 +279,10 @@ export default function PricingClient() {
                 <div className="price">
                   $1,000.00 <span> /month </span>
                 </div>
-                <button className="border border-orange-400 text-orange-400 w-full rounded-md h-[45px]" onClick={onboard}>
+                <button
+                  className="border border-orange-400 text-orange-400 w-full rounded-md h-[45px]"
+                  onClick={onboard}
+                >
                   Get Started
                 </button>
                 <div className="">
@@ -390,7 +409,10 @@ export default function PricingClient() {
               </form>
             ) : registration.step === 2 ? (
               <div className="main grid gap-2">
-                <i className="pi pi-arrow-left pb-5 cursor-pointer" onClick={changeData}></i>
+                <i
+                  className="pi pi-arrow-left pb-5 cursor-pointer"
+                  onClick={changeData}
+                ></i>
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
                   <i className="pi pi-inbox text-2xl text-[var(--primary)]"></i>{" "}
                   Check your inbox
