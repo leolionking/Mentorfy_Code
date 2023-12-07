@@ -13,7 +13,7 @@ export default function DashboardHeader() {
           <div className="logo">{workspace.name}</div>
           <div className=" hidden lg:flex items-center gap-4">
             <i className="pi pi-bell"></i>
-            <Link to="/select-workspace">Workspaces</Link>
+            <Link to="/select-workspace" className="text-sm">Workspaces</Link>
             <div className="flex items-center gap-2">
               <Avatar />
               <i className="pi pi-angle-down"></i>
