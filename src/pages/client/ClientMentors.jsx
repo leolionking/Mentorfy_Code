@@ -22,6 +22,22 @@ export default function ClientMentors() {
   const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
   const [email, setEmail] = useState("");
+
+  const items = [
+    {
+      key: "1",
+      label: <p className="text-xs p-1">View Mentee info</p>,
+    },
+    {
+      key: "2",
+      label: <p className="text-xs p-1">Suspend Mentee</p>,
+    },
+    {
+      key: "3",
+      label: <p className="text-xs p-1">Close Account</p>,
+    },
+  ];
+
   const columns = [
     {
       title: "First name",
@@ -70,22 +86,18 @@ export default function ClientMentors() {
     {
       title: "Action",
       dataIndex: "action",
-      key: "action",
-    },
-  ];
-
-  const dropdownItems = [
-    {
-      key: "1",
-      label: "View Mentee info",
-    },
-    {
-      key: "2",
-      label: "Suspend Mentee",
-    },
-    {
-      key: "3",
-      label: "Close Account",
+      render: () => (
+        <Space size="middle">
+          <Dropdown
+            className="text-sm"
+            menu={{
+              items,
+            }}
+          >
+            <p>Action</p>
+          </Dropdown>
+        </Space>
+      ),
     },
   ];
 
@@ -179,7 +191,8 @@ export default function ClientMentors() {
           <h3 className="font-['ginto-bold'] text-xl ">Mentors </h3>
           <button className="pri-btn">
             <i className="pi pi-users"></i>
-             Invite Mentors</button>
+            Invite Mentors
+          </button>
         </div>
         <Table
           columns={columns}

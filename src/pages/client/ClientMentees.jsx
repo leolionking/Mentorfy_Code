@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table } from "antd";
+import { Dropdown, Space, Table, Tag } from "antd";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../atom/authAtom";
@@ -22,6 +22,22 @@ export default function ClientMentees() {
   const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
   const [email, setEmail] = useState("");
+
+  const items = [
+    {
+      key: "1",
+      label: <p className="text-xs p-1">View Mentee info</p>,
+    },
+    {
+      key: "2",
+      label: <p className="text-xs p-1">Suspend Mentee</p>,
+    },
+    {
+      key: "3",
+      label: <p className="text-xs p-1">Close Account</p>,
+    },
+  ];
+
   const columns = [
     {
       title: "First name",
@@ -54,14 +70,34 @@ export default function ClientMentees() {
       key: "phone",
     },
     {
-      title: "Status",
+      title: " Status",
       dataIndex: "isBanned",
       key: "isBanned",
+      render: (_, { status }) => (
+        <>
+          {status === "false" ? (
+            <Tag color="gold">{status}</Tag>
+          ) : (
+            <Tag color="volcano">{status}</Tag>
+          )}
+        </>
+      ),
     },
     {
       title: "Action",
       dataIndex: "action",
-      key: "action",
+      render: () => (
+        <Space size="middle">
+          <Dropdown
+            className="text-sm"
+            menu={{
+              items,
+            }}
+          >
+            <p>Action</p>
+          </Dropdown>
+        </Space>
+      ),
     },
   ];
 
