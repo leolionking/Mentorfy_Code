@@ -179,3 +179,7 @@ label {
 .myLink:hover i{
   @apply bg-[var(--primary)] p-3 rounded-full text-white transition-all
 }
+
+td{
+  @apply bg-transparent
+}

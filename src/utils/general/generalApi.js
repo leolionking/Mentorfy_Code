@@ -29,6 +29,9 @@ const resetPassword = async (payload) =>
 const getPricing = async () =>
   await api.structure("tariff").getData("getTarif");
 
+const inviteUsers = async (payload) =>
+  await api.structure("invites").setData("inviteUsers", payload);
+
 const getProvinces = async () =>
   await api.structure("provinces").getData("getProvince");
 
@@ -71,4 +74,5 @@ export {
   getUserWorkspace,
   checkUserEmailByWorkspace,
   checkUserForValidation,
+  inviteUsers
 };

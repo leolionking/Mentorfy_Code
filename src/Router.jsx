@@ -16,6 +16,7 @@ import ClientDashboard from "./pages/client/ClientDashboard";
 import ClientOnboard from "./pages/client/ClientOnboard";
 import RequestDemo from "./pages/general/RequestDemo";
 import OnboardLayout from "./layouts/OnboardLayout";
+import WorkspaceLayout from "./layouts/WorkspaceLayout";
 
 const router = createBrowserRouter([
   {
@@ -64,12 +65,18 @@ const router = createBrowserRouter([
     element: <ClientLayout />,
     children: [
       {
-        path: "/select-workspace",
-        element: <SelectWorkspace />,
-      },
-      {
         path: "/client-dashboard",
         element: <ClientDashboard />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <WorkspaceLayout />,
+    children: [
+      {
+        path: "/select-workspace",
+        element: <SelectWorkspace />,
       },
     ],
   },

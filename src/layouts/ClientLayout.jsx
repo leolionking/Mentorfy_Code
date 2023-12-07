@@ -14,7 +14,11 @@ export default function ClientLayout() {
         <div>
           <Sidebar />
           <DashboardHeader />
-          <Outlet />
+          <div className="bg-[#FBFCFF] w-full lg:w-[calc(100vw-17vw)] ml-auto mt-14">
+            <div className="w-full">
+              <Outlet />
+            </div>
+          </div>
         </div>
       ) : (
         <>
