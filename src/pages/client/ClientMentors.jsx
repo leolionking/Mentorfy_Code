@@ -94,7 +94,7 @@ export default function ClientMentors() {
               items,
             }}
           >
-            <p>Action</p>
+            <i className=" pi pi-ellipsis-v"></i>
           </Dropdown>
         </Space>
       ),

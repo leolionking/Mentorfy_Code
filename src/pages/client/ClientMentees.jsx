@@ -94,7 +94,7 @@ export default function ClientMentees() {
               items,
             }}
           >
-            <p>Action</p>
+           <i className=" pi pi-ellipsis-v"></i>
           </Dropdown>
         </Space>
       ),
