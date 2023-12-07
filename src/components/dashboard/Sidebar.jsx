@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Sidebar({ links }) {
 
@@ -10,10 +10,10 @@ export default function Sidebar({ links }) {
           <div className="logo">{/* <img src={logo} alt="logo" /> */}</div>
           <div className="flex flex-col gap-4 mt-20">
             {links?.map((link, i) => (
-                <Link to={link.link} className="myLink flex items-center gap-2">
+                <NavLink to={link.link} className="myLink flex items-center gap-2" activeClassName="active">
                     <i className={"p-3 pi pi-"+ link.icon}></i>
                     <Link to={link.link} className="link" key={i}>{link.name}</Link>
-                </Link>
+                </NavLink>
             ))}
           </div>
         </div>

@@ -71,14 +71,12 @@ export default function ClientMentors() {
     },
     {
       title: " Status",
-      dataIndex: "isBanned",
-      key: "isBanned",
-      render: (_, { status }) => (
+      render: (_, { isBanned }) => (
         <>
-          {status === "false" ? (
-            <Tag color="gold">{status}</Tag>
+          {isBanned === "false" ? (
+            <Tag color="gold">{isBanned}</Tag>
           ) : (
-            <Tag color="volcano">{status}</Tag>
+            <Tag color="volcano">{isBanned}</Tag>
           )}
         </>
       ),
