@@ -8,18 +8,31 @@ import { useRecoilState } from "recoil";
 import { registerUserAtom } from "../../atom/registrationAtom";
 import { onboardClientValidation } from "../../utils/Validation";
 import { Dropdown } from "primereact/dropdown";
-import { getProvinces } from "../../utils/general/generalApi";
+import { getProvinces, loginApi } from "../../utils/general/generalApi";
+import {
+  createWorkspaceWithPayment,
+  workspaceGenericForm,
+} from "../../utils/client/clientApi";
 import { toast } from "react-toastify";
 import { Chips } from "primereact/chips";
+import { InboxOutlined } from "@ant-design/icons";
+import { ColorPicker } from "antd";
+import { authState } from "../../atom/authAtom";
+import { useNavigate } from "react-router-dom";
 
 export default function ClientOnboard() {
   const [registration, setRegistration] = useRecoilState(registerUserAtom);
+  const [auth, setAuth] = useRecoilState(authState);
   const [formProperties, setFormProperties] = useState([]);
-  const [createdForm, setCreatedForm] = useState({});
-  const [acceptanceValue, setAcceptacevalue] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [image, setImage] = useState();
+  const [color, setColor] = useState("000000");
+
+  const [loading, setLoading] = useState(false);
+  const [dataUrl, setDataUrl] = useState();
   const countries = ["Canada", "Others"];
   const stages = 7;
+  const navigate = useNavigate();
   const onSubmit = async (values) => {
     const { user, ...others } = registration;
     const payload = {
@@ -103,10 +116,18 @@ export default function ClientOnboard() {
     resetForm();
   };
 
+  const saveAcceptanceForm = () => {
+    const payload = {
+      ...registration,
+      onboardStep: 7,
+      acceptanceForm: formProperties,
+    };
+    setRegistration(payload);
+  };
+
   const removeData = (index) => {
-    const newData = formProperties.splice(index, 1)
+    const newData = formProperties.splice(index, 1);
     setFormProperties(newData);
-    console.log(formProperties);
   };
 
   const editData = (data) => {
@@ -167,6 +188,30 @@ export default function ClientOnboard() {
     }
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(URL?.createObjectURL(e.target.files[0]));
+      let reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        setDataUrl(reader.result);
+      };
+    }
+  };
+
+  const saveData = () => {
+    setLoading(true);
+    const payload = {
+      ...registration,
+      workspace: {
+        ...registration.workspace,
+        logo: dataUrl,
+      },
+    };
+
+    setRegistration(payload);
+  };
+
   const fetchProvinces = () => {
     getProvinces()
       .then((res) => {
@@ -176,6 +221,82 @@ export default function ClientOnboard() {
         toast.error(err.response.data.msg);
       });
   };
+
+  const finishSetup = () => {
+    setLoading(true);
+    const {fullName, ...others} = registration?.user;
+    const firstname = fullName.split(' ')[0]
+    const lastname = fullName.split(' ')[1]
+    const userPayload = {
+      name: registration.workspace.name,
+      workspaceLogo: dataUrl,
+      color: color.split("#")[1],
+      // invoice: registration.price.id,
+      description: registration.workspace.description,
+      lastName: lastname,
+      firstame: firstname,
+      newMail: registration.user.email,
+      mail: registration.user.email,
+      _fiirstProfArea: registration.workspace.professionalArea,
+      _password: registration.user.confirmPassword,
+      _phone: registration.user.phone,
+      _country: registration.user.country,
+      _provinceId: registration.user.province,
+      _postalcode: registration.user.postalcode,
+      _action: "createWithPayment",
+    };
+
+    createWorkspaceWithPayment(userPayload)
+      .then((data) => {
+        setLoading(false);
+        toast.success("successful");
+        const { email, password } = registration?.user;
+        loginApi(email, password)
+          .then((res) => {
+            const payload = {
+              workspace: {
+                id: data.result[0].workspaceId,
+                userId: data.result[0].id,
+              },
+              user: res,
+            };
+            setAuth(payload);
+            createDynamicForm(data.result[0].workspaceId);
+            navigate("/welcome");
+          })
+          .catch((err) => {
+            setLoading(false);
+            toast.error(err.response.data.msg);
+          });
+      })
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.response.data.msg);
+      });
+  };
+
+  const createDynamicForm = (workspaceId) => {
+    let acceptedValueList = [];
+    for (let value = 0; value < registration.acceptanceForm.length; value++) {
+      acceptedValueList.push(registration.acceptanceForm[value].acceptedValue);
+    }
+    const filteredData = registration.acceptanceForm.map((data) => {
+      const { acceptedValue, ...others } = data;
+      return others;
+    });
+
+    const payload = {
+      sessionID: auth?.sessionID,
+      id: workspaceId,
+      acceptance_criteria: acceptedValueList,
+      generic_forms: JSON.stringify(filteredData),
+    };
+
+    workspaceGenericForm(payload).then((res) => {
+      setRegistration(null);
+    });
+  };
+
   useEffect(() => {
     setData();
     fetchProvinces();
@@ -498,13 +619,88 @@ export default function ClientOnboard() {
                     />
                   </div>
                   <button
-                    className="pri-btn"
+                    className="outline-btn"
                     disabled={
                       errors.options || errors.label || errors.acceptedValue
                     }
                     onClick={submitForm}
                   >
-                    Save
+                    Add More
+                  </button>
+                  <button
+                    className="pri-btn"
+                    disabled={formProperties?.length === 0}
+                    onClick={saveAcceptanceForm}
+                  >
+                    Save & proceed
+                  </button>
+                </div>
+              </div>
+            ) : registration.onboardStep === 7 ? (
+              <div className="main py-5">
+                <div className="flex items-center justify-between w-full pb-2">
+                  <i
+                    className="pi pi-arrow-left cursor-pointer"
+                    onClick={() => previous(5)}
+                  ></i>
+                  <div className="">
+                    {registration.onboardStep}/{stages}
+                  </div>
+                </div>
+                <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
+                  Upload Logo & set workspace color
+                </div>
+                <div className="flex flex-col gap-3">
+                  <div className=" w-full mx-auto ">
+                    <div className="mt-10 flex flex-col items-center w-full mx-auto justify-center">
+                      <div className="">
+                        <label htmlFor="upload-button">
+                          {image ? (
+                            <div className="">
+                              <img
+                                src={image}
+                                alt="logo"
+                                className="object-cover w-full h-[80px]"
+                              />
+                            </div>
+                          ) : (
+                            <div className="p-4 rounded-lg border-dashed border-[1px] border-blue-300 bg-gray-50 flex items-center flex-col justify-center text-center">
+                              <p className=" text-[3rem] p-3 text-blue-600">
+                                <InboxOutlined />
+                              </p>
+                              <p className=" text-[1rem] text-gray-700"></p>
+                              <p className="text-xs pt-2 pb-10 text-gray-500 w-[80%]">
+                                File size limit is 5MB. Accepted formats are PNG
+                                and JPG.
+                              </p>
+                            </div>
+                          )}
+                        </label>
+                        <input
+                          type="file"
+                          id="upload-button"
+                          accept="image/png, image/jpeg"
+                          style={{ display: "none" }}
+                          onChange={handleImageChange}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label htmlFor="options">
+                      Click to select workspace color
+                    </label>
+                    <ColorPicker
+                      value={color}
+                      onChange={(value, color) => setColor(color)}
+                      allowClear
+                      disabledAlpha
+                    />
+                  </div>
+
+                  <button className="pri-btn" onClick={finishSetup}>
+                    {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+                    Finish
                   </button>
                 </div>
               </div>
@@ -544,8 +740,14 @@ export default function ClientOnboard() {
                     </div>
                   </div>
                   <div className="text-sm h-full flex justify-start gap-4">
-                    <i className="pi pi-pencil text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={() =>editData(res)}></i>
-                    <i className="pi pi-trash text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit" onClick={()=> removeData(i)}></i>
+                    <i
+                      className="pi pi-pencil text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit"
+                      onClick={() => editData(res)}
+                    ></i>
+                    <i
+                      className="pi pi-trash text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit"
+                      onClick={() => removeData(i)}
+                    ></i>
                   </div>
                 </div>
               ))}

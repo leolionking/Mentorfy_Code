@@ -73,6 +73,9 @@ body {
 .ter-btn {
   @apply h-[50px] border border-white px-5 rounded-md text-sm text-white flex items-center justify-center gap-2;
 }
+.outline-btn {
+  @apply h-[40px] border border-[var(--primary)] px-5 rounded-md text-sm text-[var(--primary)] flex items-center justify-center gap-2;
+}
 
 .white-btn {
   @apply h-[50px] border border-white px-5 rounded-md text-sm bg-white text-[var(--primary)] flex items-center justify-center gap-2;
@@ -115,6 +118,10 @@ input, textarea {
   @apply text-[var(--primary)] bg-[#95a30012]
 }
 
+.ant-color-picker-color-block{
+  @apply !w-full
+}
+
 .p-dropdown-label .p-inputtext{
   @apply !font-['ginto'];
 }
@@ -153,10 +160,22 @@ label {
   @apply text-orange-400;
 }
 
+.outline-btn:disabled{
+  @apply !text-gray-400 !bg-gray-50 !border-gray-400
+
+}
+
 :disabled {
   @apply !bg-gray-400;
 }
 
 .error {
   @apply text-xs text-red-400;
+}
+
+.myLink:hover {
+  @apply cursor-pointer text-[var(--primary)] transition-all
+}
+.myLink:hover i{
+  @apply bg-[var(--primary)] p-3 rounded-full text-white transition-all
 }
