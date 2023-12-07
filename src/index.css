@@ -180,6 +180,18 @@ label {
   @apply bg-[var(--primary)] p-3 rounded-full text-white transition-all
 }
 
+:where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper .ant-table-thead >tr>td{
+  @apply !bg-white p-4
+}
+
+tr{
+  @apply !text-sm
+}
+
+th{
+  @apply font-['ginto-bold']
+}
+
 td{
-  @apply bg-transparent
+  @apply font-[200] text-[.85rem]
 }

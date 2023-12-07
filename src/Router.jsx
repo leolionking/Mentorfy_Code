@@ -17,6 +17,9 @@ import ClientOnboard from "./pages/client/ClientOnboard";
 import RequestDemo from "./pages/general/RequestDemo";
 import OnboardLayout from "./layouts/OnboardLayout";
 import WorkspaceLayout from "./layouts/WorkspaceLayout";
+import ClientMentors from "./pages/client/ClientMentors";
+import ClientMentees from "./pages/client/ClientMentees";
+import ClientSettings from "./pages/client/ClientSettings";
 
 const router = createBrowserRouter([
   {
@@ -67,6 +70,18 @@ const router = createBrowserRouter([
       {
         path: "/client-dashboard",
         element: <ClientDashboard />,
+      },
+      {
+        path: "/client-mentors",
+        element: <ClientMentors />,
+      },
+      {
+        path: "/client-mentees",
+        element: <ClientMentees />,
+      },
+      {
+        path: "/client-settings",
+        element: <ClientSettings />,
       },
     ],
   },

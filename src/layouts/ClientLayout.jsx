@@ -4,15 +4,15 @@ import { useRecoilValue } from "recoil";
 import { authState } from "../atom/authAtom";
 import Sidebar from "../components/dashboard/Sidebar";
 import DashboardHeader from "../components/dashboard/DashboardHeader";
-
+import menu from '../utils/menu.json'
 export default function ClientLayout() {
   let auth = useRecoilValue(authState);
-
+  const clientMenu = menu.clientMenu
   return (
     <div className="">
       {auth && auth?.role === "owner" ? (
         <div>
-          <Sidebar />
+          <Sidebar links={clientMenu} />
           <DashboardHeader />
           <div className="bg-[#FBFCFF] w-full lg:w-[calc(100vw-17vw)] ml-auto mt-14">
             <div className="w-full">
