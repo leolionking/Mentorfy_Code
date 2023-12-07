@@ -1,0 +1,78 @@
+{
+    "clientMenu": [
+        {
+            "name": "Dashboard",
+            "link": "/client-dashboard",
+            "icon": "home"
+        },
+        {
+            "name": "Mentors",
+            "link": "/client-mentors",
+            "icon": "user"
+        },
+        {
+            "name": "Mentees",
+            "link": "/client-mentees",
+            "icon": "sitemap"
+        },
+        {
+            "name": "Workspace Insights",
+            "link": "/client-workspace",
+            "icon": "chart-bar"
+        },
+        {
+            "name": "Plans & Billing",
+            "link": "/client-billing",
+            "icon": "credit-card"
+        },
+        {
+            "name": "Settings",
+            "link": "/client-settings",
+            "icon": "cog"
+        }
+    ],
+    "menteeMenu": [
+        {
+            "name": "Home",
+            "link": "/mentee-home",
+            "icon": "home"
+        },
+        {
+            "name": "Matches",
+            "link": "/mentee-matches",
+            "icon": "user"
+        },
+        {
+            "name": "My Requests",
+            "link": "/mentee-requests",
+            "icon": "time"
+        },
+        {
+            "name": "My Connections",
+            "link": "/mentee-connections",
+            "icon": "chart-bar"
+        }
+    ],
+    "mentorMenu": [
+        {
+            "name": "Home",
+            "link": "/mentor-home",
+            "icon": "home"
+        },
+        {
+            "name": "Matches",
+            "link": "/mentor-matches",
+            "icon": "user"
+        },
+        {
+            "name": "My Requests",
+            "link": "/mentor-requests",
+            "icon": "time"
+        },
+        {
+            "name": "My Connections",
+            "link": "/mentor-connections",
+            "icon": "chart-bar"
+        }
+    ]
+}
