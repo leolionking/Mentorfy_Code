@@ -54,19 +54,19 @@ export default function ClientMentors() {
       key: "phone",
     },
     {
-        title: " Status",
-        dataIndex: "isBanned",
-        key: "isBanned",
-        render: (_, { status }) => (
-          <>
-            {status === "false" ? (
-              <Tag color="gold">{status}</Tag>
-            ) : (
-              <Tag color="volcano">{status}</Tag>
-            )}
-          </>
-        ),
-      },
+      title: " Status",
+      dataIndex: "isBanned",
+      key: "isBanned",
+      render: (_, { status }) => (
+        <>
+          {status === "false" ? (
+            <Tag color="gold">{status}</Tag>
+          ) : (
+            <Tag color="volcano">{status}</Tag>
+          )}
+        </>
+      ),
+    },
     {
       title: "Action",
       dataIndex: "action",
@@ -76,12 +76,16 @@ export default function ClientMentors() {
 
   const dropdownItems = [
     {
-      key: '1',
-      label: 'Action 1',
+      key: "1",
+      label: "View Mentee info",
     },
     {
-      key: '2',
-      label: 'Action 2',
+      key: "2",
+      label: "Suspend Mentee",
+    },
+    {
+      key: "3",
+      label: "Close Account",
     },
   ];
 
@@ -171,7 +175,12 @@ export default function ClientMentors() {
   return (
     <div className=" w-full min-h-[90vh]">
       <div className="w-[90%] mx-auto pt-10">
-        <h3 className="font-['ginto-bold'] text-xl mb-10">Mentors </h3>
+        <div className="flex items-center justify-between mb-10">
+          <h3 className="font-['ginto-bold'] text-xl ">Mentors </h3>
+          <button className="pri-btn">
+            <i className="pi pi-users"></i>
+             Invite Mentors</button>
+        </div>
         <Table
           columns={columns}
           loading={loading}
