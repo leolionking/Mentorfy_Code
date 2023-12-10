@@ -21,6 +21,7 @@ import ClientMentors from "./pages/client/ClientMentors";
 import ClientMentees from "./pages/client/ClientMentees";
 import ClientSettings from "./pages/client/ClientSettings";
 import ClientWorkspaceInsights from "./pages/client/ClientWorkspaceInsights";
+import ClientAddWorkspace from "./pages/client/ClientAddWorkspace";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/client-workspace",
         element: <ClientWorkspaceInsights />,
+      },
+      {
+        path: "/client-add-workspace",
+        element: <ClientAddWorkspace />,
       },
       {
         path: "/client-settings",
