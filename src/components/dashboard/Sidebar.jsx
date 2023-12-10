@@ -1,11 +1,17 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { workspaceStore } from "../../atom/workspaceAtom";
 
 export default function Sidebar({ links }) {
-
+  const workspace = useRecoilValue(workspaceStore)
   return (
     <div className="hidden lg:block">
-      <div className="w-[17vw] fixed left-0 top-0 bg-[#1F2105] text-white h-[100vh]">
+      <div className="w-[17vw] fixed left-0 top-0  text-white h-[100vh]"  style={{
+        backgroundColor: workspace?.color
+          ? `#${workspace?.color}`
+          : "#1F2105",
+      }}>
         <div className="sidebar p-5 h-full">
           <div className="logo">{/* <img src={logo} alt="logo" /> */}</div>
           <div className="flex flex-col gap-4 mt-20">

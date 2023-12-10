@@ -61,8 +61,8 @@ export default function ClientMentors() {
     },
     {
       title: "Sign up date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "@dateCreated",
+      key: "@dateCreated",
     },
     {
       title: "Contact",
@@ -71,14 +71,18 @@ export default function ClientMentors() {
     },
     {
       title: " Status",
-      render: (_, { isBanned }) => (
+      render: (_,  isBanned ) => (
         <>
-          {isBanned === "false" ? (
-            <Tag color="gold">{isBanned}</Tag>
-          ) : (
-            <Tag color="volcano">{isBanned}</Tag>
-          )}
-        </>
+        {isBanned  === "false" ? (
+          <Tag bordered={false} color="volcano">
+            Banned
+          </Tag>
+        ) : (
+          <Tag bordered={false} color="green">
+            Active
+          </Tag>
+        )}
+      </>
       ),
     },
     {

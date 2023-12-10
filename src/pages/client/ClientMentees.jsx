@@ -73,12 +73,16 @@ export default function ClientMentees() {
       title: " Status",
       dataIndex: "isBanned",
       key: "isBanned",
-      render: (_, { status }) => (
+      render: (_, isBanned) => (
         <>
-          {status === "false" ? (
-            <Tag color="gold">{status}</Tag>
+          {isBanned  === "false" ? (
+            <Tag bordered={false} color="volcano">
+              Suspended
+            </Tag>
           ) : (
-            <Tag color="volcano">{status}</Tag>
+            <Tag bordered={false} color="green">
+              Active
+            </Tag>
           )}
         </>
       ),
@@ -94,7 +98,7 @@ export default function ClientMentees() {
               items,
             }}
           >
-           <i className=" pi pi-ellipsis-v"></i>
+            <i className=" pi pi-ellipsis-v"></i>
           </Dropdown>
         </Space>
       ),
@@ -139,7 +143,7 @@ export default function ClientMentees() {
     setShow(!show);
     banUserByWorkspace(payload)
       .then((res) => {
-        toast.error("User has ben banned!!!");
+        toast.error("User has ben suspended!!!");
         listMentees();
       })
       .catch((err) => console.log(err));
