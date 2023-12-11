@@ -6,7 +6,7 @@ import { authState } from "../atom/authAtom";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { useRecoilValue } from "recoil";
 
-export default function AddAreasOfInterest() {
+export default function AddAreasOfInterest({patchValue}) {
   const [area, setArea] = useState("");
   const [loading, setLoading] = useState(false);
   const workspace = useRecoilValue(workspaceStore);
@@ -32,6 +32,25 @@ export default function AddAreasOfInterest() {
       });
   };
 
+  const renameProfArea = () => {
+    const payload = {
+      _action: "rename",
+      _creatorId: auth.username,
+      _newName: area,
+      area_title: area,
+      _url: `${window.location.origin}/${workspace.id}`,
+      professional_areaId: patchValue.id,
+    };
+    professionalAreaAction(payload)
+      .then((res) => {
+        toast.success("Area of interest has been added");
+        setArea("");
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
   return (
     <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
       <h3 className="pb-5 font-['ginto-bold']">Areas of Interest</h3>

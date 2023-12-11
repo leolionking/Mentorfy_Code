@@ -1,11 +1,20 @@
 import { InputText } from 'primereact/inputtext'
 import { InputTextarea } from 'primereact/inputtextarea'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRecoilValue } from 'recoil'
+import { workspaceStore } from '../atom/workspaceAtom'
+import { authState } from '../atom/authAtom'
 
 export default function UpdateWorkspace() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-
+    const workspace = useRecoilValue(workspaceStore);
+    const auth = useRecoilValue(authState);
+  
+    useEffect(()=> {
+        setName(workspace.name)
+        setDescription(workspace.description)
+    }, [])
   return (
     <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
     <h3 className="pb-5 font-['ginto-bold']">Workspace Details</h3>
