@@ -1,8 +1,12 @@
 import { Avatar } from "primereact/avatar";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { user } from "../../atom/userAtom";
 import { useRecoilValue } from "recoil";
+import { getProvinces } from "../../utils/general/generalApi";
+import { toast } from "react-toastify";
+import { Dropdown } from "primereact/dropdown";
+
 
 export default function ClientSettings() {
   const [password, setPassword] = useState("");
@@ -12,7 +16,28 @@ export default function ClientSettings() {
   const [country, setCountry] = useState("");
   const [province, setProvince] = useState("");
   const [postalCode, setPostalCode] = useState("");
+  const [provinces, setProvinces] = useState([]);
+  const [loading, setLoading] = useState(false);
   const userData = useRecoilValue(user);
+
+
+  const fetchProvinces = () => {
+    getProvinces()
+      .then((res) => {
+        setProvinces(res.payload);
+      })
+      .catch((err) => {
+        toast.error(err.response.data.msg);
+      });
+  };
+  useEffect(()=> {
+    setFirstname(userData?.firstName)
+    setLastname(userData?.lastName)
+    setCountry(userData?.country)
+    setProvince(userData?.province)
+    setPostalCode(userData?.postalcode)
+    fetchProvinces()
+  }, [])
   return (
     <div className=" w-full min-h-[90vh]">
       <div className="w-[90%] mx-auto pt-10">
@@ -65,12 +90,16 @@ export default function ClientSettings() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="username">Last name</label>
-                  <InputText
-                    id="username"
-                    aria-describedby="name"
-                    value={lastname}
-                    onChange={(e) => setLastname(e.target.value)}
-                  />
+                  <Dropdown
+                        id="username"
+                        value={province}
+                        options={provinces}
+                        optionLabel="Province"
+                        optionValue="Province"
+                        className=" !text-black"
+                        filter
+                        onChange={(e)=> setProvince(e.target.value)}
+                      />
                 </div>
                 <div className="flex flex-col gap-2">
                   <label htmlFor="username">Postal Code</label>
@@ -82,7 +111,7 @@ export default function ClientSettings() {
                   />
                 </div>
               </div>
-              <button className="pri-btn w-fit">Save changes</button>
+              <button className="pri-btn w-fit" disabled={loading || postalCode === "" || firstname === "" || lastname == '' || province === ""}>Save changes</button>
             </div>
           </div>
           <div className="p-5 lg:p-10 lg:py-14 bg-white rounded-md shadow-small">
