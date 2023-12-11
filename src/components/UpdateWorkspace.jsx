@@ -1,18 +1,23 @@
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { user } from "../atom/userAtom";
-import { ownerWorkspaceEdit } from "../utils/client/clientApi";
+import {
+  getOwnerWorkspaceById,
+  ownerWorkspaceEdit,
+} from "../utils/client/clientApi";
 import { toast } from "react-toastify";
+import { authState } from "../atom/authAtom";
 
 export default function UpdateWorkspace() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
-  const workspace = useRecoilValue(workspaceStore);
+  const [workspace, setWorkspace] = useRecoilState(workspaceStore);
   const userData = useRecoilValue(user);
+  const auth = useRecoilValue(authState);
 
   const updateWorkspace = () => {
     setLoading(true);
@@ -25,7 +30,18 @@ export default function UpdateWorkspace() {
 
     ownerWorkspaceEdit(userPayload)
       .then((res) => {
-        toast.success("Workspace edit successfull");
+        toast.success("Workspace edit successful");
+        const data = {
+          id: workspace.id,
+          sessionID: auth?.sessionID,
+        };
+        getOwnerWorkspaceById(data)
+          .then((res) => {
+            setWorkspace(res.payload[0]);
+          })
+          .catch((err) => {
+            toast.error(err.response.data.msg);
+          });
         setLoading(false);
       })
       .catch((err) => {
@@ -69,6 +85,7 @@ export default function UpdateWorkspace() {
           disabled={loading || name === "" || description === ""}
           onClick={updateWorkspace}
         >
+          {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
           Update
         </button>
       </div>

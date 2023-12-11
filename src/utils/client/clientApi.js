@@ -27,6 +27,9 @@ const professionalAreaAction = async (payload) =>
 const getClientWorkspace = async (payload) =>
   await api.structure("workspace").getData("ownerWorkspaseListing", payload);
 
+  const getOwnerWorkspaceById = async (payload) =>
+  await api.structure("workspace").getData("getOwnerWorkspaceById", payload);
+
 const ownerWorkspaceEdit = async (payload) =>
   await api.structure("workspace").setData("ownerWorkspaceEdit", payload);
 
@@ -78,5 +81,6 @@ export {
   createWorkspaceUser,
   getInvoiceByWorkspace,
   editRequestWorkspaceUser,
+  getOwnerWorkspaceById,
   createWorkspaceWithPayment
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { authState } from "../atom/authAtom";
 import {
@@ -12,7 +12,7 @@ export default function ListAreasOfInterest() {
   const [area, setArea] = useState();
   const [patchData, setPatchData] = useState();
 
-  const workspace = useRecoilValue(workspaceStore);
+  const [workspace, setWorkspace] = useRecoilState(workspaceStore);
   const auth = useRecoilValue(authState);
 
   const openEdit = (data) => {
