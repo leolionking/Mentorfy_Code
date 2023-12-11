@@ -24,7 +24,6 @@ export default function ClientWorkspaceInsights() {
         </div>
         <div className="grid gap-5">
           <UpdateWorkspace />
-          <AddAreasOfInterest />
           <ListAreasOfInterest />
           <CustomizeWorkspaceAppearance />
         </div>
