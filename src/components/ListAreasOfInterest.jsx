@@ -46,7 +46,7 @@ export default function ListAreasOfInterest() {
   }, []);
 
   return (
-    <div className="">
+    <div className="grid gap-4">
       <AddAreasOfInterest />
 
       <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
