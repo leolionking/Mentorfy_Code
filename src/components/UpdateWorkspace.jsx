@@ -15,7 +15,7 @@ export default function UpdateWorkspace() {
   const userData = useRecoilValue(user);
 
   const updateWorkspace = () => {
- 
+    setLoading(true);
     const userPayload = {
       name: name,
       _creatorId: userData.id,
@@ -25,13 +25,14 @@ export default function UpdateWorkspace() {
 
     ownerWorkspaceEdit(userPayload)
       .then((res) => {
-        toast.success('Workspace edit successfull');
+        toast.success("Workspace edit successfull");
+        setLoading(false);
       })
       .catch((err) => {
         toast.error(err.response.data.msg);
+        setLoading(false);
       });
   };
-
 
   useEffect(() => {
     setName(workspace.name);
