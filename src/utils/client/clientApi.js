@@ -12,7 +12,7 @@ const workspaceGenericForm = async (payload) =>
 const getProfAreasByWorkSpace = async (payload) =>
   await api
     .structure("professional_areas")
-    .getData("getProfAreaByWorkspaceOwner", payload);
+    .getData("profAreasByWorspace_owner", payload);
 
 const getProfAreaByWorkspaceOwner = async (payload) =>
   await api
