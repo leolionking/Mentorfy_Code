@@ -262,7 +262,7 @@ export default function ClientOnboard() {
             };
             setAuth(payload);
             createDynamicForm(data.result[0].workspaceId);
-            navigate("/welcome");
+            navigate("/select-workspace");
           })
           .catch((err) => {
             setLoading(false);
