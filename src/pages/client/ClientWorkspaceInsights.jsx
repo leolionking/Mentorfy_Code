@@ -3,6 +3,7 @@ import UpdateWorkspace from "../../components/UpdateWorkspace";
 import AddAreasOfInterest from "../../components/AddAreasOfInterest";
 import ListAreasOfInterest from "../../components/ListAreasOfInterest";
 import CustomizeWorkspaceAppearance from "../../components/CustomizeWorkspaceAppearance";
+import { Link } from "react-router-dom";
 
 export default function ClientWorkspaceInsights() {
   return (
@@ -18,7 +19,7 @@ export default function ClientWorkspaceInsights() {
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <button className="outline-btn text-sm">Switch Workspace</button>
+            <Link to='/select-workspace' className="outline-btn text-sm">Switch Workspace</Link>
             <button className="outline-btn text-sm">Add Workspace</button>
           </div>
         </div>
