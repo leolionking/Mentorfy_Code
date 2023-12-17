@@ -47,7 +47,7 @@ export default function SelectWorkspace() {
   return (
     <div className="">
       <Header />
-    <div className="h-full pt-10 lg:h-[70vh] w-full">
+    <div className="h-[70vh] pt-10 min-h-[90vh] w-full bg-[#E6F9EB]/[0.2]">
       <div className="main h-full grid place-items-center">
         <div className="text-center">
           <p>
