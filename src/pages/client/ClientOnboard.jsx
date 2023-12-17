@@ -311,10 +311,10 @@ export default function ClientOnboard() {
             : "main  grid place-items-center h-full"
         }
       >
-        <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] py-10 shadow-small rounded-2xl">
+        <div className="form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10 shadow-small rounded-2xl">
           <div className="">
             {registration.onboardStep === 1 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
                   Setup Account password
                 </div>
@@ -358,7 +358,7 @@ export default function ClientOnboard() {
                 </div>
               </div>
             ) : registration.onboardStep === 2 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
                     className="pi pi-arrow-left cursor-pointer"
@@ -399,7 +399,7 @@ export default function ClientOnboard() {
                 </div>
               </div>
             ) : registration.onboardStep === 3 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
                     className="pi pi-arrow-left cursor-pointer"
@@ -474,7 +474,7 @@ export default function ClientOnboard() {
                 </div>
               </div>
             ) : registration.onboardStep === 4 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="flex items-center justify-between w-full pb-2">
                   <div className="ml-auto">
                     {registration.onboardStep}/{stages}
@@ -495,7 +495,7 @@ export default function ClientOnboard() {
                 </div>
               </div>
             ) : registration.onboardStep === 5 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
                     className="pi pi-arrow-left cursor-pointer"
@@ -568,7 +568,7 @@ export default function ClientOnboard() {
                 </div>
               </div>
             ) : registration.onboardStep === 6 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
                     className="pi pi-arrow-left cursor-pointer"
@@ -637,7 +637,7 @@ export default function ClientOnboard() {
                 </div>
               </div>
             ) : registration.onboardStep === 7 ? (
-              <div className="main py-5">
+              <div className="main py-3">
                 <div className="flex items-center justify-between w-full pb-2">
                   <i
                     className="pi pi-arrow-left cursor-pointer"

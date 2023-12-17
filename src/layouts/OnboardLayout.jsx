@@ -10,8 +10,11 @@ export default function OnboardLayout() {
     <div className="">
       {registration && registration?.step === 3 ? (
         <div>
-          <Header />
-          <Outlet />
+          <div className="sidebg w-[12vw] h-[100vh] fixed top-0 left-0 z-50"></div>
+          <div className="w-[calc(100vw-12vw)] ml-auto">
+            <Header />
+            <Outlet />
+          </div>
         </div>
       ) : (
         <>

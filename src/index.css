@@ -36,6 +36,10 @@ body {
   font-family: "ginto";
 }
 
+.sidebg{
+  background-image: url('./assets/side-bg.svg');
+}
+
 .tucalendi_iframe_root > .TuCali--widget-content {
   border: none !important;
 }

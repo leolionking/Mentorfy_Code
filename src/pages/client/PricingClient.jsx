@@ -356,7 +356,7 @@ export default function PricingClient() {
       {registration?.step !== 3 ? (
         <div className="bg-black/70 h-full absolute top-0 left-0 z-100 w-full">
           <div className="main w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] left-[50%] translate-y-[-70%] translate-x-[-50%] h-fit rounded-2xl ">
-            {registration.step === 1 ? (
+            {registration?.step === 1 ? (
               <form onSubmit={handleSubmit} className="main grid gap-2">
                 <h2 className="headThree text-center flex items-center gap-2 justify-center">
                   Hey there! <img src={avatar} alt="" />
@@ -407,7 +407,7 @@ export default function PricingClient() {
                   </button>
                 </div>
               </form>
-            ) : registration.step === 2 ? (
+            ) : registration?.step === 2 ? (
               <div className="main grid gap-2">
                 <i
                   className="pi pi-arrow-left pb-5 cursor-pointer"

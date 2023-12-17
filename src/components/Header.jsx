@@ -1,10 +1,10 @@
 import React from "react";
-import logo from "../assets/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { authState } from "../atom/authAtom";
 import { useRecoilState } from "recoil";
 import { logout } from "../utils/general/generalApi";
 import { toast } from "react-toastify";
+import logo from '../assets/logo/mentorfy-logo.svg';
 
 export default function Header() {
   const [auth, setAuth] = useRecoilState(authState);
