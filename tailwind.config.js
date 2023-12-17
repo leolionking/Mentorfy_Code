@@ -12,6 +12,7 @@ module.exports = {
       },
       boxShadow: {
         small: "0px 17.7729px 54.686px rgba(27, 25, 86, 0.06)",
+        card: "0px 4px 32px 0px rgba(6, 7, 13, 0.01)",
       },
     },
   },

@@ -197,7 +197,7 @@ tr{
 }
 
 th{
-  @apply font-['ginto-bold']
+  @apply font-light
 }
 
 td{
