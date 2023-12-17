@@ -57,7 +57,7 @@ export default function ClientProfile() {
         <div className="grid gap-4">
           <div className="p-5 lg:p-10 lg:py-14 bg-white rounded-md shadow-small">
             <h3 className="pb-5 text-lg font-['ginto-bold']">
-              Profile
+            Manage your personal information
             </h3>
             <div className="grid gap-5 w-full mx-auto">
               <div className="form w-full grid md:grid-cols-2 gap-4">

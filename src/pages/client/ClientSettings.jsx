@@ -30,11 +30,11 @@ export default function ClientSettings() {
       label: "Security",
       children: <ClientSecurity/>,
     },
-    {
-      key: "5",
-      label: "Notifications",
-      children: "Content of Tab Pane 3",
-    },
+    // {
+    //   key: "5",
+    //   label: "Notifications",
+    //   children: "Content of Tab Pane 3",
+    // },
     // {
     //   key: "7",
     //   label: "Themes",
