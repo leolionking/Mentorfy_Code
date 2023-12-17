@@ -7,7 +7,7 @@ export default function Dashboard() {
   const userData = useRecoilValue(user)
   return (
     <div>
-      <div className="p-10">
+      <div className="p-4 lg:p-10">
         <h1 className="pt-3 text-xl lg:text-3xl font-['ginto-bold']"> Welcome {userData?.firstName} 👏</h1>
         <p>Track and Manage your Mentorship Workspace</p>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 mt-10">

@@ -130,7 +130,7 @@ input, textarea {
   @apply !font-['ginto'];
 }
 label {
-  @apply text-sm font-bold;
+  @apply text-sm font-light;
 }
 
 .ant-carousel .slick-dots {
@@ -146,6 +146,10 @@ label {
   margin-left: 15%;
   padding-left: 0;
   list-style: none;
+}
+
+:where(.css-dev-only-do-not-override-p7e5j5).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: var(--primary) !important;
 }
 
 .price {
