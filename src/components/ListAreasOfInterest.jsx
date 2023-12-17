@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { InputText } from "primereact/inputtext";
+import { toast } from "react-toastify";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { authState } from "../atom/authAtom";
@@ -11,11 +13,13 @@ import AddAreasOfInterest from "./AddAreasOfInterest";
 export default function ListAreasOfInterest() {
   const [area, setArea] = useState();
   const [patchData, setPatchData] = useState();
-
+  const [loading, setLoading] = useState(false);
+  const [myArea, setMyArea] = useState();
   const [workspace, setWorkspace] = useRecoilState(workspaceStore);
   const auth = useRecoilValue(authState);
 
   const openEdit = (data) => {
+    setArea(data.area_title);
     setPatchData(data);
   };
 
@@ -25,7 +29,7 @@ export default function ListAreasOfInterest() {
       sessionID: auth.sessionID,
     };
     getProfAreasByWorkSpace(payload).then((res) => {
-      setArea(res.payload);
+      setMyArea(res.payload);
     });
   };
 
@@ -41,21 +45,86 @@ export default function ListAreasOfInterest() {
     });
   };
 
+  const createArea = () => {
+    setLoading(true);
+    const payload = {
+      _action: "createAuto",
+      _creatorId: auth.username,
+      _newName: area,
+      _url: `${window.location.origin}/${workspace.id}`,
+      area_title: area,
+    };
+    professionalAreaAction(payload)
+      .then((res) => {
+        toast.success("Area of interest has been added");
+        setArea("");
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
+  const renameProfArea = (data) => {
+    const payload = {
+      _action: "rename",
+      _creatorId: auth.username,
+      _newName: area,
+      area_title: area,
+      _url: `${window.location.origin}/${workspace.id}`,
+      professional_areaId: data.id,
+    };
+    professionalAreaAction(payload)
+      .then((res) => {
+        toast.success("Area of interest has been added");
+        setArea("");
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     getProfessionalAreas();
   }, []);
 
   return (
     <div className="grid gap-4">
-      <AddAreasOfInterest />
+      <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
+        <h3 className="pb-5 text-lg font-['ginto-bold']">Areas of Interest</h3>
+
+        <div className="form w-full lg:w-[70%] grid gap-4">
+          <div className="flex flex-col gap-2">
+            <label htmlFor="username">New Area of interest</label>
+            <InputText
+              id="username"
+              aria-describedby="name"
+              value={area}
+              onChange={(e) => setArea(e.target.value)}
+            />
+          </div>
+
+          <button
+            className="pri-btn w-fit"
+            disabled={loading || area === ""}
+            onClick={createArea}
+          >
+            {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+            {patchData ? "Update Area of Interest" : " Add Area of Interest"}
+          </button>
+        </div>
+      </div>
 
       <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
-        <h3 className="pb-5 text-lg font-['ginto-bold']">Added Areas of Interest</h3>
+        <h3 className="pb-5 text-lg font-['ginto-bold']">
+          Added Areas of Interest
+        </h3>
         <div className="form w-full lg:w-[70%] grid gap-4">
           <div className="flex flex-col gap-2">
             <div className="grid md:grid-cols-2 lg:grid-cols-3">
-              {area &&
-                area.map((area, i) => (
+              {myArea &&
+                myArea.map((area, i) => (
                   <>
                     <div
                       key={i}
