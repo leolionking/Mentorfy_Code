@@ -224,9 +224,9 @@ export default function ClientOnboard() {
 
   const finishSetup = () => {
     setLoading(true);
-    const {fullName, ...others} = registration?.user;
-    const firstname = fullName.split(' ')[0]
-    const lastname = fullName.split(' ')[1]
+    const { fullName, ...others } = registration?.user;
+    const firstname = fullName.split(" ")[0];
+    const lastname = fullName.split(" ")[1];
     const userPayload = {
       name: registration.workspace.name,
       workspaceLogo: dataUrl,
