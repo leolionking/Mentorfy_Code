@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Space, Table } from "antd";
+import { workspaceStore } from "../../atom/workspaceAtom";
+import { authState } from "../../atom/authAtom";
+import { useRecoilValue } from "recoil";
+import { getRecentOnboarding } from "../../utils/client/clientApi";
 
 export default function RecentSignup() {
+  const auth = useRecoilValue(authState);
+  const workspaceData = useRecoilValue(workspaceStore);
+  const [onboardings, setOnboardings] = useState([]);
+
   const columns = [
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "firstName",
+      key: "firstName ",
     },
     {
       title: "Email",
@@ -14,13 +22,27 @@ export default function RecentSignup() {
       key: "email",
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
     },
   ];
 
   const data = []
+  const getOnboarding = () => {
+    const payload = {
+      sessionID: auth?.sessionID,
+      id: workspaceData.id,
+    };
+    getRecentOnboarding(payload)
+      .then((res) => {
+        setOnboardings(res.payload.slice(0,5));
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getOnboarding();
+  }, []);
   return (
     <div className="bg-white w-full shadow-small">
       <div className="p-4">
@@ -28,7 +50,7 @@ export default function RecentSignup() {
         <Table
           columns={columns}
           pagination={1}
-          dataSource={data}
+          dataSource={onboardings}
           className=" !box-shadow-[0px_12px_40px_0px_rgba(22,33,242,0.05)];
         "
         />

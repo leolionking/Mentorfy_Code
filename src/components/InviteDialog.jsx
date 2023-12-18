@@ -72,6 +72,7 @@ export default function InviteDialog({ visibility, type }) {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     aria-describedby="fullname-help"
+                    className="!border-gray-300"
                   />
                 </div>
 
