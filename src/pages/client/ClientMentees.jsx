@@ -10,6 +10,7 @@ import { inviteUsers } from "../../utils/general/generalApi";
 import { banUserByWorkspace } from "../../utils/client/clientApi";
 import { toast } from "react-toastify";
 import InviteDialog from "../../components/InviteDialog";
+import { Avatar } from "primereact/avatar";
 
 export default function ClientMentees() {
   const workspaceData = useRecoilValue(workspaceStore);
@@ -24,17 +25,22 @@ export default function ClientMentees() {
   const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
   const [email, setEmail] = useState("");
-   const [details, setDetails] = useState()
-  const handleMenuClick = (e) => {
-    setDetails(e)
+  const [details, setDetails] = useState();
+  const handleMenuClick = (data) => {
+    setDetails(data);
+    console.log(data);
   };
   const openuser = () => {
-    setViewUser(viewUser => !viewUser)
+    setViewUser((viewUser) => !viewUser);
   };
   const items = [
     {
       key: "1",
-      label: <p className="text-xs p-1" onClick={openuser}>View Mentee info</p>,
+      label: (
+        <p className="text-xs p-1" onClick={openuser}>
+          View Mentee info
+        </p>
+      ),
     },
     {
       key: "2",
@@ -108,8 +114,11 @@ export default function ClientMentees() {
             menu={{
               items,
             }}
-            >
-            <i className=" pi pi-ellipsis-v" onClick={(e)=> handleMenuClick(data)}></i>
+          >
+            <i
+              className=" pi pi-ellipsis-v"
+              onClick={(e) => handleMenuClick(data)}
+            ></i>
           </Dropdown>
         </Space>
       ),
@@ -209,6 +218,67 @@ export default function ClientMentees() {
         />
       </div>
       <InviteDialog visibility={visible} type={"Mentee"} />
+
+      {viewUser ? (
+        <div className="dialog">
+          <div className=" main transition-all w-full lg:w-[45vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+            <div className="main grid gap-2">
+              <i
+                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                onClick={openuser}
+              ></i>
+              <h2 className="headFour text-center flex items-center gap-2 justify-center">
+                Mentee Details
+              </h2>
+            <div className="grid grid-cols-[1fr,10fr] gap-3">
+              <div className="">
+                <Avatar label={details?.firstName?.split("")[0]} size="xlarge" shape="circle" />
+              </div>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3">
+                    <div className="">
+                      <p></p>
+                      <h4>FULL NAME</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>GENDER</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>ACTIVE SESSIONS</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>MOBILE NUMBER</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>EMAIL</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>PROFESSIONAL AREA</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>YEARS OF EXPERIENCE</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>PROVINCE</h4>
+                    </div>
+                    <div className="">
+                      <p></p>
+                      <h4>POSTAL CODE</h4>
+                    </div>
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
