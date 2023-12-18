@@ -17,17 +17,24 @@ export default function ClientMentees() {
   const auth = useRecoilValue(authState);
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
+  const [viewUser, setViewUser] = useState(false);
   const [show, setShow] = useState(false);
   const [unBanUser, setUnbanUser] = useState(false);
   const [menteesUsers, setMenteesUsers] = useState([]);
   const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
   const [email, setEmail] = useState("");
-
+   const [details, setDetails] = useState()
+  const handleMenuClick = (e) => {
+    setDetails(e)
+  };
+  const openuser = () => {
+    setViewUser(viewUser => !viewUser)
+  };
   const items = [
     {
       key: "1",
-      label: <p className="text-xs p-1">View Mentee info</p>,
+      label: <p className="text-xs p-1" onClick={openuser}>View Mentee info</p>,
     },
     {
       key: "2",
@@ -38,7 +45,10 @@ export default function ClientMentees() {
       label: <p className="text-xs p-1">Close Account</p>,
     },
   ];
-
+  const menuProps = {
+    items,
+    onClick: handleMenuClick,
+  };
   const columns = [
     {
       title: "First name",
@@ -76,7 +86,7 @@ export default function ClientMentees() {
       key: "isBanned",
       render: (_, isBanned) => (
         <>
-          {isBanned  === "false" ? (
+          {isBanned === "false" ? (
             <Tag bordered={false} color="volcano">
               Suspended
             </Tag>
@@ -91,22 +101,20 @@ export default function ClientMentees() {
     {
       title: "Action",
       dataIndex: "action",
-      render: () => (
+      render: (_, data) => (
         <Space size="middle">
           <Dropdown
             className="text-sm"
             menu={{
               items,
             }}
-          >
-            <i className=" pi pi-ellipsis-v"></i>
+            >
+            <i className=" pi pi-ellipsis-v" onClick={(e)=> handleMenuClick(data)}></i>
           </Dropdown>
         </Space>
       ),
     },
   ];
-
-
 
   const listMentees = () => {
     setLoaded(true);
@@ -174,10 +182,8 @@ export default function ClientMentees() {
   };
 
   const openInvite = () => {
-    setVisible(visible => !visible);
-
+    setVisible((visible) => !visible);
   };
-
 
   useEffect(() => {
     listMentees();
@@ -202,8 +208,7 @@ export default function ClientMentees() {
               "
         />
       </div>
-      <InviteDialog visibility={visible} type={'Mentee'}/>
-
+      <InviteDialog visibility={visible} type={"Mentee"} />
     </div>
   );
 }
