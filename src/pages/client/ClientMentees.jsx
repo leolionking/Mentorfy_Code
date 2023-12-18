@@ -9,6 +9,7 @@ import { getMenteesByWorkspaceId } from "../../utils/mentee/menteeApi";
 import { inviteUsers } from "../../utils/general/generalApi";
 import { banUserByWorkspace } from "../../utils/client/clientApi";
 import { toast } from "react-toastify";
+import InviteDialog from "../../components/InviteDialog";
 
 export default function ClientMentees() {
   const workspaceData = useRecoilValue(workspaceStore);
@@ -105,20 +106,7 @@ export default function ClientMentees() {
     },
   ];
 
-  let inviteLink = `${window.location.origin}/mentee-signup/${workspaceData?.id}`;
 
-  const sendInvite = () => {
-    const payload = {
-      email: email,
-      url: inviteLink,
-      workspaceName: workspaceData.name,
-    };
-    inviteUsers(payload).then((res) => {
-      setVisible(!visible);
-      setEmail("");
-      toast.error("Invite has been sent successfully");
-    });
-  };
 
   const listMentees = () => {
     setLoaded(true);
@@ -185,6 +173,12 @@ export default function ClientMentees() {
     setShow(!show);
   };
 
+  const openInvite = () => {
+    setVisible(visible => !visible);
+
+  };
+
+
   useEffect(() => {
     listMentees();
   }, []);
@@ -194,7 +188,7 @@ export default function ClientMentees() {
       <div className="w-[90%] mx-auto pt-10">
         <div className="flex items-center justify-between mb-10">
           <h3 className="font-['ginto-bold'] text-xl ">Mentees </h3>
-          <button className="pri-btn">
+          <button className="pri-btn" onClick={openInvite}>
             <i className="pi pi-users"></i>
             Invite Mentees
           </button>
@@ -208,6 +202,8 @@ export default function ClientMentees() {
               "
         />
       </div>
+      <InviteDialog visibility={visible} type={'Mentee'}/>
+
     </div>
   );
 }

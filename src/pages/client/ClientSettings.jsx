@@ -1,5 +1,5 @@
 
-import { Tabs } from "antd";
+import { Tabs, ConfigProvider } from "antd";
 import ClientWorkspace from "./ClientWorkspace";
 import { Link } from "react-router-dom";
 import ClientProfile from "./ClientProfile";
@@ -62,8 +62,6 @@ export default function ClientSettings() {
             </div>
           </div>
           <Tabs defaultActiveKey="1" items={items} className=" relative z-40" />
-
-     
         </div>
       </div>
     </div>

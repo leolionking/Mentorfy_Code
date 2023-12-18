@@ -21,6 +21,7 @@ import ClientMentors from "./pages/client/ClientMentors";
 import ClientMentees from "./pages/client/ClientMentees";
 import ClientSettings from "./pages/client/ClientSettings";
 import ClientAddWorkspace from "./pages/client/ClientAddWorkspace";
+import Notification from "./components/Notification";
 
 const router = createBrowserRouter([
   {
@@ -83,6 +84,10 @@ const router = createBrowserRouter([
       {
         path: "/client-workspace",
         element: '',
+      },
+      {
+        path: "/client-notifications",
+        element: <Notification />,
       },
       {
         path: "/client-add-workspace",

@@ -6,7 +6,9 @@ export default function CustomizeWorkspaceAppearance() {
       <h3 className="pb-5 text-lg font-['ginto-bold']">Customize Workspace Appearance</h3>
 
       <div className="form w-full lg:w-[70%] grid gap-4">
-        <div className="flex flex-col gap-2"></div>
+        <div className="flex flex-col gap-2">
+          
+        </div>
       </div>
     </div>
   );

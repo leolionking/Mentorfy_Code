@@ -9,19 +9,21 @@ import { getMentorsByWorkspaceId } from "../../utils/mentor/mentorApi";
 import { inviteUsers } from "../../utils/general/generalApi";
 import { banUserByWorkspace } from "../../utils/client/clientApi";
 import { toast } from "react-toastify";
+import CopyToClipboard from "react-copy-to-clipboard";
+import { InputText } from "primereact/inputtext";
+import InviteDialog from "../../components/InviteDialog";
 
 export default function ClientMentors() {
   const workspaceData = useRecoilValue(workspaceStore);
   const userData = useRecoilValue(user);
   const auth = useRecoilValue(authState);
   const navigate = useNavigate();
-  const [visible, setVisible] = useState(false);
   const [show, setShow] = useState(false);
   const [unBanUser, setUnbanUser] = useState(false);
   const [mentorUsers, setMentorUsers] = useState([]);
   const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
-  const [email, setEmail] = useState("");
+  const [visible, setVisible] = useState(false);
 
   const items = [
     {
@@ -71,18 +73,18 @@ export default function ClientMentors() {
     },
     {
       title: " Status",
-      render: (_,  isBanned ) => (
+      render: (_, isBanned) => (
         <>
-        {isBanned  === "false" ? (
-          <Tag bordered={false} color="volcano">
-            Banned
-          </Tag>
-        ) : (
-          <Tag bordered={false} color="green">
-            Active
-          </Tag>
-        )}
-      </>
+          {isBanned === "false" ? (
+            <Tag bordered={false} color="volcano">
+              Banned
+            </Tag>
+          ) : (
+            <Tag bordered={false} color="green">
+              Active
+            </Tag>
+          )}
+        </>
       ),
     },
     {
@@ -103,20 +105,8 @@ export default function ClientMentors() {
     },
   ];
 
-  let inviteLink = `${window.location.origin}/mentor-signup/${workspaceData?.id}`;
 
-  const sendInvite = () => {
-    const payload = {
-      email: email,
-      url: inviteLink,
-      workspaceName: workspaceData.name,
-    };
-    inviteUsers(payload).then((res) => {
-      setVisible(!visible);
-      setEmail("");
-      toast.error("Invite has been sent successfully");
-    });
-  };
+
 
   const listMentors = () => {
     setLoaded(true);
@@ -182,6 +172,11 @@ export default function ClientMentors() {
     setShow(!show);
   };
 
+  const openInvite = () => {
+    setVisible(visible => !visible);
+
+  };
+
   useEffect(() => {
     listMentors();
   }, []);
@@ -191,7 +186,7 @@ export default function ClientMentors() {
       <div className="w-[90%] mx-auto pt-10">
         <div className="flex items-center justify-between mb-10">
           <h3 className="font-['ginto-bold'] text-xl ">Mentors </h3>
-          <button className="pri-btn">
+          <button className="pri-btn" onClick={openInvite}>
             <i className="pi pi-users"></i>
             Invite Mentors
           </button>
@@ -205,6 +200,7 @@ export default function ClientMentors() {
             "
         />
       </div>
+        <InviteDialog visibility={visible} type={'Mentor'}/>
     </div>
   );
 }

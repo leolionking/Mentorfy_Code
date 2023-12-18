@@ -27,7 +27,9 @@ export default function DashboardHeader() {
             <span className="font-bold">{workspace.name}</span>
           </div>
           <div className=" hidden lg:flex items-center gap-4">
+            <Link to='/client-notifications'>
             <i className="pi pi-bell"></i>
+            </Link>
             <Link to="/select-workspace" className="text-sm">
               Workspaces
             </Link>

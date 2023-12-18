@@ -47,6 +47,12 @@ const getUserGenericForm = async (payload) =>
 const getUserWorkspace = async (payload) =>
   await api.structure("workspace").getData("getUserWorkspaceById", payload);
 
+const getMyALLNotification = async (payload) =>
+  await api.structure("notification").getData("getMyALLNotification", payload);
+
+const allNotificationByUserWorkspaceId = async (payload) =>
+  await api.structure("notification").getData("allNotificationByUserWorkspaceId", payload);
+
 const checkUserEmailByWorkspace = async (payload) =>
   await api
     .structure("userByworkSpace")
@@ -74,5 +80,7 @@ export {
   getUserWorkspace,
   checkUserEmailByWorkspace,
   checkUserForValidation,
-  inviteUsers
+  inviteUsers,
+  getMyALLNotification,
+  allNotificationByUserWorkspaceId
 };
