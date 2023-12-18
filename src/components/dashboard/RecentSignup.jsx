@@ -13,18 +13,19 @@ export default function RecentSignup() {
   const columns = [
     {
       title: "Name",
-      dataIndex: "firstName",
-      key: "firstName ",
+      render: (_, {firstName, lastName})=> (
+        <>
+         <p>{firstName + " " + lastName}</p>
+        </>
+      )
     },
     {
       title: "Email",
       dataIndex: "email",
-      key: "email",
     },
     {
       title: "Role",
       dataIndex: "role",
-      key: "role",
     },
   ];
 
@@ -49,7 +50,7 @@ export default function RecentSignup() {
         <h3 className="font-['ginto-bold'] mb-3">Recent Onboarding </h3>
         <Table
           columns={columns}
-          pagination={1}
+          pagination={false}
           dataSource={onboardings}
           className=" !box-shadow-[0px_12px_40px_0px_rgba(22,33,242,0.05)];
         "
