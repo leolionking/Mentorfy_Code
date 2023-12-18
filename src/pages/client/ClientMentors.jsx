@@ -241,29 +241,29 @@ export default function ClientMentors() {
                     <p className="font-bold text-[.85rem] text-gray-900">
                       {details?.firstName + " " + details?.lastName}
                     </p>
-                    <h4 className="text-sm text-gray-400">FULL NAME</h4>
+                    <h4 className="text-xs text-gray-400">FULL NAME</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] text-gray-900">
                       {details?.gender}
                     </p>
-                    <h4 className="text-sm text-gray-400">GENDER</h4>
+                    <h4 className="text-xs text-gray-400">GENDER</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] text-gray-900">0</p>
-                    <h4 className="text-sm text-gray-400">ACTIVE SESSIONS</h4>
+                    <h4 className="text-xs text-gray-400">ACTIVE SESSIONS</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] text-gray-900">
                       {details?.phone}
                     </p>
-                    <h4 className="text-sm text-gray-400">MOBILE NUMBER</h4>
+                    <h4 className="text-xs text-gray-400">MOBILE NUMBER</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] text-gray-900">
                       {details?.email}
                     </p>
-                    <h4 className="text-sm text-gray-400">EMAIL</h4>
+                    <h4 className="text-xs text-gray-400">EMAIL</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] flex items-center gap-2 text-gray-900">
@@ -271,13 +271,13 @@ export default function ClientMentors() {
                         <p key={i}>{res.area_title}</p>
                       ))}
                     </p>
-                    <h4 className="text-sm text-gray-400">PROFESSIONAL AREA</h4>
+                    <h4 className="text-xs text-gray-400">PROFESSIONAL AREA</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] text-gray-900">
                       {details?.yearsofprofessionalinterest}
                     </p>
-                    <h4 className="text-sm text-gray-400">
+                    <h4 className="text-xs text-gray-400">
                       YEARS OF EXPERIENCE
                     </h4>
                   </div>
@@ -285,13 +285,13 @@ export default function ClientMentors() {
                     <p classname="font-bold text-[.85rem] text-gray-900">
                       {details?.provinceId}
                     </p>
-                    <h4 className="text-sm text-gray-400">PROVINCE</h4>
+                    <h4 className="text-xs text-gray-400">PROVINCE</h4>
                   </div>
                   <div className="">
                     <p classname="font-bold text-[.85rem] text-gray-900">
                       {details?.postalcode}
                     </p>
-                    <h4 className="text-sm text-gray-400">POSTAL CODE</h4>
+                    <h4 className="text-xs text-gray-400">POSTAL CODE</h4>
                   </div>
                 </div>
               </div>
