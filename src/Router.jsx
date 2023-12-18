@@ -23,6 +23,7 @@ import ClientSettings from "./pages/client/ClientSettings";
 import ClientAddWorkspace from "./pages/client/ClientAddWorkspace";
 import Notification from "./components/Notification";
 import ClientBilling from "./pages/client/ClientBilling";
+import MenteeSignup from "./pages/workspaceUser/UserSignup";
 
 const router = createBrowserRouter([
   {
@@ -118,6 +119,22 @@ const router = createBrowserRouter([
     path: "/",
     element: <MenteeLayout />,
     children: [
+      {
+        path: "/mentee-signin/:id",
+        element: <MenteeLogin />,
+      },
+      {
+        path: "/mentee-signup/:id",
+        element: <MenteeSignup />,
+      },
+      {
+        path: "/mentee-signin/:id",
+        element: <MenteeLogin />,
+      },
+      {
+        path: "/mentee-signin/:id",
+        element: <MenteeLogin />,
+      },
       {
         path: "/mentee-signin/:id",
         element: <MenteeLogin />,
