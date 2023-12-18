@@ -36,11 +36,15 @@ export default function ClientMentors() {
   const items = [
     {
       key: "1",
-      label: <p className="text-xs p-1">View Mentee info</p>,
+      label: (
+        <p className="text-xs p-1" onClick={openuser}>
+          View Mentor info
+        </p>
+      ),
     },
     {
       key: "2",
-      label: <p className="text-xs p-1">Suspend Mentee</p>,
+      label: <p className="text-xs p-1">Suspend Mentor</p>,
     },
     {
       key: "3",
