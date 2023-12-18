@@ -22,6 +22,7 @@ import ClientMentees from "./pages/client/ClientMentees";
 import ClientSettings from "./pages/client/ClientSettings";
 import ClientAddWorkspace from "./pages/client/ClientAddWorkspace";
 import Notification from "./components/Notification";
+import ClientBilling from "./pages/client/ClientBilling";
 
 const router = createBrowserRouter([
   {
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: "/client-notifications",
         element: <Notification />,
+      },
+      {
+        path: "/client-billing",
+        element: <ClientBilling />,
       },
       {
         path: "/client-add-workspace",
