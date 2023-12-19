@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { InboxOutlined } from "@ant-design/icons";
@@ -32,7 +32,7 @@ export default function CustomizeWorkspaceAppearance() {
     const userPayload = {
       _creatorId: auth.username,
       color: color.split("#")[1],
-      workspaceLogo: dataUrl,
+      logo: dataUrl,
       id: workspace.id,
     };
 
@@ -57,6 +57,11 @@ export default function CustomizeWorkspaceAppearance() {
         setLoading(false);
       });
   }
+
+  useEffect(()=> {
+      setImage(workspace.logo)
+      setColor(workspace.color)
+  }, [])
   return (
     <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
       <h3 className="pb-5 text-lg font-['ginto-bold']">
@@ -81,14 +86,14 @@ export default function CustomizeWorkspaceAppearance() {
             <label htmlFor="upload-button">
               <div className="p-2 rounded-lg border-dashed border-[1px] border-gray-300 bg-[#DFDFDF]/10 flex items-center flex-col justify-center text-center">
               <img
-                  src={workspace.logo}
+                  src={image}
                   alt="logo"
                   className="object-cover h-[80px] w-[80px] rounded-full pb-2"
                 />
-                <button className="pri-btn"> 
+                <p className="pri-btn"> 
                   <i className="pi pi-upload"> </i>
                   Browse Logo
-                </button>
+                </p>
                 <small className="pt-1">Upload file must be PNG or JPG format</small>
               </div>
             </label>
