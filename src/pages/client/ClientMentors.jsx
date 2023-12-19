@@ -13,6 +13,8 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { InputText } from "primereact/inputtext";
 import InviteDialog from "../../components/InviteDialog";
 import { Avatar } from "primereact/avatar";
+import { Checkbox } from "primereact/checkbox";
+import { InputTextarea } from "primereact/inputtextarea";
 
 export default function ClientMentors() {
   const workspaceData = useRecoilValue(workspaceStore);
@@ -24,14 +26,45 @@ export default function ClientMentors() {
   const [mentorUsers, setMentorUsers] = useState([]);
   const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
+  const [others, setOthers] = useState();
   const [visible, setVisible] = useState(false);
   const [viewUser, setViewUser] = useState(false);
+  const [suspendUser, setSuspendUser] = useState(false);
+  const [type, setType] = useState();
   const [details, setDetails] = useState();
   const handleMenuClick = (data) => {
     setDetails(data);
   };
   const openuser = () => {
     setViewUser((viewUser) => !viewUser);
+  };
+  const openSuspension = (data) => {
+    setSuspendUser((suspendUser) => !suspendUser);
+    setType(data)
+    setOthers()
+    setSelectedCategories([])
+  };
+
+  const categories = [
+    { name: "Violating Community Guidelines", key: "A" },
+    { name: "Spam or Misuse", key: "B" },
+    { name: "Impersonation", key: "C" },
+    { name: "Copyright or Intellectual Property Infringement", key: "D" },
+    { name: "Hate Speech and Harassment", key: "E" },
+  ];
+  const [selectedCategories, setSelectedCategories] = useState([categories[1]]);
+
+
+  const onCategoryChange = (e) => {
+    let _selectedCategories = [...selectedCategories];
+
+    if (e.checked) _selectedCategories.push(e.value);
+    else
+      _selectedCategories = _selectedCategories.filter(
+        (category) => category.key !== e.value.key
+      );
+
+    setSelectedCategories(_selectedCategories);
   };
   const items = [
     {
@@ -44,11 +77,15 @@ export default function ClientMentors() {
     },
     {
       key: "2",
-      label: <p className="text-xs p-1">Suspend Mentor</p>,
+      label: (
+        <p className="text-xs p-1" onClick={() => openSuspension('suspend')}>
+          Suspend Mentor
+        </p>
+      ),
     },
     {
       key: "3",
-      label: <p className="text-xs p-1">Close Account</p>,
+      label: <p className="text-xs p-1"  onClick={() => openSuspension('close')}>Close Account</p>,
     },
   ];
 
@@ -120,9 +157,6 @@ export default function ClientMentors() {
     },
   ];
 
-
-
-
   const listMentors = () => {
     setLoaded(true);
     const payload = {
@@ -188,8 +222,7 @@ export default function ClientMentors() {
   };
 
   const openInvite = () => {
-    setVisible(visible => !visible);
-
+    setVisible((visible) => !visible);
   };
 
   useEffect(() => {
@@ -215,9 +248,9 @@ export default function ClientMentors() {
             "
         />
       </div>
-        <InviteDialog visibility={visible} type={'Mentor'}/>
+      <InviteDialog visibility={visible} type={"Mentor"} />
 
-        {viewUser ? (
+      {viewUser ? (
         <div className="dialog">
           <div className=" main transition-all w-full lg:w-[55vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
@@ -294,6 +327,62 @@ export default function ClientMentors() {
                     <h4 className="text-xs text-gray-400">POSTAL CODE</h4>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {suspendUser ? (
+        <div className="dialog">
+          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+            <div className=" grid gap-2">
+              <i
+                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                onClick={openSuspension}
+              ></i>
+              <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
+                {type === 'suspend'? 'Suspend Mentor': 'Close Account'} 
+              </h2>
+              <div className="questions">
+                <p className="my-3 text-sm">Select reason for Suspension</p>
+                <div className="grid gap-2">
+                  {categories.map((category) => {
+                    return (
+                      <div
+                        key={category.key}
+                        className="flex align-center gap-2"
+                      >
+                        <Checkbox
+                          inputId={category.key}
+                          name="category"
+                          className="border border-black  rounded-md"
+                          value={category}
+                          onChange={onCategoryChange}
+                          checked={selectedCategories.some(
+                            (item) => item.key === category.key
+                          )}
+                        />
+                        <label htmlFor={category.key} className="ml-2">
+                          {category.name}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-4">
+                  <p className="text-sm mb-3">Others</p>
+                  <InputTextarea
+                    cols={4}
+                    rows={6}
+                    className=" resize-none border p-3 border-gray-300"
+                    value={others}
+                    onChange={(e) => setOthers(e.target.value)}
+                  ></InputTextarea>
+                </div>
+                <button className="pri-btn w-full my-3" > Save</button>
               </div>
             </div>
           </div>
