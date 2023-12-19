@@ -69,7 +69,7 @@ export default function CustomizeWorkspaceAppearance() {
       </h3>
 
       <div className=" w-full grid gap-4">
-        <div className=" grid grid-cols-2 gap-2">
+        <div className=" grid md:grid-cols-2 gap-2">
         <div className="flex flex-col gap-2 border-gray-300 bg-[#DFDFDF]/10 justify-center p-4 rounded-md border border-dashed">
             <div className="flex items-center gap-2">
             <InputText value={color} onChange={(e)=> setColor(color)}/>

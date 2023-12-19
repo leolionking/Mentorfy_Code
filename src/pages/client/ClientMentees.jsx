@@ -172,7 +172,7 @@ export default function ClientMentees() {
       })
       .catch((err) => console.log(err));
   };
-  const activateBanUser = () => {
+  const suspendAccount = () => {
     const action = "banOfAccountByOwner";
     const payload = {
       _action: action,
@@ -182,12 +182,12 @@ export default function ClientMentees() {
     setShow(!show);
     banUserByWorkspace(payload)
       .then((res) => {
-        toast.error("User has ben suspended!!!");
+        toast.error("User has ben suspended");
         listMentees();
       })
       .catch((err) => console.log(err));
   };
-  const DeactivateBanUser = () => {
+  const reactivateAccount = () => {
     setUnbanUser(!unBanUser);
     const action = "unbanOfAccountByOwner";
     const payload = {
@@ -199,13 +199,13 @@ export default function ClientMentees() {
 
     banUserByWorkspace(payload)
       .then((res) => {
-        toast.success("User has been activated!!!");
+        toast.success("User has been re-activated");
         listMentees();
       })
       .catch((err) => console.log(err));
   };
 
-  const closureBanUser = () => {
+  const closeAccount = () => {
     const action = "closureOfAccountByOwner";
     const userPayload = {
       sessionID: auth?.sessionID,
@@ -217,7 +217,7 @@ export default function ClientMentees() {
     banUserByWorkspace(userPayload)
       .then((res) => {
         // console.log(res);
-        toast.error("User Account Closure!!!");
+        toast.error("User Account has been closed");
         navigate("/list-workspace");
       })
       .catch((err) => console.log(err));
