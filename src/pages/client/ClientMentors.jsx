@@ -40,9 +40,9 @@ export default function ClientMentors() {
   };
   const openSuspension = (data) => {
     setSuspendUser((suspendUser) => !suspendUser);
-    setType(data)
-    setOthers()
-    setSelectedCategories([])
+    setType(data);
+    setOthers();
+    setSelectedCategories([]);
   };
 
   const categories = [
@@ -53,7 +53,6 @@ export default function ClientMentors() {
     { name: "Hate Speech and Harassment", key: "E" },
   ];
   const [selectedCategories, setSelectedCategories] = useState([categories[1]]);
-
 
   const onCategoryChange = (e) => {
     let _selectedCategories = [...selectedCategories];
@@ -78,27 +77,30 @@ export default function ClientMentors() {
     {
       key: "2",
       label: (
-        <p className="text-xs p-1" onClick={() => openSuspension('suspend')}>
+        <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
           Suspend Mentor
         </p>
       ),
     },
     {
       key: "3",
-      label: <p className="text-xs p-1"  onClick={() => openSuspension('close')}>Close Account</p>,
+      label: (
+        <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+          Close Account
+        </p>
+      ),
     },
   ];
 
   const columns = [
     {
-      title: "First name",
+      title: "Full name",
       dataIndex: "firstName",
-      key: "firstName",
-    },
-    {
-      title: "Last Name",
-      dataIndex: "lastName",
-      key: "lastName",
+      render: (_, { lastName, firstName }) => (
+        <>
+          <p>{lastName + " " + firstName}</p>
+        </>
+      ),
     },
     {
       title: "Gender",
@@ -110,11 +112,11 @@ export default function ClientMentors() {
       dataIndex: "email",
       key: "email",
     },
-    {
-      title: "Sign up date",
-      dataIndex: "@dateCreated",
-      key: "@dateCreated",
-    },
+    // {
+    //   title: "Sign up date",
+    //   dataIndex: "@dateCreated",
+    //   key: "@dateCreated",
+    // },
     {
       title: "Contact",
       dataIndex: "phone",
@@ -344,7 +346,7 @@ export default function ClientMentors() {
                 onClick={openSuspension}
               ></i>
               <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
-                {type === 'suspend'? 'Suspend Mentor': 'Close Account'} 
+                {type === "suspend" ? "Suspend Mentor" : "Close Account"}
               </h2>
               <div className="questions">
                 <p className="my-3 text-sm">Select reason for Suspension</p>
@@ -382,7 +384,13 @@ export default function ClientMentors() {
                     onChange={(e) => setOthers(e.target.value)}
                   ></InputTextarea>
                 </div>
-                <button className="pri-btn w-full my-3" > Save</button>
+                <button
+                  className="pri-btn w-full my-3"
+                  disabled={selectedCategories.length === 0}
+                >
+                  {" "}
+                  Save
+                </button>
               </div>
             </div>
           </div>

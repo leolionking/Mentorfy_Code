@@ -10,6 +10,8 @@ import { banUserByWorkspace } from "../../utils/client/clientApi";
 import { toast } from "react-toastify";
 import InviteDialog from "../../components/InviteDialog";
 import { Avatar } from "primereact/avatar";
+import { Checkbox } from "primereact/checkbox";
+import { InputTextarea } from "primereact/inputtextarea";
 
 export default function ClientMentees() {
   const workspaceData = useRecoilValue(workspaceStore);
@@ -25,12 +27,43 @@ export default function ClientMentees() {
   const [loading, setLoaded] = useState(false);
   const [email, setEmail] = useState("");
   const [details, setDetails] = useState();
+  const [suspendUser, setSuspendUser] = useState(false);
+  const [others, setOthers] = useState();
+  const [type, setType] = useState();
+
+
   const handleMenuClick = (data) => {
     setDetails(data);
-    console.log(data);
   };
   const openuser = () => {
     setViewUser((viewUser) => !viewUser);
+  };
+  const openSuspension = (data) => {
+    setSuspendUser((suspendUser) => !suspendUser);
+    setType(data);
+    setOthers();
+    setSelectedCategories([]);
+  };
+
+  const categories = [
+    { name: "Violating Community Guidelines", key: "A" },
+    { name: "Spam or Misuse", key: "B" },
+    { name: "Impersonation", key: "C" },
+    { name: "Copyright or Intellectual Property Infringement", key: "D" },
+    { name: "Hate Speech and Harassment", key: "E" },
+  ];
+  const [selectedCategories, setSelectedCategories] = useState([categories[1]]);
+
+  const onCategoryChange = (e) => {
+    let _selectedCategories = [...selectedCategories];
+
+    if (e.checked) _selectedCategories.push(e.value);
+    else
+      _selectedCategories = _selectedCategories.filter(
+        (category) => category.key !== e.value.key
+      );
+
+    setSelectedCategories(_selectedCategories);
   };
   const items = [
     {
@@ -43,27 +76,31 @@ export default function ClientMentees() {
     },
     {
       key: "2",
-      label: <p className="text-xs p-1">Suspend Mentee</p>,
+      label: (
+        <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
+          Suspend Mentee
+        </p>
+      ),
     },
     {
       key: "3",
-      label: <p className="text-xs p-1">Close Account</p>,
+      label: (
+        <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+          Close Account
+        </p>
+      ),
     },
   ];
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
+
   const columns = [
     {
-      title: "First name",
+      title: "Full name",
       dataIndex: "firstName",
-      key: "firstName",
-    },
-    {
-      title: "Last Name",
-      dataIndex: "lastName",
-      key: "lastName",
+      render: (_, { lastName, firstName }) => (
+        <>
+          <p>{lastName + " " + firstName}</p>
+        </>
+      ),
     },
     {
       title: "Gender",
@@ -75,11 +112,11 @@ export default function ClientMentees() {
       dataIndex: "email",
       key: "email",
     },
-    {
-      title: "Sign up date",
-      dataIndex: "date",
-      key: "date",
-    },
+    // {
+    //   title: "Sign up date",
+    //   dataIndex: "@dateCreated",
+    //   key: "@dateCreated",
+    // },
     {
       title: "Contact",
       dataIndex: "phone",
@@ -87,13 +124,11 @@ export default function ClientMentees() {
     },
     {
       title: " Status",
-      dataIndex: "isBanned",
-      key: "isBanned",
       render: (_, isBanned) => (
         <>
           {isBanned === "false" ? (
             <Tag bordered={false} color="volcano">
-              Suspended
+              Banned
             </Tag>
           ) : (
             <Tag bordered={false} color="green">
@@ -198,7 +233,7 @@ export default function ClientMentees() {
   }, []);
 
   return (
-    <div className=" w-full min-h-[90vh]">
+ <div className=" w-full min-h-[90vh]">
       <div className="w-[90%] mx-auto pt-10">
         <div className="flex items-center justify-between mb-10">
           <h3 className="font-['ginto-bold'] text-xl ">Mentees </h3>
@@ -213,7 +248,7 @@ export default function ClientMentees() {
           pagination={1}
           dataSource={menteesUsers}
           className=" !box-shadow-[0px_12px_40px_0px_rgba(22,33,242,0.05)];
-              "
+            "
         />
       </div>
       <InviteDialog visibility={visible} type={"Mentee"} />
@@ -227,7 +262,7 @@ export default function ClientMentees() {
                 onClick={openuser}
               ></i>
               <h2 className="headFour text-center flex items-center gap-2 justify-center">
-                Mentee Details
+                Mentees Details
               </h2>
               <div className="grid md:grid-cols-[1fr,10fr] gap-8 w-full pt-10">
                 <div className="">
@@ -295,6 +330,68 @@ export default function ClientMentees() {
                     <h4 className="text-xs text-gray-400">POSTAL CODE</h4>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+
+      {suspendUser ? (
+        <div className="dialog">
+          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+            <div className=" grid gap-2">
+              <i
+                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                onClick={openSuspension}
+              ></i>
+              <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
+                {type === "suspend" ? "Suspend Mentee" : "Close Account"}
+              </h2>
+              <div className="questions">
+                <p className="my-3 text-sm">Select reason for Suspension</p>
+                <div className="grid gap-2">
+                  {categories.map((category) => {
+                    return (
+                      <div
+                        key={category.key}
+                        className="flex align-center gap-2"
+                      >
+                        <Checkbox
+                          inputId={category.key}
+                          name="category"
+                          className="border border-black  rounded-md"
+                          value={category}
+                          onChange={onCategoryChange}
+                          checked={selectedCategories.some(
+                            (item) => item.key === category.key
+                          )}
+                        />
+                        <label htmlFor={category.key} className="ml-2">
+                          {category.name}
+                        </label>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="mt-4">
+                  <p className="text-sm mb-3">Others</p>
+                  <InputTextarea
+                    cols={4}
+                    rows={6}
+                    className=" resize-none border p-3 border-gray-300"
+                    value={others}
+                    onChange={(e) => setOthers(e.target.value)}
+                  ></InputTextarea>
+                </div>
+                <button
+                  className="pri-btn w-full my-3"
+                  disabled={selectedCategories.length === 0}
+                >
+                  {" "}
+                  Save
+                </button>
               </div>
             </div>
           </div>
