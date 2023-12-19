@@ -6,6 +6,7 @@ import { ColorPicker } from "antd";
 import { getOwnerWorkspaceById, ownerWorkspaceEdit } from "../utils/client/clientApi";
 import { authState } from "../atom/authAtom";
 import { toast } from "react-toastify";
+import { InputText } from "primereact/inputtext";
 
 export default function CustomizeWorkspaceAppearance() {
   const [workspace, setWorkspace] = useRecoilState(workspaceStore);
@@ -63,28 +64,32 @@ export default function CustomizeWorkspaceAppearance() {
       </h3>
 
       <div className=" w-full grid gap-4">
-        <div className=" grid gap-2">
+        <div className=" grid grid-cols-2 gap-2">
+        <div className="flex flex-col gap-2 border-gray-300 bg-[#DFDFDF]/10 justify-center p-4 rounded-md border border-dashed">
+            <div className="flex items-center gap-2">
+            <InputText value={color} onChange={(e)=> setColor(color)}/>
+            <ColorPicker
+              value={color}
+              onChange={(value, color) => setColor(color)}
+              allowClear
+              disabledAlpha
+              className="w-[20%] h-full"
+            />
+            </div>
+          </div>
           <div className="">
-            {image ? (
-              <div className="">
-                <img
-                  src={image}
+            <label htmlFor="upload-button">
+              <div className="p-2 rounded-lg border-dashed border-[1px] border-gray-300 bg-[#DFDFDF]/10 flex items-center flex-col justify-center text-center">
+              <img
+                  src={workspace.logo}
                   alt="logo"
                   className="object-cover h-[80px] w-[80px] rounded-full pb-2"
                 />
-              </div>
-            ) : (
-              ""
-            )}
-            <label htmlFor="upload-button">
-              <div className="p-4 rounded-lg border-dashed border-[1px] border-blue-300 bg-gray-50 flex items-center flex-col justify-center text-center">
-                <p className=" text-[3rem] p-3 text-blue-600">
-                  <InboxOutlined />
-                </p>
-                <p className=" text-[1rem] text-gray-700"></p>
-                <p className="text-xs pt-2 pb-10 text-gray-500 w-[80%]">
-                  File size limit is 5MB. Accepted formats are PNG and JPG.
-                </p>
+                <button className="pri-btn"> 
+                  <i className="pi pi-upload"> </i>
+                  Browse Logo
+                </button>
+                <small className="pt-1">Upload file must be PNG or JPG format</small>
               </div>
             </label>
             <input
@@ -95,20 +100,12 @@ export default function CustomizeWorkspaceAppearance() {
               onChange={handleImageChange}
             />
           </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="options">Click to select workspace color</label>
-            <ColorPicker
-              value={color}
-              onChange={(value, color) => setColor(color)}
-              allowClear
-              disabledAlpha
-            />
-          </div>
-          <button className="pri-btn" onClick={customize} disabled={image === '' || loading}>
-            {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
-            Save
-          </button>
+      
         </div>
+          <button className="pri-btn w-fit" onClick={customize} disabled={image === '' || loading}>
+            {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+            Save changes
+          </button>
       </div>
     </div>
   );
