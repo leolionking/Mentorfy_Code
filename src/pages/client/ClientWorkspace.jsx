@@ -1,9 +1,7 @@
 import React from "react";
 import UpdateWorkspace from "../../components/UpdateWorkspace";
-import AddAreasOfInterest from "../../components/AddAreasOfInterest";
 import ListAreasOfInterest from "../../components/ListAreasOfInterest";
 import CustomizeWorkspaceAppearance from "../../components/CustomizeWorkspaceAppearance";
-import { Link } from "react-router-dom";
 
 export default function ClientWorkspace() {
   return (
