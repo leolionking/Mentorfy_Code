@@ -7,7 +7,7 @@ export default function Sidebar({ links }) {
   const workspace = useRecoilValue(workspaceStore)
   return (
     <div className="hidden lg:block">
-      <div className="w-[17vw] fixed left-0 top-0  text-white h-[100vh]"  style={{
+      <div className="lg:w-[17vw] fixed left-0 top-0 z-[1000] text-white h-[100vh]"  style={{
         backgroundColor: workspace?.color
           ? `#${workspace?.color}`
           : "#1F2105",

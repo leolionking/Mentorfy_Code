@@ -1,13 +1,12 @@
 import React from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import logo from "../../assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 import { Password } from "primereact/password";
 import {
   changePassword,
   validateResetOtp,
 } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { storeData } from "../../atom/storeAtom";
 import { useFormik } from "formik";
 import { forgotPassword } from "../../utils/Validation";
