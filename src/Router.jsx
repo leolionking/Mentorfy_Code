@@ -24,6 +24,7 @@ import ClientAddWorkspace from "./pages/client/ClientAddWorkspace";
 import Notification from "./components/Notification";
 import ClientBilling from "./pages/client/ClientBilling";
 import MenteeSignup from "./pages/workspaceUser/UserSignup";
+import ResetPasswordOtp from "./pages/general/ResetPasswordOtp";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: "/forgot-password",
         element: <ForgotPasswordClient />,
+      },
+      {
+        path: "/reset-otp/:email",
+        element: <ResetPasswordOtp />,
       },
       {
         path: "/reset-password",

@@ -26,7 +26,18 @@ const resetPassword = async (payload) =>
     .structure("reset_password_inputs")
     .setData("resetPassword", payload);
 
-const getPricing = async () =>
+const forgotPassword = async (payload) =>
+  await api
+    .structure("reset_password_inputs")
+    .setData("forgotPassword", payload);
+
+const validateResetOtp = async () =>
+  await api.structure("reset_password_inputs").getData("validateResetOtp");
+
+  const changePassword = async () =>
+  await api.structure("reset_password_inputs").setData("changePassword");
+
+  const getPricing = async () =>
   await api.structure("tariff").getData("getTarif");
 
 const inviteUsers = async (payload) =>
@@ -51,7 +62,9 @@ const getMyALLNotification = async (payload) =>
   await api.structure("notification").getData("getMyALLNotification", payload);
 
 const allNotificationByUserWorkspaceId = async (payload) =>
-  await api.structure("notification").getData("allNotificationByUserWorkspaceId", payload);
+  await api
+    .structure("notification")
+    .getData("allNotificationByUserWorkspaceId", payload);
 
 const checkUserEmailByWorkspace = async (payload) =>
   await api
@@ -82,5 +95,8 @@ export {
   checkUserForValidation,
   inviteUsers,
   getMyALLNotification,
-  allNotificationByUserWorkspaceId
+  allNotificationByUserWorkspaceId,
+  forgotPassword,
+  validateResetOtp,
+  changePassword
 };
