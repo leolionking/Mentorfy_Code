@@ -4,14 +4,17 @@ import { useFormik } from "formik";
 import { resetPassword } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
 import { forgotPassword } from "../../utils/Validation";
+import { useRecoilValue } from "recoil";
+import { user } from "../../atom/userAtom";
 
 export default function ClientSecurity() {
+  const userData = useRecoilValue(user)
+
   const onSubmit = async (values) => {
-    const { email, password, repeat_password } = values;
     const payload = {
       password: values.password,
       repeat_password: values.repeat_password,
-      user_id: values.email,
+      user_id: userData.id,
     };
     resetPassword(payload)
       .then((res) => {
@@ -31,12 +34,9 @@ export default function ClientSecurity() {
       .catch((e) => {
         if (!e.response) {
           toast.error("please check ");
-
-          //check you API endpoint, you must enable CORS header in settings
         }
         if (e.response && e.response.status === 403) {
           toast.error("please check ");
-          //todo: api endpoint required authorisation
         }
       });
   };
@@ -53,7 +53,6 @@ export default function ClientSecurity() {
   } = useFormik({
     validateOnMount: true,
     initialValues: {
-      email: "",
       password: "",
       repeat_password: "",
     },
