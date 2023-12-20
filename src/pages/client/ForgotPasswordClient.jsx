@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { forgotPassword } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { storeData } from "../../atom/storeAtom";
 export default function ForgotPasswordClient() {
+
+  const [store, setStore] = useRecoilState(storeData)
+  const navigate = useNavigate()
   const [email, setEmail] = useState();
   const resetPassword = () => {
     const payload = {
@@ -11,6 +16,11 @@ export default function ForgotPasswordClient() {
     };
     forgotPassword(payload).then((res) => {
       toast.success("Check your email for otp");
+      const payload = {
+        email: email
+      }
+      setStore(payload)
+      navigate('/reset-otp')
     });
   };
   return (

@@ -1,18 +1,20 @@
 import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   forgotPassword,
   validateResetOtp,
 } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
+import { useRecoilState } from "recoil";
+import { storeData } from "../../atom/storeAtom";
 export default function ResetPasswordOtp() {
+  const [store, setStore] = useRecoilState(storeData)
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  const param = useParams();
   const regenerateOtp = () => {
     const payload = {
-      user_id: param.email,
+      user_id: store.email,
     };
     forgotPassword(payload).then((res) => {
       toast.success("Check your email for otp");
@@ -21,7 +23,7 @@ export default function ResetPasswordOtp() {
 
   const validateResetUser = () => {
     const payload = {
-      id: param.email,
+      id: store.email,
       otp: otp,
     };
     validateResetOtp(payload).then((res) => {
@@ -29,6 +31,11 @@ export default function ResetPasswordOtp() {
         toast.error("invalid OTP. Try again");
       } else {
         toast.success("User verified");
+        const payload = {
+          ...store,
+          otp: otp,
+        }
+        setStore(payload)
         navigate("/reset-password");
       }
     });
@@ -44,7 +51,7 @@ export default function ResetPasswordOtp() {
                 Check your inbox
               </div>
               <p className="pb-5 text-xs pt-1">
-                We've sent an OTP to {param.email}.
+                We've sent an OTP to {store.email}.
               </p>
               <p className="text-center text-sm">
                 Didn’t get OTP?{" "}
