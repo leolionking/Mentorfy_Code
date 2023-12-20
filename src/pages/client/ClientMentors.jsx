@@ -219,7 +219,7 @@ export default function ClientMentors() {
       _action: action,
       _creatorId: userData.id,
       _userByworkSpace: details.id,
-      _banReason: selectedCategories,
+      _banReason: selectedCategories.slice(-1)[0].name,
     };
 
     banUserByWorkspace(userPayload)
@@ -398,7 +398,6 @@ export default function ClientMentors() {
                   className="pri-btn w-full my-3"
                   disabled={selectedCategories.length === 0}
                 >
-                  {" "}
                   Save
                 </button>
               </div>
