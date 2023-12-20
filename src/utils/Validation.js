@@ -19,8 +19,8 @@ const otpverification = yup.object().shape({
 });
 
 const forgotPassword = yup.object().shape({
-  password: yup.string().required("Required"),
-  repeat_password: yup.string().required("Required"),
+  password: yup.string().min(5).max(25).matches(passwordRule, {message: "Please create a stronger password"}).required("Required"),
+  repeat_password: yup.string().oneOf([yup.ref('password'), null], "Passwords must match").required("Required")
 });
 
 const resetPassword = yup.object().shape({
