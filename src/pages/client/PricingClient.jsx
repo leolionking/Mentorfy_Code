@@ -148,6 +148,11 @@ export default function PricingClient() {
           toast.error("User already exists. Please login");
           navigate("/signin");
         } else {
+          const payload = {
+            ...registration,
+            pricingId: "c86b7fc2-a5d4-4727-8df9-3be1f39c80e7",
+          };
+          setRegistration(payload);
           navigate("/client-onboard");
         }
       })

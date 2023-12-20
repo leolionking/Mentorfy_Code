@@ -29,6 +29,15 @@ const resetPassword = yup.object().shape({
   repeat_new_password: yup.string().required("Required"),
 });
 
+const clientProfileValidation = yup.object().shape({
+  firstName: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  country: yup.string().required("Required"),
+  province: yup.string().required("Required"),
+  postalcode: yup.string().required("Required"),
+
+})
+
 const requestNewPassword = yup.object().shape({
   email: yup.string().email("Please enter a valid email").required("Required"),
 });
@@ -117,4 +126,5 @@ export {
   userOnboard3,
   profile,
   editWorkspace,
+  clientProfileValidation
 };

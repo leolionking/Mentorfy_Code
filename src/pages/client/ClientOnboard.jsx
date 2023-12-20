@@ -231,7 +231,7 @@ export default function ClientOnboard() {
       name: registration.workspace.name,
       workspaceLogo: dataUrl,
       color: color.split("#")[1],
-      // invoice: registration.price.id,
+      invoice: registration.pricingId,
       description: registration.workspace.description,
       lastName: lastname,
       firstame: firstname,

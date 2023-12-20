@@ -52,6 +52,11 @@ const createWorkspaceUser = async (payload) =>
     .structure("_workcpaseAction")
     .setData("createWorkspaceUser", payload);
 
+const editOwnerProfile = async (payload) =>
+  await api
+    .structure("WebUser")
+    .setData("editOwnerProfile", payload);
+
 const requestWorkspace = async (payload) =>
   await api
     .structure("requestWorkspace")
@@ -86,5 +91,6 @@ export {
   editRequestWorkspaceUser,
   getOwnerWorkspaceById,
   createWorkspaceWithPayment,
-  getRecentOnboarding
+  getRecentOnboarding,
+  editOwnerProfile
 };
