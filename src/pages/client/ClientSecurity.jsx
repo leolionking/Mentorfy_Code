@@ -8,7 +8,7 @@ import { useRecoilValue } from "recoil";
 import { user } from "../../atom/userAtom";
 
 export default function ClientSecurity() {
-  const userData = useRecoilValue(user)
+  const userData = useRecoilValue(user);
 
   const onSubmit = async (values) => {
     const payload = {
@@ -19,16 +19,13 @@ export default function ClientSecurity() {
     resetPassword(payload)
       .then((res) => {
         res = res.result[0];
-        if (
-          res.is_success === false ||
-          res.result_title === "Secrets don't match"
-        ) {
+        if (res.is_success === false) {
           toast.error("Incorrect token !!!");
         } else if (
           res.is_success === true &&
           res.result_title === "New password is set"
         ) {
-          resetForm()
+          resetForm();
           toast.success("New password set successfully");
         }
       })
@@ -107,11 +104,7 @@ export default function ClientSecurity() {
             disabled={!isValid || isSubmitting}
             onClick={handleSubmit}
           >
-             {isSubmitting ? (
-                    <i className="pi pi-spin pi-spinner"></i>
-                  ) : (
-                    ""
-                  )}
+            {isSubmitting ? <i className="pi pi-spin pi-spinner"></i> : ""}
             Change Password{" "}
           </button>
         </div>
