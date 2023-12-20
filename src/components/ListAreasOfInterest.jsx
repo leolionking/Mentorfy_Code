@@ -49,7 +49,6 @@ export default function ListAreasOfInterest() {
     const payload = {
       _action: "createAuto",
       _creatorId: auth.username,
-      _newName: area,
       _url: `${window.location.origin}/${workspace.id}`,
       area_title: area,
     };
