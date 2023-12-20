@@ -178,7 +178,8 @@ export default function ClientMentees() {
       _action: action,
       _creatorId: userData.id,
       _userByworkSpace: details.id,
-      _banReason: selectedCategories,
+      _banReason: selectedCategories.slice(-1)[0].name,
+
     };
     setShow(!show);
     banUserByWorkspace(payload)
@@ -218,7 +219,8 @@ export default function ClientMentees() {
       _action: action,
       _creatorId: userData.id,
       _userByworkSpace: details.id,
-      _banReason: selectedCategories,
+      _banReason: selectedCategories.slice(-1)[0].name,
+
     };
 
     banUserByWorkspace(userPayload)
