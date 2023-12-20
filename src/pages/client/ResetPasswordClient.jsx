@@ -26,7 +26,6 @@ export default function ResetPasswordClient() {
       };
       validateResetOtp(payload2).then((res) => {
         if (res?.payload[0]?.secret) {
-          toast.success("User verified");
           const payload = {
             user_id: store.email,
             password: values.password,
