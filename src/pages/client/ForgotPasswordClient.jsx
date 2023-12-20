@@ -1,26 +1,34 @@
 import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Link, useNavigate } from "react-router-dom";
-import { forgotPassword } from "../../utils/general/generalApi";
+import {
+  checkIfUserExist,
+  forgotPassword,
+} from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import { storeData } from "../../atom/storeAtom";
 export default function ForgotPasswordClient() {
-
-  const [store, setStore] = useRecoilState(storeData)
-  const navigate = useNavigate()
+  const [store, setStore] = useRecoilState(storeData);
+  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const resetPassword = () => {
     const payload = {
-      user_id: email,
+      user_id: email.toLowerCase(),
     };
-    forgotPassword(payload).then((res) => {
-      toast.success("Check your email for otp");
-      const payload = {
-        email: email
+    checkIfUserExist({ email: email.toLowerCase() }).then((res) => {
+      if (res.payload.length === 1) {
+        forgotPassword(payload).then((res) => {
+          toast.success("Check your email for otp");
+          const payload = {
+            email: email,
+          };
+          setStore(payload);
+          navigate("/reset-otp");
+        });
+      } else {
+        toast.error("User Doesn't exists. Please Signup");
       }
-      setStore(payload)
-      navigate('/reset-otp')
     });
   };
   return (
