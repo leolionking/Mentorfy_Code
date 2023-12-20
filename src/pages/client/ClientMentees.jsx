@@ -33,7 +33,6 @@ export default function ClientMentees() {
 
   const handleMenuClick = (data) => {
     setDetails(data);
-    console.log(data);
   };
   const openuser = () => {
     setViewUser((viewUser) => !viewUser);
@@ -124,11 +123,11 @@ export default function ClientMentees() {
     },
     {
       title: " Status",
-      render: (_, isBanned) => (
+      render: (_, {isBanned}) => (
         <>
-          {isBanned === "false" ? (
+          {isBanned ? (
             <Tag bordered={false} color="volcano">
-              Banned
+              Suspended
             </Tag>
           ) : (
             <Tag bordered={false} color="green">

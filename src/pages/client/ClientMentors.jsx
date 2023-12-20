@@ -124,11 +124,11 @@ export default function ClientMentors() {
     },
     {
       title: " Status",
-      render: (_, isBanned) => (
+      render: (_, {isBanned}) => (
         <>
-          {isBanned === "false" ? (
+          {isBanned ? (
             <Tag bordered={false} color="volcano">
-              Banned
+              Suspended
             </Tag>
           ) : (
             <Tag bordered={false} color="green">
@@ -172,56 +172,66 @@ export default function ClientMentors() {
       })
       .catch((err) => console.log(err));
   };
-  const activateBanUser = () => {
+  const suspendAccount = () => {
+    setLoaded(true);
     const action = "banOfAccountByOwner";
     const payload = {
       _action: action,
       _creatorId: userData.id,
-      _userByworkSpace: userPass.id,
+      _userByworkSpace: details.id,
+      _banReason: selectedCategories,
     };
     setShow(!show);
     banUserByWorkspace(payload)
       .then((res) => {
-        toast.error("User has ben banned!!!");
+        openSuspension();
+        setLoaded(false);
+
+        toast.error("User has ben suspended");
         listMentors();
       })
       .catch((err) => console.log(err));
   };
-  const DeactivateBanUser = () => {
+  const reactivateAccount = () => {
     setUnbanUser(!unBanUser);
     const action = "unbanOfAccountByOwner";
     const payload = {
+      // sessionID: auth[0]?.sessionID,
       _action: action,
       _creatorId: userData.id,
-      _userByworkSpace: userPass.id,
+      _userByworkSpace: details.id,
     };
 
     banUserByWorkspace(payload)
       .then((res) => {
-        toast.success("User has been activated!!!");
+        toast.success("User has been re-activated");
         listMentors();
       })
       .catch((err) => console.log(err));
   };
 
-  const closureBanUser = () => {
+  const closeAccount = () => {
+    setLoaded(true);
+
     const action = "closureOfAccountByOwner";
     const userPayload = {
       sessionID: auth?.sessionID,
       _action: action,
       _creatorId: userData.id,
-      _userByworkSpace: userPass.id,
+      _userByworkSpace: details.id,
+      _banReason: selectedCategories,
     };
 
     banUserByWorkspace(userPayload)
       .then((res) => {
-        // console.log(res);
-        toast.error("User Account Closure!!!");
-        navigate("/list-workspace");
+        openSuspension();
+        setLoaded(false);
+        toast.error("User Account has been closed");
       })
       .catch((err) => console.log(err));
     setShow(!show);
   };
+
 
   const openInvite = () => {
     setVisible((visible) => !visible);
