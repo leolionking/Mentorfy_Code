@@ -40,6 +40,7 @@ export default function ClientMentees() {
     setViewUser((viewUser) => !viewUser);
   };
   const openSuspension = (data) => {
+    setLoaded(false);
     setSuspendUser((suspendUser) => !suspendUser);
     setType(data);
     setOthers();
@@ -47,6 +48,7 @@ export default function ClientMentees() {
   };
 
   const openActivate = () => {
+    setLoaded(false);
     setActivateUser((activateUser) => !activateUser);
   };
 
@@ -165,7 +167,6 @@ export default function ClientMentees() {
       .then((res) => {
         openSuspension();
         setLoaded(false);
-
         toast.error("User has ben suspended");
         listMentees();
       })
@@ -183,6 +184,7 @@ export default function ClientMentees() {
     banUserByWorkspace(payload)
       .then((res) => {
         setLoaded(false);
+        openActivate()
         toast.success("User has been re-activated");
         listMentees();
       })
@@ -467,7 +469,7 @@ export default function ClientMentees() {
               <div className="grid grid-cols-2 gap-2">
                 <button
                   className="outline-btn w-full my-3"
-                  disabled={selectedCategories.length === 0}
+                  disabled={loading}
                   onClick={openActivate}
                 >
                   {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
@@ -475,7 +477,7 @@ export default function ClientMentees() {
                 </button>
                 <button
                   className="pri-btn w-full my-3"
-                  disabled={selectedCategories.length === 0}
+                  disabled={loading}
                   onClick={reactivateAccount}
                 >
                   {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
