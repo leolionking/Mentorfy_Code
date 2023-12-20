@@ -19,7 +19,6 @@ const otpverification = yup.object().shape({
 });
 
 const forgotPassword = yup.object().shape({
-  email: yup.string().required("Required"),
   password: yup.string().required("Required"),
   repeat_password: yup.string().required("Required"),
 });

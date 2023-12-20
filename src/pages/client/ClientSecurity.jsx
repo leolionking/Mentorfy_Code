@@ -101,9 +101,14 @@ export default function ClientSecurity() {
           </div>
           <button
             className="pri-btn w-fit"
-            disabled={!isValid}
+            disabled={!isValid || isSubmitting}
             onClick={handleSubmit}
           >
+             {isSubmitting ? (
+                    <i className="pi pi-spin pi-spinner"></i>
+                  ) : (
+                    ""
+                  )}
             Change Password{" "}
           </button>
         </div>
