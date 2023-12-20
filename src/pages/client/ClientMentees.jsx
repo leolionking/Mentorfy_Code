@@ -31,9 +31,9 @@ export default function ClientMentees() {
   const [others, setOthers] = useState();
   const [type, setType] = useState();
 
-
   const handleMenuClick = (data) => {
     setDetails(data);
+    console.log(data);
   };
   const openuser = () => {
     setViewUser((viewUser) => !viewUser);
@@ -173,15 +173,20 @@ export default function ClientMentees() {
       .catch((err) => console.log(err));
   };
   const suspendAccount = () => {
+    setLoaded(true);
     const action = "banOfAccountByOwner";
     const payload = {
       _action: action,
       _creatorId: userData.id,
-      _userByworkSpace: userPass.id,
+      _userByworkSpace: details.id,
+      _banReason: selectedCategories,
     };
     setShow(!show);
     banUserByWorkspace(payload)
       .then((res) => {
+        openSuspension();
+        setLoaded(false);
+
         toast.error("User has ben suspended");
         listMentees();
       })
@@ -194,7 +199,7 @@ export default function ClientMentees() {
       // sessionID: auth[0]?.sessionID,
       _action: action,
       _creatorId: userData.id,
-      _userByworkSpace: userPass.id,
+      _userByworkSpace: details.id,
     };
 
     banUserByWorkspace(payload)
@@ -206,17 +211,21 @@ export default function ClientMentees() {
   };
 
   const closeAccount = () => {
+    setLoaded(true);
+
     const action = "closureOfAccountByOwner";
     const userPayload = {
       sessionID: auth?.sessionID,
       _action: action,
       _creatorId: userData.id,
-      _userByworkSpace: userPass.id,
+      _userByworkSpace: details.id,
+      _banReason: selectedCategories,
     };
 
     banUserByWorkspace(userPayload)
       .then((res) => {
-        // console.log(res);
+        openSuspension();
+        setLoaded(false);
         toast.error("User Account has been closed");
         navigate("/list-workspace");
       })
@@ -233,7 +242,7 @@ export default function ClientMentees() {
   }, []);
 
   return (
- <div className=" w-full min-h-[90vh]">
+    <div className=" w-full min-h-[90vh]">
       <div className="w-[90%] mx-auto pt-10">
         <div className="flex items-center justify-between mb-10">
           <h3 className="font-['ginto-bold'] text-xl ">Mentees </h3>
@@ -388,8 +397,9 @@ export default function ClientMentees() {
                 <button
                   className="pri-btn w-full my-3"
                   disabled={selectedCategories.length === 0}
+                  onClick={suspendAccount}
                 >
-                  {" "}
+                  {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                   Save
                 </button>
               </div>
