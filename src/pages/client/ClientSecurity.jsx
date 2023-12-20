@@ -5,24 +5,27 @@ import { resetPassword } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
 import { forgotPassword } from "../../utils/Validation";
 
-
 export default function ClientSecurity() {
-
   const onSubmit = async (values) => {
     const { email, password, repeat_password } = values;
     const payload = {
-        password : values.password,
-        repeat_password : values.repeat_password,
-        secret : values.secret,
-        user_id : values.email,
-      };
-    resetPassword(payload).then((res) => {
+      password: values.password,
+      repeat_password: values.repeat_password,
+      user_id: values.email,
+    };
+    resetPassword(payload)
+      .then((res) => {
         res = res.result[0];
-        if (res.is_success === false || res.result_title === "Secrets don't match"){
-          toast.error("Incorrect token !!!")
-        } else if (res.is_success === true && res.result_title === "New password is set"){
+        if (
+          res.is_success === false ||
+          res.result_title === "Secrets don't match"
+        ) {
+          toast.error("Incorrect token !!!");
+        } else if (
+          res.is_success === true &&
+          res.result_title === "New password is set"
+        ) {
           toast.success("New password set successfully");
-
         }
       })
       .catch((e) => {
@@ -73,8 +76,12 @@ export default function ClientSecurity() {
                 aria-describedby="name"
                 value={values.password}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 toggleMask={false}
               />
+              {errors.password && touched.password && (
+                <p className="error">{errors.password}</p>
+              )}
             </div>
             <div className="flex flex-col gap-2">
               <label htmlFor="username">Confirm new password</label>
@@ -84,12 +91,21 @@ export default function ClientSecurity() {
                 name="repeat_password"
                 value={values.repeat_password}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 toggleMask={false}
-
               />
+              {errors.repeat_password && touched.repeat_password && (
+                <p className="error">{errors.repeat_password}</p>
+              )}
             </div>
           </div>
-          <button className="pri-btn w-fit" disabled={errors}>Change Password </button>
+          <button
+            className="pri-btn w-fit"
+            disabled={!isValid}
+            onClick={handleSubmit}
+          >
+            Change Password{" "}
+          </button>
         </div>
       </div>
     </div>
