@@ -28,6 +28,7 @@ export default function ClientSecurity() {
           res.is_success === true &&
           res.result_title === "New password is set"
         ) {
+          resetForm()
           toast.success("New password set successfully");
         }
       })
@@ -46,6 +47,7 @@ export default function ClientSecurity() {
     errors,
     isValid,
     isSubmitting,
+    resetForm,
     touched,
     handleBlur,
     handleChange,
@@ -76,7 +78,8 @@ export default function ClientSecurity() {
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                toggleMask={false}
+                feedback={false}
+                toggleMask={true}
               />
               {errors.password && touched.password && (
                 <p className="error">{errors.password}</p>
@@ -91,7 +94,8 @@ export default function ClientSecurity() {
                 value={values.repeat_password}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                toggleMask={false}
+                feedback={false}
+                toggleMask={true}
               />
               {errors.repeat_password && touched.repeat_password && (
                 <p className="error">{errors.repeat_password}</p>
