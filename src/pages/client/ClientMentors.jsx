@@ -169,7 +169,6 @@ export default function ClientMentors() {
       .then((res) => {
         openSuspension();
         setLoaded(false);
-
         toast.error("User has ben suspended");
         listMentors();
       })
@@ -187,6 +186,7 @@ export default function ClientMentors() {
 
     banUserByWorkspace(payload)
       .then((res) => {
+        openActivate()
         toast.success("User has been re-activated");
         listMentors();
       })
