@@ -27,9 +27,7 @@ export default function ResetPasswordOtp() {
       otp: otp,
     };
     validateResetOtp(payload).then((res) => {
-      if (res.payload[0].length === 0) {
-        toast.error("invalid OTP. Try again");
-      } else {
+      if (res?.payload[0]?.secret) {
         toast.success("User verified");
         const payload = {
           ...store,
@@ -37,6 +35,8 @@ export default function ResetPasswordOtp() {
         }
         setStore(payload)
         navigate("/reset-password");
+      } else {
+        toast.error("invalid OTP. Try again");
       }
     });
   };
@@ -47,10 +47,10 @@ export default function ResetPasswordOtp() {
         <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] py-10 shadow-small rounded-2xl">
           <div className="">
             <div className="main py-5">
-              <div className="header font-['ginto-bold'] text-2xl">
+              <div className="header text-center font-['ginto-bold'] text-2xl">
                 Check your inbox
               </div>
-              <p className="pb-5 text-xs pt-1">
+              <p className="pb-5 text-center text-xs pt-1">
                 We've sent an OTP to {store.email}.
               </p>
               <p className="text-center text-sm">
@@ -59,13 +59,12 @@ export default function ResetPasswordOtp() {
                   className="text-[var(--primary)] cursor-pointer"
                   onClick={regenerateOtp}
                 >
-                  {" "}
                   Resend OTP{" "}
                 </span>
               </p>
               <div className="grid gap-3">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="email">Otp</label>
+                  <label htmlFor="email">OTP</label>
                   <InputText
                     id="otp"
                     keyfilter="int"

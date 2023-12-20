@@ -27,7 +27,7 @@ export default function ForgotPasswordClient() {
           navigate("/reset-otp");
         });
       } else {
-        toast.error("User Doesn't exists. Please Signup");
+        toast.error("User doesn't exists. Please signup");
       }
     });
   };

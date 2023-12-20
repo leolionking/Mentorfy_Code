@@ -31,8 +31,8 @@ const forgotPassword = async (payload) =>
     .structure("reset_password_inputs")
     .setData("forgotPassword", payload);
 
-const validateResetOtp = async () =>
-  await api.structure("reset_password_inputs").getData("validateResetOtp");
+const validateResetOtp = async (payload) =>
+  await api.structure("reset_password_inputs").getData("validateResetOtp", payload);
 
   const changePassword = async () =>
   await api.structure("reset_password_inputs").setData("changePassword");
