@@ -2,7 +2,10 @@ import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 import { Password } from "primereact/password";
-import { changePassword } from "../../utils/general/generalApi";
+import {
+  changePassword,
+  validateResetOtp,
+} from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { storeData } from "../../atom/storeAtom";
@@ -17,20 +20,36 @@ export default function ResetPasswordClient() {
   };
 
   const onSubmit = (values) => {
-    const payload = {
-      user_id: store.email,
-      password: values.password,
-      repeat_password: values.repeat_password,
-    };
-    changePassword(payload)
-      .then((res) => {
-        toast.success("Password reset successful");
-        setStore(null)
-        gotoHome();
-      })
-      .catch((err) => {
-        console.log(err);
+    if (store?.otp && store?.email) {
+      const payload2 = {
+        id: store.email,
+        otp: store.otp,
+      };
+      validateResetOtp(payload2).then((res) => {
+        if (res?.payload[0]?.secret) {
+          toast.success("User verified");
+          const payload = {
+            user_id: store.email,
+            password: values.password,
+            repeat_password: values.repeat_password,
+          };
+          changePassword(payload)
+            .then((res) => {
+              toast.success("Password reset successful");
+              setStore(null);
+              gotoHome();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else {
+          toast.error("invalid OTP. Try again");
+        }
       });
+    } else {
+      toast.error("Sorry you can`t reset ");
+      gotoHome();
+    }
   };
 
   const {
@@ -55,8 +74,7 @@ export default function ResetPasswordClient() {
   return (
     <div className="h-[100vh] w-full ">
       <div className="main  grid md:grid-cols-2 place-items-center h-full">
-        <div className="h-full w-full ">
-        </div>
+        <div className="h-full w-full "></div>
         <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] py-10 shadow-small rounded-2xl">
           <div className="">
             <div className="main py-5">
