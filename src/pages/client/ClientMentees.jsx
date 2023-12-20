@@ -28,8 +28,10 @@ export default function ClientMentees() {
   const [email, setEmail] = useState("");
   const [details, setDetails] = useState();
   const [suspendUser, setSuspendUser] = useState(false);
+  const [activateUser, setActivateUser] = useState(false);
   const [others, setOthers] = useState();
   const [type, setType] = useState();
+  const [items, setItems] = useState([]);
 
   const handleMenuClick = (data) => {
     setDetails(data);
@@ -42,6 +44,10 @@ export default function ClientMentees() {
     setType(data);
     setOthers();
     setSelectedCategories([]);
+  };
+
+  const openActivate = () => {
+    setActivateUser((activateUser) => !activateUser);
   };
 
   const categories = [
@@ -64,32 +70,6 @@ export default function ClientMentees() {
 
     setSelectedCategories(_selectedCategories);
   };
-  const items = [
-    {
-      key: "1",
-      label: (
-        <p className="text-xs p-1" onClick={openuser}>
-          View Mentee info
-        </p>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
-          Suspend Mentee
-        </p>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <p className="text-xs p-1" onClick={() => openSuspension("close")}>
-          Close Account
-        </p>
-      ),
-    },
-  ];
 
   const columns = [
     {
@@ -123,7 +103,7 @@ export default function ClientMentees() {
     },
     {
       title: " Status",
-      render: (_, {isBanned}) => (
+      render: (_, { isBanned }) => (
         <>
           {isBanned ? (
             <Tag bordered={false} color="volcano">
@@ -179,7 +159,6 @@ export default function ClientMentees() {
       _creatorId: userData.id,
       _userByworkSpace: details.id,
       _banReason: selectedCategories.slice(-1)[0].name,
-
     };
     setShow(!show);
     banUserByWorkspace(payload)
@@ -193,10 +172,9 @@ export default function ClientMentees() {
       .catch((err) => console.log(err));
   };
   const reactivateAccount = () => {
-    setUnbanUser(!unBanUser);
+    setLoaded(true);
     const action = "unbanOfAccountByOwner";
     const payload = {
-      // sessionID: auth[0]?.sessionID,
       _action: action,
       _creatorId: userData.id,
       _userByworkSpace: details.id,
@@ -204,6 +182,7 @@ export default function ClientMentees() {
 
     banUserByWorkspace(payload)
       .then((res) => {
+        setLoaded(false);
         toast.success("User has been re-activated");
         listMentees();
       })
@@ -220,7 +199,6 @@ export default function ClientMentees() {
       _creatorId: userData.id,
       _userByworkSpace: details.id,
       _banReason: selectedCategories.slice(-1)[0].name,
-
     };
 
     banUserByWorkspace(userPayload)
@@ -241,6 +219,67 @@ export default function ClientMentees() {
   useEffect(() => {
     listMentees();
   }, []);
+
+  useEffect(() => {
+    const itemMenu = [
+      {
+        key: "1",
+        label: (
+          <p className="text-xs p-1" onClick={openuser}>
+            View Mentee info
+          </p>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
+            Suspend Mentee
+          </p>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+            Close Account
+          </p>
+        ),
+      },
+    ];
+
+    const bannedMenu = [
+      {
+        key: "1",
+        label: (
+          <p className="text-xs p-1" onClick={openuser}>
+            View Mentee info
+          </p>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <p className="text-xs p-1" onClick={() => openActivate()}>
+            Reactivate Mentee
+          </p>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+            Close Account
+          </p>
+        ),
+      },
+    ];
+    if (details?.isBanned) {
+      setItems(bannedMenu);
+    } else {
+      setItems(itemMenu);
+    }
+  }, [details]);
 
   return (
     <div className=" w-full min-h-[90vh]">
@@ -402,6 +441,45 @@ export default function ClientMentees() {
                 >
                   {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                   Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+      {activateUser ? (
+        <div className="dialog">
+          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+            <div className=" grid gap-2">
+              <i
+                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                onClick={openActivate}
+              ></i>
+              <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
+                Re-activate Account
+              </h2>
+              <div className="text-sm py-3 text-center">
+                Are you sure you want to Re-activate Mentor’s Account?
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  className="outline-btn w-full my-3"
+                  disabled={selectedCategories.length === 0}
+                  onClick={openActivate}
+                >
+                  {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+                  Cancel
+                </button>
+                <button
+                  className="pri-btn w-full my-3"
+                  disabled={selectedCategories.length === 0}
+                  onClick={reactivateAccount}
+                >
+                  {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+                  Re-activate Mentor
                 </button>
               </div>
             </div>

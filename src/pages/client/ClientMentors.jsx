@@ -91,6 +91,32 @@ export default function ClientMentors() {
       ),
     },
   ];
+  const bannedMenu = [
+    {
+      key: "1",
+      label: (
+        <p className="text-xs p-1" onClick={openuser}>
+          View Mentor info
+        </p>
+      ),
+    },
+    {
+      key: "2",
+      label: (
+        <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
+          Reactivate Mentor
+        </p>
+      ),
+    },
+    {
+      key: "3",
+      label: (
+        <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+          Close Account
+        </p>
+      ),
+    },
+  ];
 
   const columns = [
     {
@@ -124,7 +150,7 @@ export default function ClientMentors() {
     },
     {
       title: " Status",
-      render: (_, {isBanned}) => (
+      render: (_, { isBanned }) => (
         <>
           {isBanned ? (
             <Tag bordered={false} color="volcano">
@@ -143,17 +169,31 @@ export default function ClientMentors() {
       dataIndex: "action",
       render: (_, data) => (
         <Space size="middle">
-          <Dropdown
-            className="text-sm"
-            menu={{
-              items,
-            }}
-          >
-            <i
-              className=" pi pi-ellipsis-v"
-              onClick={(e) => handleMenuClick(data)}
-            ></i>
-          </Dropdown>
+          {data.isBanned ? (
+            <Dropdown
+              className="text-sm"
+              menu={{
+                bannedMenu,
+              }}
+            >
+              <i
+                className=" pi pi-ellipsis-v"
+                onClick={(e) => handleMenuClick(data)}
+              ></i>
+            </Dropdown>
+          ) : (
+            <Dropdown
+              className="text-sm"
+              menu={{
+                items,
+              }}
+            >
+              <i
+                className=" pi pi-ellipsis-v"
+                onClick={(e) => handleMenuClick(data)}
+              ></i>
+            </Dropdown>
+          )}
         </Space>
       ),
     },
@@ -180,7 +220,6 @@ export default function ClientMentors() {
       _creatorId: userData.id,
       _userByworkSpace: details.id,
       _banReason: selectedCategories.slice(-1)[0].name,
-
     };
     setShow(!show);
     banUserByWorkspace(payload)
@@ -232,7 +271,6 @@ export default function ClientMentors() {
       .catch((err) => console.log(err));
     setShow(!show);
   };
-
 
   const openInvite = () => {
     setVisible((visible) => !visible);
