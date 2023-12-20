@@ -230,7 +230,7 @@ export default function ClientMentors() {
         key: "1",
         label: (
           <p className="text-xs p-1" onClick={openuser}>
-            View Mentee info
+            View Mentor info
           </p>
         ),
       },
@@ -238,7 +238,7 @@ export default function ClientMentors() {
         key: "2",
         label: (
           <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
-            Suspend Mentee
+            Suspend Mentor
           </p>
         ),
       },
@@ -257,7 +257,7 @@ export default function ClientMentors() {
         key: "1",
         label: (
           <p className="text-xs p-1" onClick={openuser}>
-            View Mentee info
+            View Mentor info
           </p>
         ),
       },
@@ -265,7 +265,7 @@ export default function ClientMentors() {
         key: "2",
         label: (
           <p className="text-xs p-1" onClick={() => openActivate()}>
-            Reactivate Mentee
+            Reactivate Mentor
           </p>
         ),
       },
@@ -441,7 +441,9 @@ export default function ClientMentors() {
                 <button
                   className="pri-btn w-full my-3"
                   disabled={selectedCategories.length === 0}
+                  onClick={suspendAccount}
                 >
+                  {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                   Save
                 </button>
               </div>
