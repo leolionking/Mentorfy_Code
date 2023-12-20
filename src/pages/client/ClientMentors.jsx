@@ -24,27 +24,35 @@ export default function ClientMentors() {
   const [show, setShow] = useState(false);
   const [unBanUser, setUnbanUser] = useState(false);
   const [mentorUsers, setMentorUsers] = useState([]);
-  const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
   const [others, setOthers] = useState();
   const [visible, setVisible] = useState(false);
   const [viewUser, setViewUser] = useState(false);
   const [suspendUser, setSuspendUser] = useState(false);
   const [type, setType] = useState();
+  const [activateUser, setActivateUser] = useState(false);
   const [details, setDetails] = useState();
+  const [items, setItems] = useState([]);
+
   const handleMenuClick = (data) => {
     setDetails(data);
   };
   const openuser = () => {
     setViewUser((viewUser) => !viewUser);
   };
+
   const openSuspension = (data) => {
+    setLoaded(false);
     setSuspendUser((suspendUser) => !suspendUser);
     setType(data);
     setOthers();
     setSelectedCategories([]);
   };
 
+  const openActivate = () => {
+    setLoaded(false);
+    setActivateUser((activateUser) => !activateUser);
+  };
   const categories = [
     { name: "Violating Community Guidelines", key: "A" },
     { name: "Spam or Misuse", key: "B" },
@@ -65,58 +73,6 @@ export default function ClientMentors() {
 
     setSelectedCategories(_selectedCategories);
   };
-  const items = [
-    {
-      key: "1",
-      label: (
-        <p className="text-xs p-1" onClick={openuser}>
-          View Mentor info
-        </p>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
-          Suspend Mentor
-        </p>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <p className="text-xs p-1" onClick={() => openSuspension("close")}>
-          Close Account
-        </p>
-      ),
-    },
-  ];
-  const bannedMenu = [
-    {
-      key: "1",
-      label: (
-        <p className="text-xs p-1" onClick={openuser}>
-          View Mentor info
-        </p>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
-          Reactivate Mentor
-        </p>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <p className="text-xs p-1" onClick={() => openSuspension("close")}>
-          Close Account
-        </p>
-      ),
-    },
-  ];
 
   const columns = [
     {
@@ -169,35 +125,22 @@ export default function ClientMentors() {
       dataIndex: "action",
       render: (_, data) => (
         <Space size="middle">
-          {data.isBanned ? (
-            <Dropdown
-              className="text-sm"
-              menu={{
-                bannedMenu,
-              }}
-            >
-              <i
-                className=" pi pi-ellipsis-v"
-                onClick={(e) => handleMenuClick(data)}
-              ></i>
-            </Dropdown>
-          ) : (
-            <Dropdown
-              className="text-sm"
-              menu={{
-                items,
-              }}
-            >
-              <i
-                className=" pi pi-ellipsis-v"
-                onClick={(e) => handleMenuClick(data)}
-              ></i>
-            </Dropdown>
-          )}
+          <Dropdown
+            className="text-sm"
+            menu={{
+              items,
+            }}
+          >
+            <i
+              className=" pi pi-ellipsis-v"
+              onClick={(e) => handleMenuClick(data)}
+            ></i>
+          </Dropdown>
         </Space>
       ),
     },
   ];
+
 
   const listMentors = () => {
     setLoaded(true);
@@ -279,6 +222,68 @@ export default function ClientMentors() {
   useEffect(() => {
     listMentors();
   }, []);
+
+
+  useEffect(() => {
+    const itemMenu = [
+      {
+        key: "1",
+        label: (
+          <p className="text-xs p-1" onClick={openuser}>
+            View Mentee info
+          </p>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <p className="text-xs p-1" onClick={() => openSuspension("suspend")}>
+            Suspend Mentee
+          </p>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+            Close Account
+          </p>
+        ),
+      },
+    ];
+
+    const bannedMenu = [
+      {
+        key: "1",
+        label: (
+          <p className="text-xs p-1" onClick={openuser}>
+            View Mentee info
+          </p>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <p className="text-xs p-1" onClick={() => openActivate()}>
+            Reactivate Mentee
+          </p>
+        ),
+      },
+      {
+        key: "3",
+        label: (
+          <p className="text-xs p-1" onClick={() => openSuspension("close")}>
+            Close Account
+          </p>
+        ),
+      },
+    ];
+    if (details?.isBanned) {
+      setItems(bannedMenu);
+    } else {
+      setItems(itemMenu);
+    }
+  }, [details]);
 
   return (
     <div className=" w-full min-h-[90vh]">
@@ -438,6 +443,45 @@ export default function ClientMentors() {
                   disabled={selectedCategories.length === 0}
                 >
                   Save
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
+        {activateUser ? (
+        <div className="dialog">
+          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+            <div className=" grid gap-2">
+              <i
+                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                onClick={openActivate}
+              ></i>
+              <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
+                Re-activate Account
+              </h2>
+              <div className="text-sm py-3 text-center">
+                Are you sure you want to Re-activate Mentor’s Account?
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  className="outline-btn w-full my-3"
+                  disabled={loading}
+                  onClick={openActivate}
+                >
+                  {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+                  Cancel
+                </button>
+                <button
+                  className="pri-btn w-full my-3"
+                  disabled={loading}
+                  onClick={reactivateAccount}
+                >
+                  {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+                  Re-activate Mentor
                 </button>
               </div>
             </div>

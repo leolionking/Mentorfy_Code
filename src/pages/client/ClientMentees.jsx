@@ -21,11 +21,8 @@ export default function ClientMentees() {
   const [visible, setVisible] = useState(false);
   const [viewUser, setViewUser] = useState(false);
   const [show, setShow] = useState(false);
-  const [unBanUser, setUnbanUser] = useState(false);
   const [menteesUsers, setMenteesUsers] = useState([]);
-  const [userPass, setUserPass] = useState({});
   const [loading, setLoaded] = useState(false);
-  const [email, setEmail] = useState("");
   const [details, setDetails] = useState();
   const [suspendUser, setSuspendUser] = useState(false);
   const [activateUser, setActivateUser] = useState(false);
