@@ -181,6 +181,11 @@ export default function UserOnboard() {
   const proceedToEvaluation = () => {
     const payload = {
       ...registration,
+      city: values.city,
+      phone: values.phone,
+      province: values.province,
+      postalcode: values.postalcode,
+      gender: values.gender,
       step: 5,
     };
     setRegistration(payload);
@@ -254,7 +259,7 @@ export default function UserOnboard() {
         _url: window.location.href,
         _linkedin: registration.linkedin,
         _city: registration.city,
-        _yearsofprofessionalinterest: registration.yearsOfExperience
+        _yearsofprofessionalinterest: registration.yearsOfExperiences
           .split(" ")
           .join(""),
         firstame: registration.firstName,
@@ -276,7 +281,7 @@ export default function UserOnboard() {
         _url: window.location.href,
         _linkedin: registration.linkedin,
         _city: registration.city,
-        _yearsofprofessionalinterest: registration.yearsOfExperience
+        _yearsofprofessionalinterest: registration.yearsOfExperiences
           .split(" ")
           .join(""),
         firstame: registration.firstName,
@@ -292,7 +297,7 @@ export default function UserOnboard() {
 
     createWorkspaceUser(payload).then((res) => {
       toast.success("successful");
-      const { email, password } = registration.user;
+      const { email, password } = registration;
       loginApi(email, password).then((res) => {
         const payload = {
           workspaceId: params.id,
@@ -620,7 +625,7 @@ export default function UserOnboard() {
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
                       className="pi pi-arrow-left cursor-pointer"
-                      onClick={() => previous(2)}
+                      onClick={() => previous(3)}
                     ></i>
                     <div className="">
                       {registration.step}/{stages}
@@ -725,7 +730,7 @@ export default function UserOnboard() {
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
                       className="pi pi-arrow-left cursor-pointer"
-                      onClick={() => previous(2)}
+                      onClick={() => previous(4)}
                     ></i>
                     <div className="">
                       {registration.step}/{stages}
@@ -773,7 +778,7 @@ export default function UserOnboard() {
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
                       className="pi pi-arrow-left cursor-pointer"
-                      onClick={() => previous(2)}
+                      onClick={() => previous(5)}
                     ></i>
                     <div className="">
                       {registration.step}/{stages}
@@ -818,7 +823,7 @@ export default function UserOnboard() {
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
                       className="pi pi-arrow-left cursor-pointer"
-                      onClick={() => previous(2)}
+                      onClick={() => previous(6)}
                     ></i>
                     <div className="">
                       {registration.step}/{stages}
@@ -899,7 +904,7 @@ export default function UserOnboard() {
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
                       className="pi pi-arrow-left cursor-pointer"
-                      onClick={() => previous(2)}
+                      onClick={() => previous(7)}
                     ></i>
                     <div className="">
                       {registration.step}/{stages}
@@ -952,7 +957,7 @@ export default function UserOnboard() {
                     <button
                       className="pri-btn"
                       disabled={!image}
-                      onClick={proceedToEvaluation}
+                      onClick={registerUser}
                     >
                       Finish
                     </button>
