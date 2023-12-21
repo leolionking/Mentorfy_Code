@@ -336,7 +336,7 @@ export default function UserOnboard() {
               </p>
             </div>
           </div>
-          <div className="form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  shadow-small rounded-2xl">
+          <div className={registration.step > 3 ? "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  shadow-small rounded-2xl" : 'form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  rounded-2xl'}>
             <div className="">
               {registration?.step === 1 ? (
                 <div className="main py-3">
