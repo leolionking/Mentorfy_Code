@@ -93,7 +93,7 @@ body {
 }
 
 .dialog{
-  @apply before:h-[100vh] before:w-[100vw] before:bg-black/40 before:fixed before:top-0 before:left-0 before:z-[10000] before:backdrop-blur-sm
+  @apply before:h-[100vh] before:w-[100vw] before:bg-black/40 before:fixed before:top-0 before:left-0 before:z-[1000] before:backdrop-blur-sm
 }
 
 input, textarea {
