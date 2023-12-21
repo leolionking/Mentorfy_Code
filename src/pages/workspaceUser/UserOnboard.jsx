@@ -431,7 +431,7 @@ export default function UserOnboard() {
                   <div className="form w-full md:w-[60vw] h-fit lg:w-[30vw] shadow-small rounded-2xl">
                     <div className="">
                       <div className="header bg-[var(--primary)] text-white font-['ginto-bold'] text-2xl p-4 flex items-center justify-center text-center rounded-t-2xl h-[20vh] px-10">
-                        Let’s create your Mentor Account
+                        Let’s create your {registration?.role} Account
                       </div>
                       <div className="main py-5">
                         <form onSubmit={handleSubmit} className="grid gap-3">
