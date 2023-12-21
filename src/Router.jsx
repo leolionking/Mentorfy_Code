@@ -127,8 +127,8 @@ const router = createBrowserRouter([
     element: <MenteeLayout />,
     children: [
       {
-        path: "/mentee-signin/:id",
-        element: <MenteeLogin />,
+        path: "/mentee-signup/:id",
+        element: <UserOnboard />,
       },
       {
         path: "/mentee-dashboard",
