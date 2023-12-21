@@ -183,12 +183,12 @@ export default function UserOnboard() {
   const proceedToWorksapce = () => {
     const payload = {
       ...registration,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
+      summary: values.summary,
       step: 7,
     };
     setRegistration(payload);
   };
+
   let stages = 7;
 
   const previous = (data) => {
@@ -225,6 +225,7 @@ export default function UserOnboard() {
     email: "",
     otp: "",
     summary: "",
+    linkedin: "",
   };
 
   const {
@@ -669,14 +670,13 @@ export default function UserOnboard() {
                     </div>
                   </div>
                   <div className="header font-['ginto-bold'] text-2xl text-center">
-                  Tell us about your yourself
+                    Tell us about your yourself
                   </div>
                   <p className="text-sm text-center py-2 pb-5">
-                  How would you like to be introduced? Add a short bio
+                    How would you like to be introduced? Add a short bio
                   </p>
                   <div className="grid gap-3">
                     <div className="flex flex-col gap-2">
-                      <label htmlFor="username">Phone Number</label>
                       <InputTextarea
                         id="phone"
                         name="summary"
@@ -696,17 +696,54 @@ export default function UserOnboard() {
                     </div>
                     <button
                       className="pri-btn"
-                      disabled={
-                        errors.summary
-                      }
-                      onClick={proceedToEvaluation}
+                      disabled={errors.summary}
+                      onClick={proceedToWorksapce}
                     >
                       Next
                     </button>
                   </div>
                 </div>
               ) : registration.step === 7 ? (
-                ""
+                <div className="main py-3">
+                  <div className="flex items-center justify-between w-full pb-2">
+                    <i
+                      className="pi pi-arrow-left cursor-pointer"
+                      onClick={() => previous(2)}
+                    ></i>
+                    <div className="">
+                      {registration.step}/{stages}
+                    </div>
+                  </div>
+                  <div className="header font-['ginto-bold'] text-2xl text-center">
+                    Workspace Information
+                  </div>
+                  <p className="text-sm text-center py-2 pb-5">
+                    We’ll use this to setup your Mentor Profile
+                  </p>
+                  <div className="grid gap-3">
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="username">LinkedIn Profile</label>
+                      <InputText
+                        id="username"
+                        name="linkedin"
+                        aria-describedby="username-help"
+                        value={values.linkedin}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                      />
+                      {errors.linkedin && touched.linkedin && (
+                        <p className="error">{errors.linkedin}</p>
+                      )}
+                    </div>
+                    <button
+                      className="pri-btn"
+                      disabled={errors.summary}
+                      onClick={proceedToEvaluation}
+                    >
+                      Next
+                    </button>
+                  </div>
+                </div>
               ) : (
                 ""
               )}

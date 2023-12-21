@@ -96,6 +96,7 @@ const onboardUserValidation = yup.object().shape({
   email: yup.string().required("Required"),
   otp: yup.string().required("Required"),
   summary: yup.string().required("Required"),
+  linkedin: yup.string().required("Required"),
 });
 
 const stage2 = yup.object().shape({
