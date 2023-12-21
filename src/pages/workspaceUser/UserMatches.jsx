@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function MentorMatches() {
+export default function UserMatches() {
   return (
     <div>MentorMatches</div>
   )

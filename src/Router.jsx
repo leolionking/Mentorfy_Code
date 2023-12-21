@@ -4,9 +4,7 @@ import Home from "./pages/general/Home";
 import LoginClient from "./pages/client/LoginClient";
 import ClientLayout from "./layouts/ClientLayout";
 import MenteeLayout from "./layouts/MenteeLayout";
-import MenteeLogin from "./pages/mentee/MenteeLogin";
 import MentorLayout from "./layouts/MentorLayout";
-import MentorLogin from "./pages/mentor/MentorLogin";
 import ForgotPasswordClient from "./pages/client/ForgotPasswordClient";
 import ResetPasswordClient from "./pages/client/ResetPasswordClient";
 import PricingClient from "./pages/client/PricingClient";
@@ -23,10 +21,13 @@ import ClientSettings from "./pages/client/ClientSettings";
 import ClientAddWorkspace from "./pages/client/ClientAddWorkspace";
 import Notification from "./components/Notification";
 import ClientBilling from "./pages/client/ClientBilling";
-import MenteeSignup from "./pages/workspaceUser/UserSignup";
 import ResetPasswordOtp from "./pages/general/ResetPasswordOtp";
 import UserOnboard from "./pages/workspaceUser/UserOnboard";
 import Dashboard from "./components/dashboard/Dashboard";
+import UserRequests from "./pages/workspaceUser/UserRequests";
+import UserConnection from "./pages/workspaceUser/UserConnection";
+import UserMatches from "./pages/workspaceUser/UserMatches";
+import UserDashboard from "./pages/workspaceUser/UserDashboard";
 
 const router = createBrowserRouter([
   {
@@ -132,19 +133,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/mentee-dashboard",
-        element: <Dashboard />,
+        element: <UserDashboard />,
       },
       {
-        path: "/mentee-signin/:id",
-        element: <MenteeLogin />,
+        path: "/mentee-matches",
+        element: <UserMatches />,
       },
       {
-        path: "/mentee-signin/:id",
-        element: <MenteeLogin />,
+        path: "/mentee-connections",
+        element: <UserConnection />,
       },
       {
-        path: "/mentee-signin/:id",
-        element: <MenteeLogin />,
+        path: "/mentee-requests",
+        element: <UserRequests />,
+      },
+      {
+        path: "/mentee-notifications",
+        element: <Notification />,
       },
     ],
   },
@@ -158,7 +163,23 @@ const router = createBrowserRouter([
       },
       {
         path: "/mentor-dashboard",
-        element: <Dashboard />,
+        element: <UserDashboard />,
+      },
+      {
+        path: "/mentor-matches",
+        element: <UserMatches />,
+      },
+      {
+        path: "/mentor-connections",
+        element: <UserConnection />,
+      },
+      {
+        path: "/mentor-requests",
+        element: <UserRequests />,
+      },
+      {
+        path: "/mentor-notifications",
+        element: <Notification />,
       },
     ],
   },

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function MentorLogin() {
+export default function UserLogin() {
   return (
     <div>MentorLogin</div>
   )

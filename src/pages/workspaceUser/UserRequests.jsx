@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function MentorRequests() {
+export default function UserRequests() {
   return (
     <div>MentorRequests</div>
   )
