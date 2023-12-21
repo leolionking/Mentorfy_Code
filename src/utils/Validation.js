@@ -19,8 +19,16 @@ const otpverification = yup.object().shape({
 });
 
 const forgotPassword = yup.object().shape({
-  password: yup.string().min(5).max(25).matches(passwordRule, {message: "Please create a stronger password"}).required("Required"),
-  repeat_password: yup.string().oneOf([yup.ref('password'), null], "Passwords must match").required("Required")
+  password: yup
+    .string()
+    .min(5)
+    .max(25)
+    .matches(passwordRule, { message: "Please create a stronger password" })
+    .required("Required"),
+  repeat_password: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Required"),
 });
 
 const resetPassword = yup.object().shape({
@@ -35,8 +43,7 @@ const clientProfileValidation = yup.object().shape({
   country: yup.string().required("Required"),
   province: yup.string().required("Required"),
   postalcode: yup.string().required("Required"),
-
-})
+});
 
 const requestNewPassword = yup.object().shape({
   email: yup.string().email("Please enter a valid email").required("Required"),
@@ -61,9 +68,34 @@ const onboardClientValidation = yup.object().shape({
   description: yup.string().required("Required"),
   logo: yup.string().required("Required"),
   workspaceName: yup.string().required("Required"),
-  label:yup.string().required("Required"),
+  label: yup.string().required("Required"),
   acceptedValue: yup.string().required("Required"),
   options: yup.array().required("Required"),
+});
+
+const onboardUserValidation = yup.object().shape({
+  password: yup
+    .string()
+    .min(5)
+    .max(25)
+    .matches(passwordRule, { message: "Please create a stronger password" })
+    .required("Required"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Required"),
+  phone: yup.string().required("Required"),
+  postalcode: yup.string().required("Required"),
+  province: yup.string().required("Required"),
+  city: yup.string().required("Required"),
+  yearsOfExperience: yup.string().required("Required"),
+  firstName: yup.string().required("Required"),
+  gender: yup.string().required("Required"),
+  lastName: yup.string().required("Required"),
+  professionalArea: yup.string().required("Required"),
+  email: yup.string().required("Required"),
+  otp: yup.string().required("Required"),
+  summary: yup.string().required("Required"),
 });
 
 const stage2 = yup.object().shape({
@@ -98,7 +130,6 @@ const userDynamicForm = yup.object().shape({
   acceptedValue: yup.string().required("Required"),
 });
 
-
 const profile = yup.object().shape({
   firstName: yup.string().required("Required"),
   lastName: yup.string().required("Required"),
@@ -126,5 +157,6 @@ export {
   userOnboard3,
   profile,
   editWorkspace,
-  clientProfileValidation
+  clientProfileValidation,
+  onboardUserValidation,
 };
