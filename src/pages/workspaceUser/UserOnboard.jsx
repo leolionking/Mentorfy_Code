@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { registerUserAtom } from "../../atom/registrationAtom";
 import { InputText } from "primereact/inputtext";
@@ -11,6 +11,7 @@ import {
   getProvinces,
   getUserGenericForm,
   getUserWorkspace,
+  loginApi,
   validateOtp,
   validateUser,
 } from "../../utils/general/generalApi";
@@ -20,9 +21,13 @@ import { toast } from "react-toastify";
 import { Dropdown } from "primereact/dropdown";
 import { Password } from "primereact/password";
 import { InputTextarea } from "primereact/inputtextarea";
-import { getProfAreaByWorkspaceOwner } from "../../utils/client/clientApi";
+import {
+  createWorkspaceUser,
+  getProfAreaByWorkspaceOwner,
+} from "../../utils/client/clientApi";
 import avaterNew from "../../assets/avatar-new.png";
 import { InboxOutlined } from "@ant-design/icons";
+import { authState } from "../../atom/authAtom";
 
 export default function UserOnboard() {
   const params = useParams();
@@ -35,6 +40,8 @@ export default function UserOnboard() {
   const [provinces, setProvinces] = useState([]);
   const [image, setImage] = useState();
   const [dataUrl, setDataUrl] = useState();
+  const [auth, setAuth] = useRecoilState(authState);
+  const navigate = useNavigate();
 
   const genders = ["Male", "Female", "Others"];
   const yearsOfExperiences = [
@@ -234,6 +241,76 @@ export default function UserOnboard() {
       };
     }
   };
+
+  const registerUser = () => {
+    let payload;
+    if (registration.role === "mentor") {
+      payload = {
+        _password: registration.confirmPassword,
+        _phone: registration.phone,
+        _postalcode: registration.postalcode,
+        _provinceId: registration.province,
+        _role_input: true,
+        _url: window.location.href,
+        _linkedin: registration.linkedin,
+        _city: registration.city,
+        _yearsofprofessionalinterest: registration.yearsOfExperience
+          .split(" ")
+          .join(""),
+        firstame: registration.firstName,
+        _profilesummary: registration.summary,
+        gender: registration.gender,
+        lastName: registration.lastName,
+        mentor__profAreaIds: registration.professionalArea,
+        mail: registration.email,
+        workspaceId: params.id,
+        // acceptanceCriteria : reg.form,
+      };
+    } else {
+      payload = {
+        _password: registration.confirmPassword,
+        _phone: registration.phone,
+        _postalcode: registration.postalcode,
+        _provinceId: registration.province,
+        _role_input: true,
+        _url: window.location.href,
+        _linkedin: registration.linkedin,
+        _city: registration.city,
+        _yearsofprofessionalinterest: registration.yearsOfExperience
+          .split(" ")
+          .join(""),
+        firstame: registration.firstName,
+        _profilesummary: registration.summary,
+        gender: registration.gender,
+        lastName: registration.lastName,
+        mentee__profAreaIds: registration.professionalArea,
+        mail: registration.email,
+        workspaceId: params.id,
+        // acceptanceCriteria : reg.form,
+      };
+    }
+
+    createWorkspaceUser(payload).then((res) => {
+      toast.success("successful");
+      const { email, password } = registration.user;
+      loginApi(email, password).then((res) => {
+        const payload = {
+          workspaceId: params.id,
+          res,
+        };
+        setAuth(payload);
+        if(registration.role === 'mentor'){
+          navigate(`/mentor-dashboard`);
+        }
+        else{
+          navigate(`/mentee-dashboard`);
+
+        }
+        setRegistration(null);
+      });
+    });
+  };
+
   const initialValues = {
     password: "",
     confirmPassword: "",
@@ -336,7 +413,13 @@ export default function UserOnboard() {
               </p>
             </div>
           </div>
-          <div className={registration.step > 3 ? "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  shadow-small rounded-2xl" : 'form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  rounded-2xl'}>
+          <div
+            className={
+              registration.step > 3
+                ? "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  shadow-small rounded-2xl"
+                : "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  rounded-2xl"
+            }
+          >
             <div className="">
               {registration?.step === 1 ? (
                 <div className="main py-3">
@@ -868,9 +951,7 @@ export default function UserOnboard() {
                     </div>
                     <button
                       className="pri-btn"
-                      disabled={
-                        !image 
-                      }
+                      disabled={!image}
                       onClick={proceedToEvaluation}
                     >
                       Finish

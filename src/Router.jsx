@@ -26,6 +26,7 @@ import ClientBilling from "./pages/client/ClientBilling";
 import MenteeSignup from "./pages/workspaceUser/UserSignup";
 import ResetPasswordOtp from "./pages/general/ResetPasswordOtp";
 import UserOnboard from "./pages/workspaceUser/UserOnboard";
+import Dashboard from "./components/dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -91,7 +92,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/client-workspace",
-        element: '',
+        element: "",
       },
       {
         path: "/client-notifications",
@@ -130,8 +131,8 @@ const router = createBrowserRouter([
         element: <MenteeLogin />,
       },
       {
-        path: "/mentee-signup/:id",
-        element: <UserOnboard />,
+        path: "/mentee-dashboard",
+        element: <Dashboard />,
       },
       {
         path: "/mentee-signin/:id",
@@ -156,8 +157,8 @@ const router = createBrowserRouter([
         element: <UserOnboard />,
       },
       {
-        path: "/mentee-signup/:id",
-        element: <MenteeSignup />,
+        path: "/mentor-dashboard",
+        element: <Dashboard />,
       },
     ],
   },
