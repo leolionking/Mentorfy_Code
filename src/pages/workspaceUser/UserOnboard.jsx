@@ -20,6 +20,9 @@ import { toast } from "react-toastify";
 import { Dropdown } from "primereact/dropdown";
 import { Password } from "primereact/password";
 import { InputTextarea } from "primereact/inputtextarea";
+import { getProfAreaByWorkspaceOwner } from "../../utils/client/clientApi";
+import avaterNew from "../../assets/avatar-new.png";
+import { InboxOutlined } from "@ant-design/icons";
 
 export default function UserOnboard() {
   const params = useParams();
@@ -28,8 +31,18 @@ export default function UserOnboard() {
   const [workspace, setWorkspace] = useRecoilState(workspaceStore);
   const [formData, setFormData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [professionalArea, setProfessionalArea] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [image, setImage] = useState();
+  const [dataUrl, setDataUrl] = useState();
+
   const genders = ["Male", "Female", "Others"];
+  const yearsOfExperiences = [
+    "Less than 2 years",
+    "2-4 years",
+    "5-8 years",
+    "More than 8 years",
+  ];
   let newArray = new Map();
   const setValues = (data, i) => {
     newArray.set(i, data);
@@ -179,7 +192,7 @@ export default function UserOnboard() {
     setRegistration(payload);
   };
 
-  // step 5
+  // step 6
   const proceedToWorksapce = () => {
     const payload = {
       ...registration,
@@ -189,7 +202,7 @@ export default function UserOnboard() {
     setRegistration(payload);
   };
 
-  let stages = 7;
+  let stages = 8;
 
   const previous = (data) => {
     const payload = {
@@ -199,17 +212,28 @@ export default function UserOnboard() {
     setRegistration(payload);
   };
 
-  // step 6
+  // step 7
   const proceedToImage = () => {
     const payload = {
       ...registration,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-      step: 7,
+      linkedin: values.linkedin,
+      yearsOfExperiences: values.yearsOfExperience,
+      professionalArea: values.professionalArea,
+      step: 8,
     };
     setRegistration(payload);
   };
 
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(URL?.createObjectURL(e.target.files[0]));
+      let reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        setDataUrl(reader.result);
+      };
+    }
+  };
   const initialValues = {
     password: "",
     confirmPassword: "",
@@ -283,6 +307,9 @@ export default function UserOnboard() {
     };
     getUserGenericForm(payload).then((res) => {
       setFormData(JSON.parse(res.payload[0]?.generic_forms));
+    });
+    getProfAreaByWorkspaceOwner(payload).then((res) => {
+      setProfessionalArea(res.payload);
     });
   }, []);
   return (
@@ -735,12 +762,118 @@ export default function UserOnboard() {
                         <p className="error">{errors.linkedin}</p>
                       )}
                     </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="username">Years of Experience</label>
+                      <Dropdown
+                        id="username"
+                        name="yearsOfExperience"
+                        value={values.yearsOfExperience}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        options={yearsOfExperiences}
+                        className=" !text-black"
+                        filter
+                      />
+                      {errors.yearsOfExperience &&
+                        touched.yearsOfExperience && (
+                          <p className="error">{errors.yearsOfExperience}</p>
+                        )}
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <label htmlFor="username">Professionl Areas</label>
+                      <Dropdown
+                        id="username"
+                        name="professionalArea"
+                        value={values.professionalArea}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        optionLabel="area_title"
+                        optionValue="id"
+                        filter
+                        options={professionalArea}
+                        className=" !text-black"
+                      />
+                      {errors.professionalArea && touched.professionalArea && (
+                        <p className="error">{errors.professionalArea}</p>
+                      )}
+                    </div>
+
                     <button
                       className="pri-btn"
-                      disabled={errors.summary}
-                      onClick={proceedToEvaluation}
+                      disabled={
+                        errors.professionalArea ||
+                        errors.yearsOfExperience ||
+                        errors.linkedin
+                      }
+                      onClick={proceedToImage}
                     >
                       Next
+                    </button>
+                  </div>
+                </div>
+              ) : registration.step === 8 ? (
+                <div className="main py-3">
+                  <div className="flex items-center justify-between w-full pb-2">
+                    <i
+                      className="pi pi-arrow-left cursor-pointer"
+                      onClick={() => previous(2)}
+                    ></i>
+                    <div className="">
+                      {registration.step}/{stages}
+                    </div>
+                  </div>
+                  <div className="h-[90px] w-[90px] mx-auto rounded-full">
+                    {image ? (
+                      <img
+                        src={image}
+                        alt=""
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={avaterNew}
+                        alt=""
+                        className="w-full h-full object-contain"
+                      />
+                    )}
+                  </div>
+                  <div className="header font-['ginto-bold'] text-2xl text-center">
+                    Put a face to your Profile
+                  </div>
+                  <p className="text-sm text-center py-2 pb-5">
+                    A face helps you get Requests and let people know who
+                    they're Requesting from.
+                  </p>
+                  <div className="grid gap-3">
+                    <div className="">
+                      <label htmlFor="upload-button">
+                        <div className="p-4 rounded-lg border-dashed border-[1px] border-blue-300 bg-gray-50 flex items-center flex-col justify-center text-center">
+                          <p className=" text-[3rem] p-3 text-blue-600">
+                            <InboxOutlined />
+                          </p>
+                          <p className=" text-[1rem] text-gray-700"></p>
+                          <p className="text-xs pt-2 pb-10 text-gray-500 w-[80%]">
+                            File size limit is 5MB. Accepted formats are PNG and
+                            JPG.
+                          </p>
+                        </div>
+                      </label>
+                      <input
+                        type="file"
+                        id="upload-button"
+                        accept="image/png, image/jpeg"
+                        style={{ display: "none" }}
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                    <button
+                      className="pri-btn"
+                      disabled={
+                        !image 
+                      }
+                      onClick={proceedToEvaluation}
+                    >
+                      Finish
                     </button>
                   </div>
                 </div>
