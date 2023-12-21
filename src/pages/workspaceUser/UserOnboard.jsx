@@ -42,7 +42,7 @@ export default function UserOnboard() {
   const [dataUrl, setDataUrl] = useState();
   const [auth, setAuth] = useRecoilState(authState);
   const navigate = useNavigate();
-
+  const imageformData = new FormData();
   const genders = ["Male", "Female", "Others"];
   const yearsOfExperiences = [
     "Less than 2 years",
@@ -239,6 +239,7 @@ export default function UserOnboard() {
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(URL?.createObjectURL(e.target.files[0]));
+      imageformData.append('file', e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
@@ -246,6 +247,8 @@ export default function UserOnboard() {
       };
     }
   };
+
+
 
   const registerUser = () => {
     let payload;
@@ -269,6 +272,7 @@ export default function UserOnboard() {
         mentor__profAreaIds: registration.professionalArea,
         mail: registration.email,
         workspaceId: params.id,
+        _userpic: imageformData
         // acceptanceCriteria : reg.form,
       };
     } else {
@@ -291,6 +295,7 @@ export default function UserOnboard() {
         mentee__profAreaIds: registration.professionalArea,
         mail: registration.email,
         workspaceId: params.id,
+        _userpic: imageformData
         // acceptanceCriteria : reg.form,
       };
     }
@@ -383,6 +388,13 @@ export default function UserOnboard() {
         setWorkspace(res.payload[0]);
       });
     }
+    else{
+      const payload = {
+        ...registration,
+        role: role,
+      };
+      setRegistration(payload)
+    }
     fetchProvinces();
     const payload = {
       id: params.id,
@@ -420,7 +432,7 @@ export default function UserOnboard() {
           </div>
           <div
             className={
-              registration.step > 3
+              registration.step > 2
                 ? "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  shadow-small rounded-2xl"
                 : "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  rounded-2xl"
             }
