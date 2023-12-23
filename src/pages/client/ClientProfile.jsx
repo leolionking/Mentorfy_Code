@@ -30,7 +30,6 @@ export default function ClientProfile() {
       });
   };
   useEffect(() => {
-    
     fetchProvinces();
   }, []);
 
@@ -51,6 +50,14 @@ export default function ClientProfile() {
     postalcode: "",
   };
 
+  const loadedValues = {
+    firstName: userData?.firstName,
+    lastName: userData?.lastName,
+    country: userData?.country,
+    province: userData?.province,
+    postalcode: userData?.postalcode,
+  }
+
   const {
     values,
     errors,
@@ -63,7 +70,7 @@ export default function ClientProfile() {
     handleSubmit,
   } = useFormik({
     validateOnMount: true,
-    initialValues: initialValues ,
+    initialValues: userData ? loadedValues : initialValues,
     validationSchema: clientProfileValidation,
     onSubmit,
   });
@@ -80,15 +87,19 @@ export default function ClientProfile() {
               </div>
             </div> */}
         <div className="">
-              <Avatar
-                label={userData?.firstName?.slice(0, 2)}
-                size="xlarge"
-                shape="circle"
-                className="lg:h-[100px] lg:w-[100px] text-white bg-[var(--primary)]  flex justify-center items-center mx-auto  top-[-20px]"
-              />
-            </div>
+          <Avatar
+            label={userData?.firstName?.slice(0, 1)}
+            size="xlarge"
+            shape="circle"
+            className="lg:h-[120px] text-xl lg:w-[120px] text-white bg-[var(--primary)] absolute left-[50%] translate-x-[-50%] flex justify-center items-center mx-auto  top-[0px]"
+          />
+          <div className=" absolute left-[50%] translate-x-[-50%] top-[4.7rem] bg-white/40 p-3 rounded-full w-[40px] h-[40px] flex items-center justify-center ">
+            <i className="pi pi-camera text-sm"></i>
+
+          </div>
+        </div>
         <div className="grid gap-4">
-          <div className="p-5 lg:p-10 lg:py-14 bg-white rounded-md shadow-small">
+          <div className="p-5 lg:p-10 lg:py-14 bg-white mt-10 rounded-md shadow-small">
             <h3 className="pb-5 text-lg font-['ginto-bold']">
               Manage your personal information
             </h3>
@@ -154,7 +165,7 @@ export default function ClientProfile() {
                 </div>
               </div>
               <button className="pri-btn w-fit" disabled={!isValid || loading}>
-                {loading ? <i className="pi pi-spin pi-spinner"></i>: ''}
+                {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                 Save changes
               </button>
             </div>
