@@ -388,7 +388,7 @@ export default function ClientMentees() {
 
       {suspendUser ? (
         <div className="dialog">
-          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-[1000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
                 className="pi pi-times text-black absolute top-5 right-5 p-4"
@@ -450,7 +450,7 @@ export default function ClientMentees() {
       )}
       {activateUser ? (
         <div className="dialog">
-          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-50 left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
+          <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-[1000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
                 className="pi pi-times text-black absolute top-5 right-5 p-4"
