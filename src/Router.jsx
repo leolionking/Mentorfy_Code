@@ -142,6 +142,10 @@ const router = createBrowserRouter([
         element: <UserForgotPassword />,
       },
       {
+        path: "/mentee-otp/:id",
+        element: <UserForgotPassword />,
+      },
+      {
         path: "/mentee-dashboard",
         element: <UserDashboard />,
       },
