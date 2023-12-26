@@ -9,6 +9,7 @@ import { Dropdown } from "primereact/dropdown";
 import { editOwnerProfile } from "../../utils/client/clientApi";
 import { useFormik } from "formik";
 import { clientProfileValidation } from "../../utils/Validation";
+import { authState } from "../../atom/authAtom";
 
 export default function ClientProfile() {
   const [firstname, setFirstname] = useState("");
@@ -19,6 +20,8 @@ export default function ClientProfile() {
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(false);
   const userData = useRecoilValue(user);
+  const [image, setImage] = useState();
+  const auth = useRecoilValue(authState);
 
   const fetchProvinces = () => {
     getProvinces()
@@ -32,6 +35,30 @@ export default function ClientProfile() {
   useEffect(() => {
     fetchProvinces();
   }, []);
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      let reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      setImage(e.target.files[0]);
+    }
+  };
+
+  const saveImage = () => {
+    const formData = new FormData();
+    const payload = {
+      userpic: image,
+    };
+    formData.append("file", payload);
+
+    editOwnerProfile(formData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   const onSubmit = () => {
     const payload = {};
@@ -56,7 +83,7 @@ export default function ClientProfile() {
     country: userData?.country,
     province: userData?.province,
     postalcode: userData?.postalcode,
-  }
+  };
 
   const {
     values,
@@ -94,8 +121,16 @@ export default function ClientProfile() {
             className="lg:h-[120px] text-xl lg:w-[120px] text-white bg-[var(--primary)] absolute left-[50%] translate-x-[-50%] flex justify-center items-center mx-auto  top-[0px]"
           />
           <div className=" absolute left-[50%] translate-x-[-50%] top-[4.7rem] bg-white/40 p-3 rounded-full w-[40px] h-[40px] flex items-center justify-center ">
-            <i className="pi pi-camera text-sm"></i>
-
+            <label htmlFor="upload-button">
+              <i className="pi pi-camera text-sm"></i>
+            </label>
+            <input
+              type="file"
+              id="upload-button"
+              accept="image/png, image/jpeg"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+            />
           </div>
         </div>
         <div className="grid gap-4">
@@ -164,7 +199,11 @@ export default function ClientProfile() {
                   />
                 </div>
               </div>
-              <button className="pri-btn w-fit" disabled={!isValid || loading}>
+              <button
+                className="pri-btn w-fit"
+                disabled={!isValid || loading}
+                onClick={saveImage}
+              >
                 {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                 Save changes
               </button>
