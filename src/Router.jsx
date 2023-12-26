@@ -29,6 +29,7 @@ import UserConnection from "./pages/workspaceUser/UserConnection";
 import UserMatches from "./pages/workspaceUser/UserMatches";
 import UserDashboard from "./pages/workspaceUser/UserDashboard";
 import UserLogin from './pages/workspaceUser/UserLogin';
+import UserForgotPassword from "./pages/workspaceUser/UserForgotPassword";
 
 const router = createBrowserRouter([
   {
@@ -137,6 +138,10 @@ const router = createBrowserRouter([
         element: <UserLogin />,
       },
       {
+        path: "/mentee-forgot-password/:id",
+        element: <UserForgotPassword />,
+      },
+      {
         path: "/mentee-dashboard",
         element: <UserDashboard />,
       },
@@ -169,6 +174,10 @@ const router = createBrowserRouter([
       {
         path: "/mentor-signin/:id",
         element: <UserLogin />,
+      },
+      {
+        path: "/mentor-forgot-password/:id",
+        element: <UserForgotPassword />,
       },
       {
         path: "/mentor-dashboard",
