@@ -239,7 +239,7 @@ export default function UserOnboard() {
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(URL?.createObjectURL(e.target.files[0]));
-      imageformData.append('file', e.target.files[0]);
+      imageformData.append("file", e.target.files[0]);
       let reader = new FileReader();
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
@@ -247,8 +247,6 @@ export default function UserOnboard() {
       };
     }
   };
-
-
 
   const registerUser = () => {
     let payload;
@@ -272,7 +270,7 @@ export default function UserOnboard() {
         mentor__profAreaIds: registration.professionalArea,
         mail: registration.email,
         workspaceId: params.id,
-        _userpic: imageformData
+        _userpic: imageformData,
         // acceptanceCriteria : reg.form,
       };
     } else {
@@ -295,7 +293,7 @@ export default function UserOnboard() {
         mentee__profAreaIds: registration.professionalArea,
         mail: registration.email,
         workspaceId: params.id,
-        _userpic: imageformData
+        _userpic: imageformData,
         // acceptanceCriteria : reg.form,
       };
     }
@@ -309,12 +307,10 @@ export default function UserOnboard() {
           res,
         };
         setAuth(payload);
-        if(registration.role === 'mentor'){
+        if (registration.role === "mentor") {
           navigate(`/mentor-dashboard`);
-        }
-        else{
+        } else {
           navigate(`/mentee-dashboard`);
-
         }
         setRegistration(null);
       });
@@ -387,13 +383,12 @@ export default function UserOnboard() {
       getUserWorkspace(data).then((res) => {
         setWorkspace(res.payload[0]);
       });
-    }
-    else{
+    } else {
       const payload = {
         ...registration,
         role: role,
       };
-      setRegistration(payload)
+      setRegistration(payload);
     }
     fetchProvinces();
     const payload = {
@@ -511,7 +506,13 @@ export default function UserOnboard() {
                             <div className="flex items-center gap-2 justify-center">
                               Already have an account?
                               <Link
-                                to="/pricing"
+                                to={
+                                  "/" +
+                                  registration.role +
+                                  "-signin" +
+                                  "/" +
+                                  params.id
+                                }
                                 className=" cursor-pointer text-[var(--primary)]"
                               >
                                 Sign in
