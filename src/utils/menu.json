@@ -45,7 +45,7 @@
         {
             "name": "My Requests",
             "link": "/mentee-requests",
-            "icon": "clock"
+            "icon": "clock pi-spin"
         },
         {
             "name": "My Connections",
@@ -67,7 +67,7 @@
         {
             "name": "My Requests",
             "link": "/mentor-requests",
-            "icon": "clock"
+            "icon": "clock pi-spin"
         },
         {
             "name": "My Connections",
