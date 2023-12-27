@@ -34,7 +34,7 @@
     "menteeMenu": [
         {
             "name": "Home",
-            "link": "/mentee-home",
+            "link": "/mentee-dashboard",
             "icon": "home"
         },
         {
@@ -45,7 +45,7 @@
         {
             "name": "My Requests",
             "link": "/mentee-requests",
-            "icon": "time"
+            "icon": "clock"
         },
         {
             "name": "My Connections",
@@ -56,7 +56,7 @@
     "mentorMenu": [
         {
             "name": "Home",
-            "link": "/mentor-home",
+            "link": "/mentor-dashboard",
             "icon": "home"
         },
         {
@@ -67,7 +67,7 @@
         {
             "name": "My Requests",
             "link": "/mentor-requests",
-            "icon": "time"
+            "icon": "clock"
         },
         {
             "name": "My Connections",

@@ -3,10 +3,12 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import React, { useEffect, useState } from "react";
 import { loginuser } from "../../utils/Validation";
-import { getUserWorkspace } from "../../utils/general/generalApi";
+import { checkUserEmailByWorkspace, getUserWorkspace, loginApi } from "../../utils/general/generalApi";
 import { useRecoilState } from "recoil";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import { authState } from "../../atom/authAtom";
 
 export default function UserLogin() {
   const [workspace, setWorkspace] = useRecoilState(workspaceStore);
@@ -15,9 +17,43 @@ export default function UserLogin() {
   const navigate = useNavigate();
   const params = useParams();
   const route = useLocation();
+  const [auth, setAuth] = useRecoilState(authState);
 
   const onSubmit = async (values) => {
-    const payload = {};
+    const { email, password } = values;
+
+
+    const data = {
+      id: params.id,
+      email: values.email.toLowerCase(),
+    };
+
+    checkUserEmailByWorkspace(data)
+      .then((res) => {
+        setLoading(false);
+        if(res.payload.length === 1){
+          if (res?.payload?.userByworkSpaceStatusId === "ban") {
+            toast.error("User has been banned. Please contact admin");
+          } else  {
+            loginApi(email.toLowerCase(), password)
+              .then((res) => {
+                setAuth(res);
+                navigate('/mentee-dashboard');
+                toast.success("Signin Successful");
+              })
+              .catch((err) => {
+                toast.error(err.response.data.msg);
+              });
+          }
+        }
+        else{
+          toast.error("User does not exist on this workspace. Please Signup");
+        }
+      })
+      .catch((e) => {
+        setLoading(false);
+        toast.error(e.response.data.msg);
+      });
   };
 
   const login = () => {};
