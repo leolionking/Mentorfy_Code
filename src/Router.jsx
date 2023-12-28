@@ -32,6 +32,7 @@ import UserLogin from './pages/workspaceUser/UserLogin';
 import UserForgotPassword from "./pages/workspaceUser/UserForgotPassword";
 import UserLayout from './layouts/UserLayout';
 import LoggedInUserLayout from "./layouts/LoggedInUserLayout";
+import ClientWorkspace from "./pages/client/ClientWorkspace";
 
 const router = createBrowserRouter([
   {
@@ -97,7 +98,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/client-workspace",
-        element: "",
+        element: <ClientWorkspace/>,
       },
       {
         path: "/client-notifications",

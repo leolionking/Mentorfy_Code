@@ -26,8 +26,10 @@ export default function LoggedInUserLayout() {
           <Sidebar links={links} />
           <UserDashboardHeader />
           <div className="bg-[#FBFCFF] w-full lg:w-[calc(100vw-17vw)] ml-auto mt-14">
-            <div className="w-full">
-              <Outlet />
+            <div className=" w-full min-h-[90vh]">
+              <div className="w-[90%] mx-auto pt-10">
+                <Outlet />
+              </div>
             </div>
           </div>
         </div>
