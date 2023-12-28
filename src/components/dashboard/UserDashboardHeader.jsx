@@ -21,9 +21,9 @@ export default function UserDashboardHeader() {
 
   const signout = () => {
     logout().then((res) => {
-      setAuth("");
-      toast.success("user logged out successfully");
-      navigate("/" + userData.role + "-signin/" + workspace.id);
+        toast.success("user logged out successfully");
+        navigate("/" + auth.role + "-signin/" + workspace.id);
+        localStorage.clear()
     });
   };
   return (

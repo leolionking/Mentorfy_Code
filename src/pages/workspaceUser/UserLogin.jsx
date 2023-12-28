@@ -21,7 +21,7 @@ export default function UserLogin() {
 
   const onSubmit = async (values) => {
     const { email, password } = values;
-
+    setLoading(true);
 
     const data = {
       id: params.id,
@@ -56,7 +56,6 @@ export default function UserLogin() {
       });
   };
 
-  const login = () => {};
 
   const {
     values,
@@ -160,8 +159,7 @@ export default function UserLogin() {
                   </div>
                   <button
                     className="pri-btn"
-                    disabled={errors.email || errors.password}
-                    onClick={login}
+                    disabled={errors.email || errors.password || loading}
                   >
                     {loading ? (
                       <i className="pi pi-spin pi-spinner !text-[20px]"></i>
