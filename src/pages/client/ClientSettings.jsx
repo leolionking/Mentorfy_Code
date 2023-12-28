@@ -43,9 +43,9 @@ export default function ClientSettings() {
   ];
   return (
     <div className="">
-      <div className=" w-full min-h-[90vh]">
-        <div className="w-[90%] mx-auto pt-10">
-          <div className="grid md:grid-cols-2 gap-4 items-center justify-between my-10 ">
+      <div className=" w-full ">
+        <div className="">
+          <div className="grid md:grid-cols-2 gap-4 items-center justify-between my-5 ">
             <div className="">
               <h3 className="font-['ginto-bold'] text-2xl pb-1">
                 Workspace Settings{" "}

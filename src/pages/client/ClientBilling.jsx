@@ -2,8 +2,8 @@ import React from "react";
 
 export default function ClientBilling() {
   return (
-    <div className="w-[90%] mx-auto">
-      <div className="py-4 lg:py-10">
+    <div className="">
+      <div className="">
         <h1 className="pt-3 text-xl lg:text-3xl font-['ginto-bold']">
           Overview
         </h1>

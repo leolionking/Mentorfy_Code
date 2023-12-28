@@ -15,8 +15,10 @@ export default function ClientLayout() {
           <Sidebar links={clientMenu} />
           <DashboardHeader />
           <div className="bg-[#FBFCFF] w-full lg:w-[calc(100vw-17vw)] ml-auto mt-14">
-            <div className="w-full">
+            <div className="w-full min-h-[90vh]">
+            <div className="w-[90%] mx-auto pt-10">
               <Outlet />
+              </div>
             </div>
           </div>
         </div>

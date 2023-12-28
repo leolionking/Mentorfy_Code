@@ -48,7 +48,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <div className="p-4 lg:p-10">
+      <div className="">
         <h1 className="pt-3 text-xl lg:text-3xl font-['ginto-bold']">
           {" "}
           Welcome {userData?.firstName} 👏
