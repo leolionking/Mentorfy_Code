@@ -3,12 +3,13 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import React, { useEffect, useState } from "react";
 import { loginuser } from "../../utils/Validation";
-import { checkUserEmailByWorkspace, getUserWorkspace, loginApi } from "../../utils/general/generalApi";
+import { checkUserEmailByWorkspace, getProfile, getUserWorkspace, loginApi } from "../../utils/general/generalApi";
 import { useRecoilState } from "recoil";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { authState } from "../../atom/authAtom";
+import { user } from "../../atom/userAtom";
 
 export default function UserLogin() {
   const [workspace, setWorkspace] = useRecoilState(workspaceStore);
@@ -18,6 +19,7 @@ export default function UserLogin() {
   const params = useParams();
   const route = useLocation();
   const [auth, setAuth] = useRecoilState(authState);
+  const [userData, setUserData] = useRecoilState(user);
 
   const onSubmit = async (values) => {
     const { email, password } = values;
@@ -40,6 +42,13 @@ export default function UserLogin() {
                 setAuth(res);
                 navigate('/mentee-dashboard');
                 toast.success("Signin Successful");
+                const payload = {
+                  sessionID: res.sessionID,
+                  email : res.username
+                }
+                getProfile(payload).then((res) => {
+                  setUserData(res.payload[0])
+                })
               })
               .catch((err) => {
                 toast.error(err.response.data.msg);
