@@ -1,20 +1,31 @@
 import { Avatar } from "primereact/avatar";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { workspaceStore } from "../../atom/workspaceAtom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { user } from "../../atom/userAtom";
 import { authState } from "../../atom/authAtom";
+import { logout } from "../../utils/general/generalApi";
+import { toast } from "react-toastify";
 
 export default function UserDashboardHeader() {
   const [open, setOpen] = useState(false);
   const workspace = useRecoilValue(workspaceStore);
   const userData = useRecoilValue(user);
-  const auth = useRecoilValue(authState);
+  const [auth, setAuth] = useRecoilState(authState);
+  const navigate = useNavigate();
 
-  const openModal = ()=> {
-    setOpen(open => !open)
-  }
+  const openModal = () => {
+    setOpen((open) => !open);
+  };
+
+  const signout = () => {
+    logout().then((res) => {
+      setAuth("");
+      toast.success("user logged out successfully");
+      navigate("/" + userData.role + "-signin/" + workspace.id);
+    });
+  };
   return (
     <>
       <div className="h-[70px] bg-white shadow-small w-full lg:w-[calc(100vw-17vw)] fixed top-0 right-0 ml-auto z-[500] p-4 px-10">
@@ -30,7 +41,10 @@ export default function UserDashboardHeader() {
               <Link to="/select-workspace" className="text-sm">
                 Switch Workspace
               </Link>
-              <div className="flex items-center gap-2 cursor-pointer" onClick={openModal}>
+              <div
+                className="flex items-center gap-2 cursor-pointer"
+                onClick={openModal}
+              >
                 <Avatar
                   label={userData?.firstName?.split("")[0]}
                   shape="circle"
@@ -47,7 +61,10 @@ export default function UserDashboardHeader() {
             <i className="pi pi-user text-sm"></i>
             Profile
           </div>
-          <div className="flex bg-white items-center gap-4 cursor-pointer hover:bg-gray-200 px-7 p-3 rounded-lg">
+          <div
+            className="flex bg-white items-center gap-4 cursor-pointer hover:bg-gray-200 px-7 p-3 rounded-lg"
+            onClick={signout}
+          >
             <i className="pi pi-power-off text-sm"></i>
             Logout
           </div>
