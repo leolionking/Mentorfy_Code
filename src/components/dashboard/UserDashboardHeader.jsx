@@ -7,10 +7,14 @@ import { user } from "../../atom/userAtom";
 import { authState } from "../../atom/authAtom";
 
 export default function UserDashboardHeader() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const workspace = useRecoilValue(workspaceStore);
   const userData = useRecoilValue(user);
   const auth = useRecoilValue(authState);
+
+  const openModal = ()=> {
+    setOpen(open => !open)
+  }
   return (
     <>
       <div className="h-[70px] bg-white shadow-small w-full lg:w-[calc(100vw-17vw)] fixed top-0 right-0 ml-auto z-[500] p-4 px-10">
@@ -26,7 +30,7 @@ export default function UserDashboardHeader() {
               <Link to="/select-workspace" className="text-sm">
                 Switch Workspace
               </Link>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 cursor-pointer" onClick={openModal}>
                 <Avatar
                   label={userData?.firstName?.split("")[0]}
                   shape="circle"
