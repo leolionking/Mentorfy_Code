@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { useRecoilValue } from "recoil";
 import { user } from "../../atom/userAtom";
+import { authState } from "../../atom/authAtom";
 
 export default function UserDashboardHeader() {
     const workspace = useRecoilValue(workspaceStore);
     const userData = useRecoilValue(user);
+    const auth = useRecoilValue(authState);
     return (
       <div className="h-[70px] bg-white shadow-small w-full lg:w-[calc(100vw-17vw)] fixed top-0 right-0 ml-auto z-[500] p-4 px-10">
         <div className="w-full">
@@ -17,7 +19,7 @@ export default function UserDashboardHeader() {
               </div>
             </div>
             <div className=" hidden lg:flex items-center gap-4">
-              <Link to="/client-notifications">
+              <Link to={"/" +auth.role + "-notifications"}>
                 <i className="pi pi-bell"></i>
               </Link>
               <Link to="/select-workspace" className="text-sm">
