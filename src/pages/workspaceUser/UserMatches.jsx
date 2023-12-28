@@ -28,12 +28,12 @@ export default function UserMatches() {
       };
 
       if (auth.role === "mentor") {
-        getMatchingByMentor(newPayload).then((res) => {
+        getMatchingByMentee(newPayload).then((res) => {
           setMatches(res.payload);
         });
       }
       {
-        getMatchingByMentee(newPayload).then((res) => {
+        getMatchingByMentor(newPayload).then((res) => {
           setMatches(res.payload);
         });
       }
@@ -46,7 +46,7 @@ export default function UserMatches() {
   return (
     <div>
       <h1 className="text-xl lg:text-2xl font-['ginto-bold']">
-        Proposed Mentees
+        Proposed {auth.role === "mentor" ? "Mentees" : "Mentors"}
       </h1>
       <p className="text-sm">
         Temporary Text you have no these mentees suggestions

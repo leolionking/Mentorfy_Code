@@ -65,6 +65,7 @@ export default function UserOnboard() {
   };
   // stage 1
   const proceed = () => {
+    setLoading(true);
     const payload = {
       ...registration,
       firstName: values.firstName,
@@ -241,8 +242,7 @@ export default function UserOnboard() {
       let reader = new FileReader();
       setDataUrl(e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
-      reader.onload = () => {
-      };
+      reader.onload = () => {};
     }
   };
 
@@ -492,7 +492,8 @@ export default function UserOnboard() {
                             disabled={
                               errors.firstName ||
                               errors.lastName ||
-                              errors.email
+                              errors.email ||
+                              loading
                             }
                             onClick={proceed}
                           >
