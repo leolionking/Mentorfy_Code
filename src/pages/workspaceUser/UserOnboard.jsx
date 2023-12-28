@@ -42,7 +42,6 @@ export default function UserOnboard() {
   const [dataUrl, setDataUrl] = useState();
   const [auth, setAuth] = useRecoilState(authState);
   const navigate = useNavigate();
-  const imageformData = new FormData();
   const genders = ["Male", "Female", "Others"];
   const yearsOfExperiences = [
     "Less than 2 years",
@@ -123,7 +122,7 @@ export default function UserOnboard() {
     setLoading(true);
     const payload = {
       otp: values.otp,
-      id: registration.email.toLowerCase(),
+      id: registration?.email.toLowerCase(),
     };
 
     validateOtp(payload)
@@ -132,7 +131,7 @@ export default function UserOnboard() {
           toast.error("Invalid OTP");
         } else {
           const userPayload = {
-            id: registration.email,
+            id: registration?.email,
           };
           validateUser(userPayload).then((res) => {
             toast.success("OTP validation successful");
@@ -153,7 +152,7 @@ export default function UserOnboard() {
   const regenerateOtp = () => {
     setLoading(true);
     const payload = {
-      email: registration.email,
+      email: registration?.email,
     };
     generateOtp(payload)
       .then((res) => {
@@ -239,66 +238,68 @@ export default function UserOnboard() {
   const handleImageChange = (e) => {
     if (e.target.files[0]) {
       setImage(URL?.createObjectURL(e.target.files[0]));
-      imageformData.append("file", e.target.files[0]);
       let reader = new FileReader();
+      setDataUrl(e.target.files[0]);
       reader.readAsDataURL(e.target.files[0]);
       reader.onload = () => {
-        setDataUrl(reader.result);
       };
     }
   };
 
   const registerUser = () => {
     let payload;
-    if (registration.role === "mentor") {
+    if (registration?.role === "mentor") {
       payload = {
-        _password: registration.confirmPassword,
-        _phone: registration.phone,
-        _postalcode: registration.postalcode,
-        _provinceId: registration.province,
+        _password: registration?.confirmPassword,
+        _phone: registration?.phone,
+        _postalcode: registration?.postalcode,
+        _provinceId: registration?.province,
         _role_input: true,
         _url: window.location.href,
-        _linkedin: registration.linkedin,
-        _city: registration.city,
-        _yearsofprofessionalinterest: registration.yearsOfExperiences
+        _linkedin: registration?.linkedin,
+        _city: registration?.city,
+        _yearsofprofessionalinterest: registration?.yearsOfExperiences
           .split(" ")
           .join(""),
-        firstame: registration.firstName,
-        _profilesummary: registration.summary,
-        gender: registration.gender,
-        lastName: registration.lastName,
-        mentor__profAreaIds: registration.professionalArea,
-        mail: registration.email,
+        firstame: registration?.firstName,
+        _profilesummary: registration?.summary,
+        gender: registration?.gender,
+        lastName: registration?.lastName,
+        mentor__profAreaIds: registration?.professionalArea,
+        mail: registration?.email,
         workspaceId: params.id,
-        _userpic: imageformData,
+        _userpic: dataUrl,
         // acceptanceCriteria : reg.form,
       };
     } else {
       payload = {
-        _password: registration.confirmPassword,
-        _phone: registration.phone,
-        _postalcode: registration.postalcode,
-        _provinceId: registration.province,
+        _password: registration?.confirmPassword,
+        _phone: registration?.phone,
+        _postalcode: registration?.postalcode,
+        _provinceId: registration?.province,
         _role_input: true,
         _url: window.location.href,
-        _linkedin: registration.linkedin,
-        _city: registration.city,
-        _yearsofprofessionalinterest: registration.yearsOfExperiences
+        _linkedin: registration?.linkedin,
+        _city: registration?.city,
+        _yearsofprofessionalinterest: registration?.yearsOfExperiences
           .split(" ")
           .join(""),
-        firstame: registration.firstName,
-        _profilesummary: registration.summary,
-        gender: registration.gender,
-        lastName: registration.lastName,
-        mentee__profAreaIds: registration.professionalArea,
-        mail: registration.email,
+        firstame: registration?.firstName,
+        _profilesummary: registration?.summary,
+        gender: registration?.gender,
+        lastName: registration?.lastName,
+        mentee__profAreaIds: registration?.professionalArea,
+        mail: registration?.email,
         workspaceId: params.id,
-        _userpic: imageformData,
+        _userpic: dataUrl,
         // acceptanceCriteria : reg.form,
       };
     }
-
-    createWorkspaceUser(payload).then((res) => {
+    let formData = new FormData();
+    Object.keys(payload).forEach((key) => {
+      formData.append(key, payload[key]);
+    });
+    createWorkspaceUser(formData).then((res) => {
       toast.success("successful");
       const { email, password } = registration;
       loginApi(email, password).then((res) => {
@@ -307,7 +308,7 @@ export default function UserOnboard() {
           res,
         };
         setAuth(payload);
-        if (registration.role === "mentor") {
+        if (registration?.role === "mentor") {
           navigate(`/mentor-dashboard`);
         } else {
           navigate(`/mentee-dashboard`);
@@ -370,7 +371,7 @@ export default function UserOnboard() {
     } else {
       role = "mentee";
     }
-    if (registration.step === undefined) {
+    if (registration?.step === undefined || registration?.step === null) {
       const payload = {
         ...registration,
         step: 1,
@@ -427,7 +428,7 @@ export default function UserOnboard() {
           </div>
           <div
             className={
-              registration.step > 2
+              registration?.step > 2
                 ? "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  shadow-small rounded-2xl"
                 : "form w-full md:w-[60vw] h-fit lg:w-[32vw] py-10  rounded-2xl"
             }
@@ -508,7 +509,7 @@ export default function UserOnboard() {
                               <Link
                                 to={
                                   "/" +
-                                  registration.role +
+                                  registration?.role +
                                   "-signin" +
                                   "/" +
                                   params.id
@@ -588,7 +589,7 @@ export default function UserOnboard() {
                 <div className="main py-3 ">
                   <div className="flex items-center justify-between w-full pb-2">
                     <div className="ml-auto">
-                      {registration.step}/{6}
+                      {registration?.step}/{6}
                     </div>
                   </div>
                   <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
@@ -641,7 +642,7 @@ export default function UserOnboard() {
                       onClick={() => previous(3)}
                     ></i>
                     <div className="">
-                      {registration.step}/{stages}
+                      {registration?.step}/{stages}
                     </div>
                   </div>
                   <div className="header font-['ginto-bold'] text-2xl text-center pb-5">
@@ -738,7 +739,7 @@ export default function UserOnboard() {
                     </button>
                   </div>
                 </div>
-              ) : registration.step === 5 ? (
+              ) : registration?.step === 5 ? (
                 <div className="main py-3">
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
@@ -746,7 +747,7 @@ export default function UserOnboard() {
                       onClick={() => previous(4)}
                     ></i>
                     <div className="">
-                      {registration.step}/{stages}
+                      {registration?.step}/{stages}
                     </div>
                   </div>
                   <div className="header font-['ginto-bold'] text-2xl text-center">
@@ -786,7 +787,7 @@ export default function UserOnboard() {
                     </button>
                   </div>
                 </div>
-              ) : registration.step === 6 ? (
+              ) : registration?.step === 6 ? (
                 <div className="main py-3">
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
@@ -794,7 +795,7 @@ export default function UserOnboard() {
                       onClick={() => previous(5)}
                     ></i>
                     <div className="">
-                      {registration.step}/{stages}
+                      {registration?.step}/{stages}
                     </div>
                   </div>
                   <div className="header font-['ginto-bold'] text-2xl text-center">
@@ -831,7 +832,7 @@ export default function UserOnboard() {
                     </button>
                   </div>
                 </div>
-              ) : registration.step === 7 ? (
+              ) : registration?.step === 7 ? (
                 <div className="main py-3">
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
@@ -839,7 +840,7 @@ export default function UserOnboard() {
                       onClick={() => previous(6)}
                     ></i>
                     <div className="">
-                      {registration.step}/{stages}
+                      {registration?.step}/{stages}
                     </div>
                   </div>
                   <div className="header font-['ginto-bold'] text-2xl text-center">
@@ -912,7 +913,7 @@ export default function UserOnboard() {
                     </button>
                   </div>
                 </div>
-              ) : registration.step === 8 ? (
+              ) : registration?.step === 8 ? (
                 <div className="main py-3">
                   <div className="flex items-center justify-between w-full pb-2">
                     <i
@@ -920,7 +921,7 @@ export default function UserOnboard() {
                       onClick={() => previous(7)}
                     ></i>
                     <div className="">
-                      {registration.step}/{stages}
+                      {registration?.step}/{stages}
                     </div>
                   </div>
                   <div className="h-[90px] w-[90px] mx-auto rounded-full">

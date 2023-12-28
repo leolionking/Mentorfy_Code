@@ -9,5 +9,7 @@ const getMenteesByWorkspaceId = async (payload) =>
 const getMenteeProfile = async (payload) =>
   await api.structure("WebUser").getData("getMenteeProfile", payload);
 
+const getMatchingByMentee = async (payload) =>
+  await api.structure("matching").getData("getMatchingByMentee_copy", payload);
 
-export { getMenteesByWorkspaceId, getMenteeProfile };
+export { getMenteesByWorkspaceId, getMenteeProfile,getMatchingByMentee };

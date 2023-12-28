@@ -32,12 +32,16 @@ const forgotPassword = async (payload) =>
     .setData("forgotPassword", payload);
 
 const validateResetOtp = async (payload) =>
-  await api.structure("reset_password_inputs").getData("validateResetOtp", payload);
+  await api
+    .structure("reset_password_inputs")
+    .getData("validateResetOtp", payload);
 
-  const changePassword = async (payload) =>
-  await api.structure("reset_password_inputs").setData("changePassword", payload);
+const changePassword = async (payload) =>
+  await api
+    .structure("reset_password_inputs")
+    .setData("changePassword", payload);
 
-  const getPricing = async () =>
+const getPricing = async () =>
   await api.structure("tariff").getData("getTarif");
 
 const inviteUsers = async (payload) =>
@@ -57,6 +61,9 @@ const getUserGenericForm = async (payload) =>
 
 const getUserWorkspace = async (payload) =>
   await api.structure("workspace").getData("getUserWorkspaceById", payload);
+
+const getUserByWorkspace = async (payload) =>
+  await api.structure("userByworkSpace").getData("getUserByWorkspace", payload);
 
 const getMyALLNotification = async (payload) =>
   await api.structure("notification").getData("getMyALLNotification", payload);
@@ -98,5 +105,6 @@ export {
   allNotificationByUserWorkspaceId,
   forgotPassword,
   validateResetOtp,
-  changePassword
+  changePassword,
+  getUserByWorkspace
 };
