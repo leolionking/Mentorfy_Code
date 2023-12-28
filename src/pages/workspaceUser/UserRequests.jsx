@@ -54,7 +54,7 @@ export default function UserRequests() {
         Temporary Text you have no these mentees suggestions
       </p>
       <div className="py-10">
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {requests.map((res, i) => (
             <UserCard key={i} />
           ))}

@@ -11,7 +11,7 @@ export default function UserMatches() {
         Temporary Text you have no these mentees suggestions
       </p>
       <div className="py-10">
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
           {[1, 2, 3, 4, 5, 6, 7, 8].map((res) => (
             <UserCard  />
           ))}
