@@ -24,8 +24,8 @@ export default function Notification() {
     getNotification();
   }, []);
   return (
-    <div className="w-[90%] mx-auto">
-      <div className="py-4 lg:py-10">
+    <div className=" mx-auto">
+      <div className="py-4">
         <h1 className="pt-3 text-xl lg:text-3xl font-['ginto-bold']">
           Notifications
         </h1>
