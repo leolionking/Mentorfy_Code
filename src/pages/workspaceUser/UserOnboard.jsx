@@ -277,7 +277,7 @@ export default function UserOnboard() {
         _phone: registration?.phone,
         _postalcode: registration?.postalcode,
         _provinceId: registration?.province,
-        _role_input: true,
+        _role_input: false,
         _url: window.location.href,
         _linkedin: registration?.linkedin,
         _city: registration?.city,
