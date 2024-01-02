@@ -202,7 +202,6 @@ export default function ClientMentees() {
 
     const action = "closureOfAccountByOwner";
     const userPayload = {
-      sessionID: auth?.sessionID,
       _action: action,
       _creatorId: userData.id,
       _userByworkSpace: details.id,
