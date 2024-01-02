@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { Chips } from "primereact/chips";
 import { Dropdown } from "primereact/dropdown";
 import { useFormik } from "formik";
+import SkeletonBody from "../../components/SkeletonBody";
 
 export default function ClientAcceptanceCriteria() {
   const [createdForm, setCreatedForm] = useState([]);
@@ -16,8 +17,9 @@ export default function ClientAcceptanceCriteria() {
 
   const workspaceData = useRecoilValue(workspaceStore);
   const auth = useRecoilValue(authState);
+  const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
-
+  const [loaded, setLoaded] = useState({});
   const openModal = () => {
     setOpen((open) => !open);
   };
@@ -26,8 +28,10 @@ export default function ClientAcceptanceCriteria() {
     const payload = {
       id: workspaceData.id,
     };
+    setLoading(true);
     getUserGenericForm(payload)
       .then((res) => {
+        setLoading(false);
         if (res?.payload[0]["generic_forms"]) {
           setCreatedForm(JSON.parse(res?.payload[0]["generic_forms"]));
           setAcceptacevalue(res?.payload[0]["acceptance_criteria"]);
@@ -38,6 +42,21 @@ export default function ClientAcceptanceCriteria() {
 
   const saveAcceptanceForm = () => {};
 
+  let emptyValue = {
+    label: "",
+    options: [],
+    acceptedValue: "",
+  };
+
+  const edit = (data, index) => {
+    emptyValue = {
+      label: data.label,
+      options: data.options,
+      acceptedValue: acceptanceValue[index],
+    };
+    openModal();
+    console.log(data, index);
+  };
   const submitForm = () => {
     const property = {
       label: values.label,
@@ -63,11 +82,7 @@ export default function ClientAcceptanceCriteria() {
     handleSubmit,
   } = useFormik({
     validateOnMount: true,
-    initialValues: {
-      label: "",
-      acceptedValue: "",
-      options: [],
-    },
+    initialValues: emptyValue,
     validationSchema: acceptanceCriteriaValidation,
     onSubmit,
   });
@@ -106,12 +121,19 @@ export default function ClientAcceptanceCriteria() {
                     </div>
                   </div>
                   <div className="text-sm h-full flex justify-start gap-2">
-                    <i className="pi pi-pencil text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit"></i>
+                    <i
+                      className="pi pi-pencil text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit"
+                      onClick={() => edit(res, i)}
+                    ></i>
                     <i className="pi pi-trash text-sm cursor-pointer p-2 hover:bg-slate-200 transition-all rounded-md w-fit h-fit"></i>
                   </div>
                 </div>
               ))}
+
             </div>
+            {
+              loading ? <SkeletonBody type={2}/> :  ''
+            }
             <div className="flex items-center gap-3">
               <button className="pri-btn w-fit" onClick={openModal}>
                 Add Acceptance Criteria{" "}

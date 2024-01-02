@@ -69,7 +69,7 @@ export default function SelectWorkspace() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 items-center gap-5">
                 {[1,2,3].map((res)=> (
                   <div key={res}>
-                     <SkeletonBody/>
+                     <SkeletonBody type={1}/>
                   </div>
 
                 ))}
