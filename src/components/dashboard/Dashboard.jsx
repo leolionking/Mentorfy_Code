@@ -74,8 +74,9 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="card border border-[#F2F2F2] shadow-card p-6 rounded-lg bg-white">
-            <div className="top flex items-center justify-between">
+            <div className="top flex items-center justify-between relative">
               <p>Avg. Weekly Engagement</p>
+              <small className="text-xs bg-red-500 text-red-100 px-1 rounded-md absolute bottom-[-14px]">Coming soon</small>
               <i className="pi pi-users p-2 bg-[var(--primary)] text-white rounded-full"></i>
             </div>
             <div className="pt-10">
