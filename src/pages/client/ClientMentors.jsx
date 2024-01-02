@@ -178,6 +178,7 @@ export default function ClientMentors() {
       .catch((err) => console.log(err));
   };
   const reactivateAccount = () => {
+    setLoaded(true);
     setUnbanUser(!unBanUser);
     const action = "unbanOfAccountByOwner";
     const payload = {
@@ -188,7 +189,8 @@ export default function ClientMentors() {
     };
 
     banUserByWorkspace(payload)
-      .then((res) => {
+      .then(() => {
+        setLoaded(false);
         openActivate();
         toast.success("User has been re-activated");
         listMentors();
