@@ -103,16 +103,16 @@ export default function ClientMentors() {
       title: " Status",
       render: (_, { isBanned, isClosured }) => (
         <>
-          {isClosured === false && isBanned  ? (
+          {isClosured === false && isBanned ? (
             <Tag bordered={false} color="volcano">
               Suspended
             </Tag>
-          ) : (
-            isClosured === false && isBanned===false ?
+          ) : isClosured === false && isBanned === false ? (
             <Tag bordered={false} color="green">
               Active
             </Tag>
-            : ''
+          ) : (
+            ""
           )}
           {isClosured ? (
             <Tag bordered={false} color="volcano">
@@ -279,8 +279,28 @@ export default function ClientMentors() {
         ),
       },
     ];
-    if (details?.isBanned ) {
+    const closedMenu = [
+      {
+        key: "1",
+        label: (
+          <p className="text-xs p-1" onClick={openuser}>
+            View Mentor info
+          </p>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <p className="text-xs p-1" onClick={() => openActivate()}>
+            Reactivate Mentor
+          </p>
+        ),
+      },
+    ];
+    if (details?.isBanned === true && details?.isClosured === false) {
       setItems(bannedMenu);
+    } else if (details?.isClosured === true) {
+      setItems(closedMenu);
     } else {
       setItems(itemMenu);
     }
@@ -312,7 +332,7 @@ export default function ClientMentors() {
           <div className=" main transition-all w-full lg:w-[55vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-[10000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
-               className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
+                className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
                 onClick={openuser}
               ></i>
               <h2 className="headFour text-center flex items-center gap-2 justify-center">
@@ -442,7 +462,7 @@ export default function ClientMentors() {
                 <button
                   className="pri-btn w-full my-3"
                   disabled={selectedCategories.length === 0 || loading}
-                  onClick={type === 'suspend' ? suspendAccount: closeAccount}
+                  onClick={type === "suspend" ? suspendAccount : closeAccount}
                 >
                   {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                   Save
@@ -459,7 +479,7 @@ export default function ClientMentors() {
           <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%]  z-[10000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
-                 className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
+                className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
                 onClick={openActivate}
               ></i>
               <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">

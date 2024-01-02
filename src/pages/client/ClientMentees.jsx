@@ -281,8 +281,28 @@ export default function ClientMentees() {
         ),
       },
     ];
-    if (details?.isBanned) {
+    const closedMenu = [
+      {
+        key: "1",
+        label: (
+          <p className="text-xs p-1" onClick={openuser}>
+            View Mentor info
+          </p>
+        ),
+      },
+      {
+        key: "2",
+        label: (
+          <p className="text-xs p-1" onClick={() => openActivate()}>
+            Reactivate Mentor
+          </p>
+        ),
+      },
+    ];
+    if (details?.isBanned && details?.isClosured === false) {
       setItems(bannedMenu);
+    } else if (details?.isClosured === true) {
+      setItems(closedMenu);
     } else {
       setItems(itemMenu);
     }
