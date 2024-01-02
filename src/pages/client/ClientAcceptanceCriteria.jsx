@@ -171,20 +171,13 @@ export default function ClientAcceptanceCriteria() {
                     />
                   </div>
                   <button
-                    className="outline-btn"
+                    className="pri-btn"
                     disabled={
                       errors.options || errors.label || errors.acceptedValue
                     }
                     onClick={submitForm}
                   >
-                    Add More
-                  </button>
-                  <button
-                    className="pri-btn"
-                    disabled={formProperties?.length === 0}
-                    onClick={saveAcceptanceForm}
-                  >
-                    Save & proceed
+                    Save
                   </button>
                 </div>
               </div>
