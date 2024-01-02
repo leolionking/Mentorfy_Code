@@ -120,8 +120,8 @@ export default function ClientProfile() {
 
   useEffect(() => {
     const payload = {
-      id: userData.id,
-      email: userData.email,
+      sessionID: auth?.sessionID,
+      email: auth.username,
     };
     getProfile(payload).then((res) => {
       setUserData(res.payload[0]);
@@ -183,7 +183,7 @@ export default function ClientProfile() {
                     id="username"
                     name="lastName"
                     aria-describedby="name"
-                    value={values.lasttName}
+                    value={values.lastName}
                     onChange={handleChange}
                     onBlur={handleBlur}
                   />
