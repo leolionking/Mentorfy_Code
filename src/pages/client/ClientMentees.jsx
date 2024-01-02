@@ -102,16 +102,25 @@ export default function ClientMentees() {
     },
     {
       title: " Status",
-      render: (_, { isBanned }) => (
+      render: (_, { isBanned, isClosured }) => (
         <>
-          {isBanned ? (
+          {isClosured === false && isBanned  ? (
             <Tag bordered={false} color="volcano">
               Suspended
             </Tag>
           ) : (
+            isClosured === false && isBanned===false ?
             <Tag bordered={false} color="green">
               Active
             </Tag>
+            : ''
+          )}
+          {isClosured ? (
+            <Tag bordered={false} color="volcano">
+              Account Closed
+            </Tag>
+          ) : (
+            ""
           )}
         </>
       ),
