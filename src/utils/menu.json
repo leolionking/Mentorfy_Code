@@ -18,7 +18,8 @@
         {
             "name": "Workspace Insights",
             "link": "/client-workspace",
-            "icon": "chart-bar"
+            "icon": "chart-bar",
+            "comingSoon": true
         },
         {
             "name": "Plans & Billing",

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { InboxOutlined } from "@ant-design/icons";
-import { ColorPicker } from "antd";
+import { ColorPicker } from 'antd';
 import { getOwnerWorkspaceById, ownerWorkspaceEdit } from "../utils/client/clientApi";
 import { authState } from "../atom/authAtom";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import { InputText } from "primereact/inputtext";
 export default function CustomizeWorkspaceAppearance() {
   const [workspace, setWorkspace] = useRecoilState(workspaceStore);
   const [color, setColor] = useState("000000");
+  const [textColor, setTextColor] = useState("000000");
   const [image, setImage] = useState();
   const [dataUrl, setDataUrl] = useState();
   const [loading, setLoading] = useState(false);
@@ -31,7 +32,7 @@ export default function CustomizeWorkspaceAppearance() {
     setLoading(true);
     const userPayload = {
       _creatorId: auth.username,
-      color: color.split("#")[1],
+      color: color.split("#")[1]?? color,
       logo: dataUrl,
       id: workspace.id,
     };
@@ -61,6 +62,10 @@ export default function CustomizeWorkspaceAppearance() {
   useEffect(()=> {
       setImage(workspace.logo)
       setColor(workspace.color)
+
+      const addColor = () => {
+        
+      }
   }, [])
   return (
     <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
@@ -72,7 +77,7 @@ export default function CustomizeWorkspaceAppearance() {
         <div className=" grid md:grid-cols-2 gap-2">
         <div className="flex flex-col gap-2 border-gray-300 bg-[#DFDFDF]/10 justify-center p-4 rounded-md border border-dashed">
             <div className="flex items-center gap-2">
-            <InputText value={color} onChange={(e)=> setColor(color)}/>
+            <InputText value={color} onChange={(e)=> setColor(e.target.value)}/>
             <ColorPicker
               value={color}
               onChange={(value, color) => setColor(color)}
@@ -102,6 +107,7 @@ export default function CustomizeWorkspaceAppearance() {
               id="upload-button"
               accept="image/png, image/jpeg"
               style={{ display: "none" }}
+              className="valid:border-green-500 "
               onChange={handleImageChange}
             />
           </div>

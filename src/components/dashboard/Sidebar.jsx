@@ -16,9 +16,10 @@ export default function Sidebar({ links }) {
           <div className="logo">{/* <img src={logo} alt="logo" /> */}</div>
           <div className="flex flex-col gap-4 mt-20">
             {links?.map((link, i) => (
-                <NavLink to={link.link} className="myLink flex items-center gap-2" activeClassName="active">
-                    <i className={"p-3 pi pi-"+ link.icon}></i>
+                <NavLink to={link.link} className="myLink flex items-center gap-2 relative" activeClassName="active" data-color={'#'+workspace?.color}>
+                    <i className={"p-3 pi pi-"+ link.icon} data-color={'#'+workspace?.color}></i>
                     <Link to={link.link} className="link" key={i}>{link.name}</Link>
+                    {link.comingSoon?  <small className=" absolute text-xs bottom-[-8px] left-12 text-red-100 bg-red-500 px-1 rounded-md">Coming soon</small>: ''}
                 </NavLink>
             ))}
           </div>
