@@ -73,6 +73,12 @@ const onboardClientValidation = yup.object().shape({
   options: yup.array().required("Required"),
 });
 
+const acceptanceCriteriaValidation = yup.object().shape({
+  label: yup.string().required("Required"),
+  acceptedValue: yup.string().required("Required"),
+  options: yup.array().required("Required"),
+});
+
 const onboardUserValidation = yup.object().shape({
   password: yup
     .string()
@@ -160,4 +166,5 @@ export {
   editWorkspace,
   clientProfileValidation,
   onboardUserValidation,
+  acceptanceCriteriaValidation
 };

@@ -141,7 +141,6 @@ export default function ClientMentors() {
     },
   ];
 
-
   const listMentors = () => {
     setLoaded(true);
     const payload = {
@@ -186,7 +185,7 @@ export default function ClientMentors() {
 
     banUserByWorkspace(payload)
       .then((res) => {
-        openActivate()
+        openActivate();
         toast.success("User has been re-activated");
         listMentors();
       })
@@ -222,7 +221,6 @@ export default function ClientMentors() {
   useEffect(() => {
     listMentors();
   }, []);
-
 
   useEffect(() => {
     const itemMenu = [
@@ -311,7 +309,7 @@ export default function ClientMentors() {
           <div className=" main transition-all w-full lg:w-[55vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-[10000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
-                className="pi pi-times text-black absolute top-5 right-5 p-4"
+               className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
                 onClick={openuser}
               ></i>
               <h2 className="headFour text-center flex items-center gap-2 justify-center">
@@ -396,7 +394,7 @@ export default function ClientMentors() {
           <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%] z-[10000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
-                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
                 onClick={openSuspension}
               ></i>
               <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
@@ -453,12 +451,12 @@ export default function ClientMentors() {
       ) : (
         ""
       )}
-        {activateUser ? (
+      {activateUser ? (
         <div className="dialog">
           <div className=" main transition-all w-full lg:w-[35vw] bg-white shadow-small p-5 lg:p-10 absolute top-[50%]  z-[10000] left-[50%] translate-y-[-50%] translate-x-[-50%] h-fit rounded-2xl ">
             <div className=" grid gap-2">
               <i
-                className="pi pi-times text-black absolute top-5 right-5 p-4"
+                 className="pi pi-times text-black absolute top-5 right-5 p-3 cursor-pointer hover:bg-gray-200 rounded-full transition-all"
                 onClick={openActivate}
               ></i>
               <h2 className="text-xl font-['ginto-bold'] text-center flex items-center gap-2 justify-center">
