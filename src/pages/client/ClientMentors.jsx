@@ -279,7 +279,7 @@ export default function ClientMentors() {
         ),
       },
     ];
-    if (details?.isBanned) {
+    if (details?.isBanned || details?.isClosured) {
       setItems(bannedMenu);
     } else {
       setItems(itemMenu);
