@@ -439,7 +439,7 @@ export default function ClientMentors() {
                 <button
                   className="pri-btn w-full my-3"
                   disabled={selectedCategories.length === 0 || loading}
-                  onClick={suspendAccount}
+                  onClick={type === 'suspend' ? suspendAccount: closeAccount}
                 >
                   {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                   Save
