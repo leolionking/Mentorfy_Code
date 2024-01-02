@@ -33,6 +33,7 @@ import UserForgotPassword from "./pages/workspaceUser/UserForgotPassword";
 import UserLayout from './layouts/UserLayout';
 import LoggedInUserLayout from "./layouts/LoggedInUserLayout";
 import ClientWorkspace from "./pages/client/ClientWorkspace";
+import ComingSoon from "./pages/general/ComingSoon";
 
 const router = createBrowserRouter([
   {
@@ -98,7 +99,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/client-workspace",
-        element: <ClientWorkspace/>,
+        element: <ClientDashboard/>,
       },
       {
         path: "/client-notifications",

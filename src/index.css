@@ -223,3 +223,50 @@ th{
 td{
   @apply font-[200] text-[.85rem]
 }
+
+
+
+#coming {
+  color: green;
+  /*color: #8002f5;*/
+  font-family: Monaco, monospace;
+  font-size: 24px;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  top: 45%;
+  left: 0;
+  animation: 120ms infinite normal glitch;
+}
+
+.glitch span {
+  animation: 1.5s infinite normal imleç;
+}
+
+
+@keyframes glitch {
+  0% {
+    opacity: 0;
+    left: 0;
+  }
+  40%,
+  80% {
+    opacity: 1;
+    left: -2px;
+  }
+}
+
+@keyframes imleç {
+  0% {
+    opacity: 0;
+    left: 0;
+  }
+  40% {
+    opacity: 0;
+    left: -2px;
+  }
+  80% {
+    opacity: 1;
+    left: -2px;
+  }
+}
