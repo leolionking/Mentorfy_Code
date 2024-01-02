@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { workspaceStore } from "../atom/workspaceAtom";
 import { InboxOutlined } from "@ant-design/icons";
-import { ColorPicker } from 'antd';
-import { getOwnerWorkspaceById, ownerWorkspaceEdit } from "../utils/client/clientApi";
+import { ColorPicker } from "antd";
+import {
+  getOwnerWorkspaceById,
+  ownerWorkspaceEdit,
+} from "../utils/client/clientApi";
 import { authState } from "../atom/authAtom";
 import { toast } from "react-toastify";
 import { InputText } from "primereact/inputtext";
@@ -32,7 +35,7 @@ export default function CustomizeWorkspaceAppearance() {
     setLoading(true);
     const userPayload = {
       _creatorId: auth.username,
-      color: color.split("#")[1]?? color,
+      color: color.split("#")[1] ?? color,
       logo: dataUrl,
       id: workspace.id,
     };
@@ -57,16 +60,40 @@ export default function CustomizeWorkspaceAppearance() {
         toast.error(err.response.data.msg);
         setLoading(false);
       });
-  }
+  };
 
-  useEffect(()=> {
-      setImage(workspace.logo)
-      setColor(workspace.color)
+  useEffect(() => {
+    setImage(workspace.logo);
+    setColor(workspace.color);
 
+    function hexToRgb(hex) {
+      var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      } : null;
+    }
+
+    if(workspace.color){
       const addColor = () => {
-        
-      }
-  }, [])
+        document.documentElement.style.setProperty(
+          "--primary",
+          "#" + workspace.color
+        );
+        const rgb = hexToRgb(workspace.color)
+        rgb[0] = Math.round(.173 * 255);
+        rgb[1] = Math.round(.223 * 255);
+        rgb[2] = Math.round(.3 * 255);
+        const backgroundColour = 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+        document.documentElement.style.setProperty(
+          "--complementary",
+          backgroundColour
+        );
+      };
+      addColor();
+    }
+  }, [workspace]);
   return (
     <div className="p-5 lg:p-10 bg-white rounded-md shadow-small">
       <h3 className="pb-5 text-lg font-['ginto-bold']">
@@ -75,31 +102,36 @@ export default function CustomizeWorkspaceAppearance() {
 
       <div className=" w-full grid gap-4">
         <div className=" grid md:grid-cols-2 gap-2">
-        <div className="flex flex-col gap-2 border-gray-300 bg-[#DFDFDF]/10 justify-center p-4 rounded-md border border-dashed">
+          <div className="flex flex-col gap-2 border-gray-300 bg-[#DFDFDF]/10 justify-center p-4 rounded-md border border-dashed">
             <div className="flex items-center gap-2">
-            <InputText value={color} onChange={(e)=> setColor(e.target.value)}/>
-            <ColorPicker
-              value={color}
-              onChange={(value, color) => setColor(color)}
-              allowClear
-              disabledAlpha
-              className="w-[20%] h-full"
-            />
+              <InputText
+                value={color}
+                onChange={(e) => setColor(e.target.value)}
+              />
+              <ColorPicker
+                value={color}
+                onChange={(value, color) => setColor(color)}
+                allowClear
+                disabledAlpha
+                className="w-[20%] h-full"
+              />
             </div>
           </div>
           <div className="">
             <label htmlFor="upload-button">
               <div className="p-2 rounded-lg border-dashed border-[1px] border-gray-300 bg-[#DFDFDF]/10 flex items-center flex-col justify-center text-center">
-              <img
+                <img
                   src={image}
                   alt="logo"
                   className="object-cover h-[80px] w-[80px] rounded-full pb-2"
                 />
-                <p className="pri-btn"> 
+                <p className="pri-btn">
                   <i className="pi pi-upload"> </i>
                   Browse Logo
                 </p>
-                <small className="pt-1">Upload file must be PNG or JPG format</small>
+                <small className="pt-1">
+                  Upload file must be PNG or JPG format
+                </small>
               </div>
             </label>
             <input
@@ -111,12 +143,15 @@ export default function CustomizeWorkspaceAppearance() {
               onChange={handleImageChange}
             />
           </div>
-      
         </div>
-          <button className="pri-btn w-fit" onClick={customize} disabled={image === '' || loading}>
-            {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
-            Save changes
-          </button>
+        <button
+          className="pri-btn w-fit"
+          onClick={customize}
+          disabled={image === "" || loading}
+        >
+          {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
+          Save changes
+        </button>
       </div>
     </div>
   );

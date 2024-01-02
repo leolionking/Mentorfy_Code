@@ -25,10 +25,13 @@ export default function Header() {
         </Link>
         <div className="hidden md:block flex-shrink-0">
           {auth && auth?.role ? (
+            <div className="flex items-center gap-6">
+            <Link to='select-workspace' className="text-sm"> Workspace</Link>
             <button onClick={signout} className="pri-btn">
               {" "}
               Logout
             </button>
+            </div>
           ) : (
             <ul className="flex items-center gap-6 text-sm">
               <Link to="/pricing" className="cursor-pointer">

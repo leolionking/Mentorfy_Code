@@ -7,17 +7,18 @@ import { getRecentOnboarding } from "../../utils/client/clientApi";
 
 export default function RecentSignup() {
   const auth = useRecoilValue(authState);
+  const [loading, setLoading] = useState(false);
   const workspaceData = useRecoilValue(workspaceStore);
   const [onboardings, setOnboardings] = useState([]);
 
   const columns = [
     {
       title: "Name",
-      render: (_, {firstName, lastName})=> (
+      render: (_, { firstName, lastName }) => (
         <>
-         <p>{firstName + " " + lastName}</p>
+          <p>{firstName + " " + lastName}</p>
         </>
-      )
+      ),
     },
     {
       title: "Email",
@@ -29,15 +30,17 @@ export default function RecentSignup() {
     },
   ];
 
-  const data = []
+  const data = [];
   const getOnboarding = () => {
+    setLoading(true);
     const payload = {
       sessionID: auth?.sessionID,
       id: workspaceData.id,
     };
     getRecentOnboarding(payload)
       .then((res) => {
-        setOnboardings(res.payload.slice(0,5));
+        setLoading(false);
+        setOnboardings(res.payload.slice(0, 5));
       })
       .catch((err) => console.log(err));
   };
@@ -52,6 +55,7 @@ export default function RecentSignup() {
           columns={columns}
           pagination={false}
           dataSource={onboardings}
+          loading={loading}
           className=" !box-shadow-[0px_12px_40px_0px_rgba(22,33,242,0.05)];
         "
         />

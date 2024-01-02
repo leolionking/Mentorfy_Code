@@ -6,7 +6,7 @@ import { getMentorsByWorkspaceId } from "../../utils/mentor/mentorApi";
 import { authState } from "../../atom/authAtom";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { getMenteesByWorkspaceId } from "../../utils/mentee/menteeApi";
-import { getRecentOnboarding } from "../../utils/client/clientApi";
+import emptyActivity from "../../assets/empty-activity.svg";
 
 export default function Dashboard() {
   const userData = useRecoilValue(user);
@@ -89,7 +89,9 @@ export default function Dashboard() {
             <div className="top flex items-center justify-between">
               <p>Recent Activities</p>
             </div>
-            <div className="pt-10"></div>
+            <div className="flex flex-col rounded-lg  h-full items-center justify-center">
+                <img src={emptyActivity} alt="" />
+              </div>
           </div>
         </div>
       </div>

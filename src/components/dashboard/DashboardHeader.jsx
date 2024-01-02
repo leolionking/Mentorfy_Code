@@ -1,13 +1,29 @@
 import { Avatar } from "primereact/avatar";
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { workspaceStore } from "../../atom/workspaceAtom";
 import { useRecoilValue } from "recoil";
 import { user } from "../../atom/userAtom";
+import { logout } from "../../utils/general/generalApi";
+import { toast } from "react-toastify";
 
 export default function DashboardHeader() {
   const workspace = useRecoilValue(workspaceStore);
   const userData = useRecoilValue(user);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const openModal = () => {
+    setOpen((open) => !open);
+  };
+  
+  const signout = () => {
+    logout().then((res) => {
+        toast.success("user logged out successfully");
+        navigate("/signin");
+        localStorage.clear()
+    });
+  };
   return (
     <div className="h-[70px] bg-white shadow-small w-full lg:w-[calc(100vw-17vw)] fixed top-0 right-0 ml-auto z-[500] p-4 px-10">
       <div className="w-full">
@@ -33,7 +49,7 @@ export default function DashboardHeader() {
             <Link to="/select-workspace" className="text-sm">
               Workspaces
             </Link>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2"   onClick={openModal}>
               <Avatar
                 label={userData?.firstName?.split("")[0]}
                 shape="circle"
@@ -43,6 +59,23 @@ export default function DashboardHeader() {
           </div>
         </div>
       </div>
+      {open ? (
+        <div className=" fixed rounded-lg bg-white shadow-small z-50 w-[150px] text-sm top-[70px] right-10 ">
+          <div className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200">
+            <i className="pi pi-user text-sm"></i>
+            Profile
+          </div>
+          <div
+            className="flex bg-white items-center gap-4 cursor-pointer hover:bg-gray-200 px-7 p-3 rounded-lg"
+            onClick={signout}
+          >
+            <i className="pi pi-power-off text-sm"></i>
+            Logout
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

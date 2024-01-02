@@ -22,6 +22,7 @@
 :root {
   --primary: #95a302;
   --secondary: #b2b2b2;
+  --complementary: #b2b2b2;
   --gray: #f1f1f1;
   --orange-bg: #fff1e7;
   --background: #fbfbfb;
@@ -197,14 +198,14 @@ label {
 }
 
 .myLink:hover {
-  @apply cursor-pointer text-[var(--primary)] transition-all
+  @apply cursor-pointer text-[var(--complementary)] transition-all
 }
 .myLink:hover i{
-  @apply bg-[var(--primary)] p-3 rounded-full text-white transition-all
+  @apply bg-[var(--complementary)] p-3 rounded-full text-white transition-all
 }
 
 .active> i{
-  @apply bg-[var(--primary)]  p-3 rounded-full text-white transition-all
+  @apply bg-[var(--complementary)]  p-3 rounded-full text-white transition-all
 }
 
 :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper .ant-table-thead >tr>th, :where(.css-dev-only-do-not-override-2q8sxy).ant-table-wrapper .ant-table-thead >tr>td{
