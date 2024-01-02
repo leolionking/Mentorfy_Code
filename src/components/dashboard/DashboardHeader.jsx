@@ -19,10 +19,11 @@ export default function DashboardHeader() {
 
   const signout = () => {
     logout().then((res) => {
-        toast.success("user logged out successfully");
-        navigate("/signin");
-        localStorage.clear()
-        openModal()
+      toast.success("user logged out successfully");
+      navigate("/signin");
+      localStorage.clear();
+      openModal();
+      document.documentElement.style.setProperty("--primary", "#95a302");
     });
   };
   return (
@@ -41,7 +42,9 @@ export default function DashboardHeader() {
                 ""
               )}
             </div>
-            <span className="font-[ginto-bold] uppercase">{workspace.name}</span>
+            <span className="font-[ginto-bold] uppercase">
+              {workspace.name}
+            </span>
           </div>
           <div className=" hidden lg:flex items-center gap-4">
             <Link to="/client-notifications">
@@ -50,7 +53,7 @@ export default function DashboardHeader() {
             <Link to="/select-workspace" className="text-sm">
               Workspaces
             </Link>
-            <div className="flex items-center gap-2"   onClick={openModal}>
+            <div className="flex items-center gap-2" onClick={openModal}>
               <Avatar
                 label={userData?.firstName?.split("")[0]}
                 shape="circle"
@@ -62,7 +65,11 @@ export default function DashboardHeader() {
       </div>
       {open ? (
         <div className=" fixed rounded-lg bg-white shadow-small z-50 w-[150px] text-sm top-[70px] right-10 ">
-          <Link to='/client-profile' className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200" onClick={openModal}>
+          <Link
+            to="/client-profile"
+            className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200"
+            onClick={openModal}
+          >
             <i className="pi pi-user text-sm"></i>
             Profile
           </Link>

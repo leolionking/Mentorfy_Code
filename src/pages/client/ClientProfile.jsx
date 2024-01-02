@@ -2,8 +2,8 @@ import { Avatar } from "primereact/avatar";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { user } from "../../atom/userAtom";
-import { useRecoilValue } from "recoil";
-import { getProvinces } from "../../utils/general/generalApi";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { getProfile, getProvinces } from "../../utils/general/generalApi";
 import { toast } from "react-toastify";
 import { Dropdown } from "primereact/dropdown";
 import { editOwnerProfile } from "../../utils/client/clientApi";
@@ -12,14 +12,9 @@ import { clientProfileValidation } from "../../utils/Validation";
 import { authState } from "../../atom/authAtom";
 
 export default function ClientProfile() {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [country, setCountry] = useState("");
-  const [province, setProvince] = useState("");
-  const [postalCode, setPostalCode] = useState("");
   const [provinces, setProvinces] = useState([]);
   const [loading, setLoading] = useState(false);
-  const userData = useRecoilValue(user);
+  const [userData, setUserData] = useRecoilState(user);
   const [image, setImage] = useState();
   const auth = useRecoilValue(authState);
 
@@ -61,9 +56,30 @@ export default function ClientProfile() {
   };
 
   const onSubmit = () => {
-    const payload = {};
+    setLoading(true);
+    const payload = {
+      firstName: values.firstName,
+      lastName: values.lastName,
+      country: values.country,
+      province: values.province,
+      postalcode: values.postalcode,
+      id: userData?.email,
+    };
     editOwnerProfile(payload)
-      .then((res) => {})
+      .then(() => {
+        setLoading(false);
+        const data = {
+          sessionID: auth?.sessionID,
+        };
+        getProfile(data)
+          .then((res) => {
+            setUserData(res.payload[0]);
+          })
+          .catch((err) => {
+            toast.error(err.response.data.msg);
+          });
+        toast.success("Profile updated successfully");
+      })
       .catch((err) => {
         console.log(err);
       });
@@ -102,17 +118,27 @@ export default function ClientProfile() {
     onSubmit,
   });
 
+  useEffect(() => {
+    const payload = {
+      id: userData.id,
+      email: userData.email,
+    };
+    getProfile(payload).then((res) => {
+      setUserData(res.payload[0]);
+    });
+  }, []);
+
   return (
     <div>
       <div className="profile pt-10">
         <div className="flex items-center justify-center mb-4">
-              <div className="">
-                <h3 className="font-['ginto-bold'] text-lg text-center lg:text-2xl pb-1">
-                  Manage your personal information
-                </h3>
-                <p className="text-sm text-center">Edit personal information</p>
-              </div>
-            </div>
+          <div className="">
+            <h3 className="font-['ginto-bold'] text-lg text-center lg:text-2xl pb-1">
+              Manage your personal information
+            </h3>
+            <p className="text-sm text-center">Edit personal information</p>
+          </div>
+        </div>
         <div className="relative">
           <Avatar
             label={userData?.firstName?.slice(0, 1)}
@@ -138,7 +164,7 @@ export default function ClientProfile() {
             <h3 className="pb-5 text-lg font-['ginto-bold']">
               Manage your personal information
             </h3>
-            <div className="grid gap-5 w-full mx-auto">
+            <form onSubmit={handleSubmit} className="grid gap-5 w-full mx-auto">
               <div className="form w-full grid md:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
                   <label htmlFor="username">First name</label>
@@ -199,15 +225,11 @@ export default function ClientProfile() {
                   />
                 </div>
               </div>
-              <button
-                className="pri-btn w-fit"
-                disabled={!isValid || loading}
-                onClick={saveImage}
-              >
+              <button className="pri-btn w-fit" disabled={!isValid || loading}>
                 {loading ? <i className="pi pi-spin pi-spinner"></i> : ""}
                 Save changes
               </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>

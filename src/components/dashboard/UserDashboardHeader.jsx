@@ -24,6 +24,8 @@ export default function UserDashboardHeader() {
         toast.success("user logged out successfully");
         navigate("/" + auth.role + "-signin/" + workspace.id);
         localStorage.clear()
+      document.documentElement.style.setProperty("--primary", "#95a302");
+
     });
   };
   return (

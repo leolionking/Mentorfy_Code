@@ -15,6 +15,8 @@ export default function Header() {
       localStorage.clear()
       toast.success("user logged out successfully");
       navigate("/signin");
+      document.documentElement.style.setProperty("--primary", "#95a302");
+
     });
   };
   return (
