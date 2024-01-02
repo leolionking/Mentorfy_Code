@@ -22,6 +22,7 @@ export default function DashboardHeader() {
         toast.success("user logged out successfully");
         navigate("/signin");
         localStorage.clear()
+        openModal()
     });
   };
   return (
@@ -61,7 +62,7 @@ export default function DashboardHeader() {
       </div>
       {open ? (
         <div className=" fixed rounded-lg bg-white shadow-small z-50 w-[150px] text-sm top-[70px] right-10 ">
-          <Link to='/client-profile' className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200">
+          <Link to='/client-profile' className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200" onClick={openModal}>
             <i className="pi pi-user text-sm"></i>
             Profile
           </Link>
