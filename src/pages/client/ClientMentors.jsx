@@ -4,13 +4,9 @@ import { workspaceStore } from "../../atom/workspaceAtom";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../atom/authAtom";
 import { user } from "../../atom/userAtom";
-import { useNavigate } from "react-router-dom";
 import { getMentorsByWorkspaceId } from "../../utils/mentor/mentorApi";
-import { inviteUsers } from "../../utils/general/generalApi";
 import { banUserByWorkspace } from "../../utils/client/clientApi";
 import { toast } from "react-toastify";
-import CopyToClipboard from "react-copy-to-clipboard";
-import { InputText } from "primereact/inputtext";
 import InviteDialog from "../../components/InviteDialog";
 import { Avatar } from "primereact/avatar";
 import { Checkbox } from "primereact/checkbox";
@@ -20,7 +16,6 @@ export default function ClientMentors() {
   const workspaceData = useRecoilValue(workspaceStore);
   const userData = useRecoilValue(user);
   const auth = useRecoilValue(authState);
-  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const [unBanUser, setUnbanUser] = useState(false);
   const [mentorUsers, setMentorUsers] = useState([]);
@@ -106,16 +101,25 @@ export default function ClientMentors() {
     },
     {
       title: " Status",
-      render: (_, { isBanned }) => (
+      render: (_, { isBanned, isClosured }) => (
         <>
-          {isBanned ? (
+          {isClosured === false && isBanned  ? (
             <Tag bordered={false} color="volcano">
               Suspended
             </Tag>
           ) : (
+            isClosured === false && isBanned===false ?
             <Tag bordered={false} color="green">
               Active
             </Tag>
+            : ''
+          )}
+          {isClosured ? (
+            <Tag bordered={false} color="volcano">
+              Account Closed
+            </Tag>
+          ) : (
+            ""
           )}
         </>
       ),
@@ -197,7 +201,6 @@ export default function ClientMentors() {
 
     const action = "closureOfAccountByOwner";
     const userPayload = {
-      sessionID: auth?.sessionID,
       _action: action,
       _creatorId: userData.id,
       _userByworkSpace: details.id,
