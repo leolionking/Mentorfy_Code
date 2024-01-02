@@ -105,15 +105,15 @@ export default function ClientProfile() {
   return (
     <div>
       <div className="profile pt-10">
-        {/* <div className="flex items-center justify-center mb-4">
+        <div className="flex items-center justify-center mb-4">
               <div className="">
                 <h3 className="font-['ginto-bold'] text-lg text-center lg:text-2xl pb-1">
                   Manage your personal information
                 </h3>
                 <p className="text-sm text-center">Edit personal information</p>
               </div>
-            </div> */}
-        <div className="">
+            </div>
+        <div className="relative">
           <Avatar
             label={userData?.firstName?.slice(0, 1)}
             size="xlarge"

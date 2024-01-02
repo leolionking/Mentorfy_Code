@@ -34,6 +34,7 @@ import UserLayout from './layouts/UserLayout';
 import LoggedInUserLayout from "./layouts/LoggedInUserLayout";
 import ClientWorkspace from "./pages/client/ClientWorkspace";
 import ComingSoon from "./pages/general/ComingSoon";
+import ClientProfile from "./pages/client/ClientProfile";
 
 const router = createBrowserRouter([
   {
@@ -108,6 +109,10 @@ const router = createBrowserRouter([
       {
         path: "/client-billing",
         element: <ClientBilling />,
+      },
+      {
+        path: "/client-profile",
+        element: <ClientProfile />,
       },
       {
         path: "/client-add-workspace",

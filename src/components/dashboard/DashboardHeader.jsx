@@ -16,7 +16,7 @@ export default function DashboardHeader() {
   const openModal = () => {
     setOpen((open) => !open);
   };
-  
+
   const signout = () => {
     logout().then((res) => {
         toast.success("user logged out successfully");
@@ -40,7 +40,7 @@ export default function DashboardHeader() {
                 ""
               )}
             </div>
-            <span className="font-bold">{workspace.name}</span>
+            <span className="font-[ginto-bold] uppercase">{workspace.name}</span>
           </div>
           <div className=" hidden lg:flex items-center gap-4">
             <Link to="/client-notifications">
@@ -61,10 +61,10 @@ export default function DashboardHeader() {
       </div>
       {open ? (
         <div className=" fixed rounded-lg bg-white shadow-small z-50 w-[150px] text-sm top-[70px] right-10 ">
-          <div className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200">
+          <Link to='/client-profile' className="flex items-center gap-4 pb-3 bg-white cursor-pointer px-7 p-3 rounded-lg  hover:bg-gray-200">
             <i className="pi pi-user text-sm"></i>
             Profile
-          </div>
+          </Link>
           <div
             className="flex bg-white items-center gap-4 cursor-pointer hover:bg-gray-200 px-7 p-3 rounded-lg"
             onClick={signout}
